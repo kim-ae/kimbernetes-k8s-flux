@@ -5352,7 +5352,7 @@ spec:
       serviceAccountName: source-controller
       terminationGracePeriodSeconds: 10
       tolerations:
-      - key: node-role.kubernetes.io/control-plane:NoSchedule
+      - key: node-role.kubernetes.io/control-plane
         operator: Exists
       volumes:
       - emptyDir: {}
@@ -7251,7 +7251,7 @@ spec:
       serviceAccountName: kustomize-controller
       terminationGracePeriodSeconds: 60
       tolerations:
-      - key: node-role.kubernetes.io/control-plane:NoSchedule
+      - key: node-role.kubernetes.io/control-plane
         operator: Exists
       volumes:
       - emptyDir: {}
@@ -11056,7 +11056,7 @@ spec:
       serviceAccountName: helm-controller
       terminationGracePeriodSeconds: 600
       tolerations:
-      - key: node-role.kubernetes.io/control-plane:NoSchedule
+      - key: node-role.kubernetes.io/control-plane
         operator: Exists
       volumes:
       - emptyDir: {}
@@ -13037,7 +13037,7 @@ spec:
       serviceAccountName: notification-controller
       terminationGracePeriodSeconds: 10
       tolerations:
-      - key: node-role.kubernetes.io/control-plane:NoSchedule
+      - key: node-role.kubernetes.io/control-plane
         operator: Exists
       volumes:
       - emptyDir: {}
@@ -14150,7 +14150,7 @@ spec:
       serviceAccountName: image-reflector-controller
       terminationGracePeriodSeconds: 10
       tolerations:
-      - key: node-role.kubernetes.io/control-plane:NoSchedule
+      - key: node-role.kubernetes.io/control-plane
         operator: Exists
       volumes:
       - emptyDir: {}
@@ -14986,7 +14986,7 @@ spec:
       serviceAccountName: image-automation-controller
       terminationGracePeriodSeconds: 10
       tolerations:
-      - key: node-role.kubernetes.io/control-plane:NoSchedule
+      - key: node-role.kubernetes.io/control-plane
         operator: Exists
       volumes:
       - emptyDir: {}
