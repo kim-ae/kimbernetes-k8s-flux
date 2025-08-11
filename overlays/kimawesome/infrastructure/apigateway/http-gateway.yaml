@@ -6,7 +6,6 @@ metadata:
     io.cilium.gateway/service-type: "NodePort"
 spec:
   gatewayClassName: cilium
-  serviceType: NodePort
   listeners:
     - name: http
       protocol: HTTP
