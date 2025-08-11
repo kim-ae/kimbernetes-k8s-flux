@@ -1,0 +1,7 @@
+resources:
+  - db-secret.sealed.yaml
+
+configMapGenerator:
+  - name: db-config
+    envs:
+      - database-config.properties

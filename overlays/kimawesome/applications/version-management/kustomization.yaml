@@ -1,3 +1,10 @@
 namespace: version-management
 resources:
   - ../../../base/version-management
+  - shared-resources
+  - mysql
+
+images:
+  - name: version-management-image-placeholder
+    newName: kimae09/version-management
+    newTag: 20250811-193537-rc

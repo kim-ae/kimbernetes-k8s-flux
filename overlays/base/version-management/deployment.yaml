@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: version-management-app
+  labels:
+    app: version-management-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: version-management-app
+  template:
+    metadata:
+      labels:
+        app: version-management-app
+    spec:
+      containers:
+      - name: version-management
+        image: version-management-image-placeholder
+        ports:
+        - containerPort: 3000
+          name: http
+        envFrom:
+        - configMapRef:
+            name: db-config
+        - configMapRef:
+            name: version-management-config
+            optional: true
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secrets
+              key: DB_PASSWORD
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        readinessProbe:
+          httpGet:
+            path: /version-management/api/health
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /version-management/api/health
+            port: 3000
+          initialDelaySeconds: 15
+          periodSeconds: 10

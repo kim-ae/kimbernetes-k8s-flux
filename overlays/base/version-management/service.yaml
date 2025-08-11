@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: version-management
+  labels:
+    app: version-management-app
+spec:
+  selector:
+    app: version-management-app
+  ports:
+    - port: 3000
+      targetPort: http
+      protocol: TCP
+      name: http
+  type: ClusterIP

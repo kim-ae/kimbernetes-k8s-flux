@@ -1,0 +1,7 @@
+resources:
+  - ../../../../base/tools/mysql
+
+configMapGenerator:
+  - name: mysql-init-schema
+    files:
+      - schema.sql
