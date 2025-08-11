@@ -3,6 +3,7 @@ resources:
   - ../../../base/version-management
   - shared-resources
   - mysql
+  - httproute.yaml
 
 images:
   - name: version-management-image-placeholder
