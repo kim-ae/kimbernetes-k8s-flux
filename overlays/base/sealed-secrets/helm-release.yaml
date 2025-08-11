@@ -8,6 +8,7 @@ spec:
       chart: sealed-secrets
       sourceRef:
         kind: HelmRepository
+        name: sealed-secrets
       version: "=2.17.3"
       # https://github.com/bitnami-labs/sealed-secrets/releases
   interval: 24h
