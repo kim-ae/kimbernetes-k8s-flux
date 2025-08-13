@@ -2,17 +2,19 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: https-gateway
+  annotations:
+    cert-manager.io/cluster-issuer: cluster-issuer
 spec:
   gatewayClassName: cilium
   listeners:
     - name: https
       protocol: HTTPS
       port: 443       # Internally uses NodePort (e.g., 31000)
+      hostname: "kim.tplinkdns.com"  # Specific hostname for this app
       allowedRoutes:  # Add this block
         namespaces:
           from: All   # Allows any namespace
       tls:
         mode: Terminate
         certificateRefs:
-          - name: kim-iplinkdns-com-tls
-            namespace: cert-manager
+          - name: kim-iplinkdns-tls
