@@ -1,0 +1,9 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kim-iplinkdns-com-cert
+spec:
+  issuerRef:
+    name: cluster-issuer
+  dnsNames:
+  - "kim.tplinkdns.com"
