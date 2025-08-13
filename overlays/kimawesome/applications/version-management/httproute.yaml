@@ -6,6 +6,7 @@ spec:
   parentRefs:
     - name: https-gateway
       namespace: kube-system
+      sectionName: https
   hostnames:
     - "kim.tplinkdns.com"       # Specific hostname for this app
   rules:
