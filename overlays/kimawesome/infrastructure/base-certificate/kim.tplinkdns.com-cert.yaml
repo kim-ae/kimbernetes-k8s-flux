@@ -3,8 +3,9 @@ kind: Certificate
 metadata:
   name: kim-iplinkdns-com-cert
 spec:
-  clusterIssuerRef:
+  issuerRef:
     name: cluster-issuer
+    kind: ClusterIssuer
   dnsNames:
   - "kim.tplinkdns.com"
   secretName: kim-iplinkdns-com-tls
