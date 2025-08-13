@@ -3,7 +3,7 @@ kind: Certificate
 metadata:
   name: kim-iplinkdns-com-cert
 spec:
-  issuerRef:
+  clusterIssuerRef:
     name: cluster-issuer
   dnsNames:
   - "kim.tplinkdns.com"
