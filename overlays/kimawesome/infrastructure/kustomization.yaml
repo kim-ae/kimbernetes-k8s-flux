@@ -2,3 +2,4 @@ resources:
   - sealed-secrets
   - apigateway
   - cert-manager
+  - base-certificate/kustomization.flux.yaml
