@@ -1,13 +1,13 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: cluster-issuer
+  name: stg-cluster-issuer
 spec:
   acme:
     email: kim.ae09@gmail.com
-    server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      name: issuer-account-key
+      name: stg-issuer-account-key
     solvers:
     - http01:
         gatewayHTTPRoute:
