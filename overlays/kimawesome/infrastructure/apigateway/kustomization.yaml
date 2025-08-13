@@ -2,3 +2,4 @@ namespace: kube-system
 resources:
 - gatewayclass-nodeport.yaml
 - http-gateway.yaml
+- https-gateway.yaml
