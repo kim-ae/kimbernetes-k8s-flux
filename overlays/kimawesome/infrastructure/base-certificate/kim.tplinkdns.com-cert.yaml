@@ -7,3 +7,4 @@ spec:
     name: cluster-issuer
   dnsNames:
   - "kim.tplinkdns.com"
+  secretName: kim-iplinkdns-com-tls
