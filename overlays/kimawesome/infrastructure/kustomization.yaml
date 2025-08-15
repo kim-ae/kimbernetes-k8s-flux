@@ -3,3 +3,4 @@ resources:
   - apigateway
   - cert-manager
   - base-certificate/kustomization.flux.yaml
+  - metrics-server
