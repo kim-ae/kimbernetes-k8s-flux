@@ -4,7 +4,6 @@ resources:
   - shared-resources
   - mysql
   - httproute.yaml
-  - https-gateway-version-management-kim-tec-br.yaml
   - httproute-kim-tec-br.yaml
 
 images:

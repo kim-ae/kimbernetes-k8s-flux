@@ -4,8 +4,8 @@ metadata:
   name: version-management-route-kim-tec-br
 spec:
   parentRefs:
-    - name: https-gateway-version-management-kim-tec-br
-      namespace: version-management
+    - name: kim-tec-br-gateway
+      namespace: kube-system
       sectionName: https
   hostnames:
     - "version-management.kim.tec.br"       # Specific hostname for this app

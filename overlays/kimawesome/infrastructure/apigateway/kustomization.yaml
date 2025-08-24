@@ -3,3 +3,4 @@ resources:
 - gatewayclass-nodeport.yaml
 - https-gateway.yaml
 - http-to-https-redirect.yaml
+- kim-tec-br-gateway.yaml
