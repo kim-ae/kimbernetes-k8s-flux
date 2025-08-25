@@ -10,7 +10,7 @@ spec:
     - name: https
       protocol: HTTPS
       port: 443       # Internally uses NodePort (e.g., 31000)
-      hostname: kim.iplinkdns.com
+      hostname: kim.tplinkdns.com
       allowedRoutes:  # Add this block
         namespaces:
           from: All   # Allows any namespace
