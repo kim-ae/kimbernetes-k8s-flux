@@ -10,6 +10,7 @@ spec:
     - name: https
       protocol: HTTPS
       port: 443       # Internally uses NodePort (e.g., 31000)
+      hostname: kim.iplinkdns.com
       allowedRoutes:  # Add this block
         namespaces:
           from: All   # Allows any namespace
@@ -17,6 +18,16 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: kim-iplinkdns-tls
+    - name: https-vm
+      protocol: HTTPS
+      port: 443       # Internally uses NodePort (e.g., 31000)
+      hostname: version-management.kim.tec.br
+      allowedRoutes:  # Add this block
+        namespaces:
+          from: All   # Allows any namespace
+      tls:
+        mode: Terminate
+        certificateRefs:
           - name: version-management-kim-tec-br-tls
     - name: http
       protocol: HTTP
