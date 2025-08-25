@@ -12,14 +12,21 @@ spec:
   rules:
     - matches:
         - path:
-            type: PathPrefix
+            type: Exact
             value: /
       filters:
         - type: URLRewrite
           urlRewrite:
             path:
-              type: ReplacePrefixMatch
-              replacePrefixMatch: /version-management
+              type: ReplaceFullPath
+              replaceFullPath: /version-management
+      backendRefs:
+        - name: version-management
+          port: 3000
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /version-management
       backendRefs:
         - name: version-management
           port: 3000
