@@ -1,3 +1,4 @@
 namespace: sealed-secrets
 resources:
+  - namespace.yaml
   - ../../../base/sealed-secrets
