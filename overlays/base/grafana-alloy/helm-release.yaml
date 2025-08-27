@@ -10,6 +10,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: grafana-alloy
+      version: 3.2.2
   interval: 24h
   releaseName: grafana-monitoring
   install:
@@ -32,8 +33,18 @@ spec:
         enabled: false
     alloy-logs:
       enabled: true
+      extraConfig: |
+        remote.kubernetes.secret "password" {
+          namespace = "observability"
+          name = "access-policy-password"
+        }
     alloy-singleton:
       enabled: true
+      extraConfig: |
+        remote.kubernetes.secret "password" {
+          namespace = "observability"
+          name = "access-policy-password"
+        }
     alloy-metrics:
       enblaed: false
     nodeLogs:
@@ -49,10 +60,8 @@ spec:
         url: https://logs-prod-024.grafana.net/loki/api/v1/push
         auth:
           type: basic
-          secret:
-            create: false
-            name: access-policy-password
-            key: password
+          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username"])
+          passwordFrom: remote.kubernetes.secret.password.data["password"]
     podLogs:
       enabled: true
       staticLabels:

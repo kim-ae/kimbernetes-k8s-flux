@@ -2,7 +2,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: grafana-agent
+  name: grafana-alloy
 spec:
   interval: 24h
   url: https://grafana.github.io/helm-charts
