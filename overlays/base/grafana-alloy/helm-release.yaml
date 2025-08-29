@@ -32,6 +32,8 @@ spec:
         enabled: true
       controlPlane:
         enabled: true
+      kepler:
+        enabled: true
     alloy-logs:
       enabled: true
       enableReporting: false
