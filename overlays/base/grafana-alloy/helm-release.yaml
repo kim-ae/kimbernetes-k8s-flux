@@ -35,7 +35,7 @@ spec:
       kepler:
         enabled: true
       opencost:
-        enabled: true
+        enabled: false
         metricsSource: prometheus-grafana-cloud
         opencost:
           exporter:
@@ -76,7 +76,7 @@ spec:
         url: https://fleet-management-prod-015.grafana.net
         auth:
           type: basic
-          username: convert.nonsensitive(remote.kubernetes.secret.password.data["username-fleet"])
+          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username-fleet"])
           passwordFrom: remote.kubernetes.secret.password.data["password"]
         secret:
           embed: true
@@ -117,7 +117,7 @@ spec:
         url: https://fleet-management-prod-015.grafana.net
         auth:
           type: basic
-          username: convert.nonsensitive(remote.kubernetes.secret.password.data["username-loki"])
+          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username-fleet"])
           passwordFrom: remote.kubernetes.secret.password.data["password"]
         secret:
           embed: true
@@ -153,7 +153,7 @@ spec:
         url: https://fleet-management-prod-015.grafana.net
         auth:
           type: basic
-          username: convert.nonsensitive(remote.kubernetes.secret.password.data["username-fleet"])
+          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username-fleet"])
           passwordFrom: remote.kubernetes.secret.password.data["password"]
         secret:
           embed: true
