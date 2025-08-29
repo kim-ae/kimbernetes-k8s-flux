@@ -25,7 +25,7 @@ spec:
       enabled: true
       labelsToKeep: ["level","namespace","node","source"]
     clusterMetrics:
-      enabled: false
+      enabled: true
       kubelet:
         enabled: true
       node-exporter:
@@ -161,7 +161,7 @@ spec:
           passwordFrom: remote.kubernetes.secret.password.data["password"]
       - name: prometheus-grafana-cloud
         type: prometheus
-        url: https://prometheus-prod-40-prod-sa-east-1.grafana.net/api/prom
+        url: https://prometheus-prod-40-prod-sa-east-1.grafana.net/api/prom/push
         auth:
           type: basic
           usernameFrom: "2621077"
