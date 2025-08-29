@@ -25,16 +25,22 @@ spec:
       enabled: true
       labelsToKeep: ["level","namespace","node","source"]
     clusterMetrics:
-      opencost:
-        enabled: false
+      enabled: false
       kubelet:
-        enabled: false
+        enabled: true
       node-exporter:
-        enabled: false
+        enabled: true
+      controlPlane:
+        enabled: true
     alloy-logs:
       enabled: true
-      enableReporting: false
+    alloy-singleton:
+      enabled: true
+    alloy-metrics:
+      enblaed: false
+    collectorCommon:
       alloy:
+        enableReporting: false
         extraEnv:
           - name: GCLOUD_RW_API_KEY
             valueFrom:
@@ -57,58 +63,20 @@ spec:
                 fieldPath: spec.nodeName
           - name: GCLOUD_FM_COLLECTOR_ID
             value: grafana-k8s-monitoring-$(CLUSTER_NAME)-$(NAMESPACE)-$(POD_NAME)-$(NODE_NAME)
-      remoteConfig:
-        enabled: true
-        url: https://fleet-management-prod-015.grafana.net
-        auth:
-          type: basic
-          username: "1348421"
-          passwordFrom: remote.kubernetes.secret.password.data["password"]
-        secret:
-          embed: true
-      extraConfig: |
-        remote.kubernetes.secret "password" {
-          namespace = "observability"
-          name = "access-policy-password"
-        }
-    alloy-singleton:
-      enabled: true
-      enableReporting: false
-      alloy:
-        extraEnv:
-          - name: GCLOUD_RW_API_KEY
-            valueFrom:
-              secretKeyRef:
-                name: access-policy-password
-                key: password
-          - name: CLUSTER_NAME
-            value: kim7s
-          - name: NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
-          - name: POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          - name: GCLOUD_FM_COLLECTOR_ID
-            value: grafana-k8s-monitoring-$(CLUSTER_NAME)-$(NAMESPACE)-$(POD_NAME)
-      extraConfig: |
-        remote.kubernetes.secret "password" {
-          namespace = "observability"
-          name = "access-policy-password"
-        }
-      remoteConfig:
-        enabled: true
-        url: https://fleet-management-prod-015.grafana.net
-        auth:
-          type: basic
-          username: "1348421"
-          passwordFrom: remote.kubernetes.secret.password.data["password"]
-        secret:
-          embed: true
-    alloy-metrics:
-      enblaed: false
+        remoteConfig:
+          enabled: true
+          url: https://fleet-management-prod-015.grafana.net
+          auth:
+            type: basic
+            username: "1348421"
+            passwordFrom: remote.kubernetes.secret.password.data["password"]
+          secret:
+            embed: true
+        extraConfig: |
+          remote.kubernetes.secret "password" {
+            namespace = "observability"
+            name = "access-policy-password"
+          }
     nodeLogs:
       enabled: true
       labelsToKeep: ["instance","level","name","unit","service_name","source"]
@@ -127,7 +95,6 @@ spec:
     podLogs:
       enabled: true
       staticLabels:
-        log_source: "kubility"
         source: "pods"
       extraDiscoveryRules: |-
           rule {
