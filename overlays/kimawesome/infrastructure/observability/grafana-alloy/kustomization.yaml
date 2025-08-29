@@ -1,3 +1,21 @@
 resources:
   - ../../../../base/grafana-alloy
   - access-policy.sealed.yaml
+
+patches:
+  - target:
+      kind: HelmRelease
+      name: grafana-alloy
+    patch: |-
+      - op: replace
+        path: /spec/values/cluster/name
+        value: kim7s
+      - op: replace
+        path: /spec/values/alloy-logs/alloy/extraEnv/1/value
+        value: kim7s
+      - op: replace
+        path: /spec/values/alloy-metrics/alloy/extraEnv/1/value
+        value: kim7s
+      - op: replace
+        path: /spec/values/alloy-singleton/alloy/extraEnv/1/value
+        value: kim7s
