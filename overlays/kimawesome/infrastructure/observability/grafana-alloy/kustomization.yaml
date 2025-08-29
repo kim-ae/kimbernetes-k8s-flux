@@ -1,3 +1,3 @@
 resources:
   - ../../../../base/grafana-alloy
-  - access-policy-password.sealed.yaml
+  - access-policy.sealed.yaml

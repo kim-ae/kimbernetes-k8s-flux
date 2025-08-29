@@ -34,6 +34,17 @@ spec:
         enabled: true
       kepler:
         enabled: true
+      opencost:
+        enabled: true
+        metricsSource: prometheus-grafana-cloud
+        opencost:
+          exporter:
+            defaultClusterId: kim7s
+          prometheus:
+            existingSecretName: access-policy
+            username_key: username-prom
+            external:
+              url: https://prometheus-prod-40-prod-sa-east-1.grafana.net./api/prom
     alloy-logs:
       enabled: true
       enableReporting: false
@@ -42,7 +53,7 @@ spec:
           - name: GCLOUD_RW_API_KEY
             valueFrom:
               secretKeyRef:
-                name: access-policy-password
+                name: access-policy
                 key: password
           - name: CLUSTER_NAME
             value: kim7s
@@ -65,14 +76,14 @@ spec:
         url: https://fleet-management-prod-015.grafana.net
         auth:
           type: basic
-          username: "1348421"
+          username: convert.nonsensitive(remote.kubernetes.secret.password.data["username-fleet"])
           passwordFrom: remote.kubernetes.secret.password.data["password"]
         secret:
           embed: true
       extraConfig: |
         remote.kubernetes.secret "password" {
           namespace = "observability"
-          name = "access-policy-password"
+          name = "access-policy"
         }
     alloy-singleton:
       enabled: true
@@ -82,7 +93,7 @@ spec:
           - name: GCLOUD_RW_API_KEY
             valueFrom:
               secretKeyRef:
-                name: access-policy-password
+                name: access-policy
                 key: password
           - name: CLUSTER_NAME
             value: kim7s
@@ -99,14 +110,14 @@ spec:
       extraConfig: |
         remote.kubernetes.secret "password" {
           namespace = "observability"
-          name = "access-policy-password"
+          name = "access-policy"
         }
       remoteConfig:
         enabled: true
         url: https://fleet-management-prod-015.grafana.net
         auth:
           type: basic
-          username: "1348421"
+          username: convert.nonsensitive(remote.kubernetes.secret.password.data["username-loki"])
           passwordFrom: remote.kubernetes.secret.password.data["password"]
         secret:
           embed: true
@@ -118,7 +129,7 @@ spec:
           - name: GCLOUD_RW_API_KEY
             valueFrom:
               secretKeyRef:
-                name: access-policy-password
+                name: access-policy
                 key: password
           - name: CLUSTER_NAME
             value: kim7s
@@ -135,14 +146,14 @@ spec:
       extraConfig: |
         remote.kubernetes.secret "password" {
           namespace = "observability"
-          name = "access-policy-password"
+          name = "access-policy"
         }
       remoteConfig:
         enabled: true
         url: https://fleet-management-prod-015.grafana.net
         auth:
           type: basic
-          username: "1348421"
+          username: convert.nonsensitive(remote.kubernetes.secret.password.data["username-fleet"])
           passwordFrom: remote.kubernetes.secret.password.data["password"]
         secret:
           embed: true
@@ -159,14 +170,14 @@ spec:
         url: https://logs-prod-024.grafana.net/loki/api/v1/push
         auth:
           type: basic
-          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username"])
+          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username-loki"])
           passwordFrom: remote.kubernetes.secret.password.data["password"]
       - name: prometheus-grafana-cloud
         type: prometheus
         url: https://prometheus-prod-40-prod-sa-east-1.grafana.net/api/prom/push
         auth:
           type: basic
-          usernameFrom: "2621077"
+          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username-prom"])
           passwordFrom: remote.kubernetes.secret.password.data["password"]
         secret:
           embed: true
