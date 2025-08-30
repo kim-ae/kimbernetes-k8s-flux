@@ -34,6 +34,8 @@ spec:
         enabled: true
       kepler:
         enabled: true
+      windows-expoter:
+        enabled: false
       opencost:
         enabled: false
         metricsSource: prometheus-grafana-cloud
