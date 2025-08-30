@@ -157,6 +157,51 @@ spec:
           passwordFrom: remote.kubernetes.secret.password.data["password"]
         secret:
           embed: true
+    alloy-receiver:
+      enabled: true
+      enableReporting: false
+      alloy:
+        extraPorts:
+          - name: otlp-grpc
+            port: 4317
+            targetPort: 4317
+            protocol: TCP
+          - name: otlp-http
+            port: 4318
+            targetPort: 4318
+            protocol: TCP
+        extraEnv:
+          - name: GCLOUD_RW_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: access-policy
+                key: password
+          - name: CLUSTER_NAME
+            value: ""
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: GCLOUD_FM_COLLECTOR_ID
+            value: grafana-k8s-monitoring-$(CLUSTER_NAME)-$(NAMESPACE)-$(POD_NAME)
+      extraConfig: |
+        remote.kubernetes.secret "password" {
+          namespace = "observability"
+          name = "access-policy"
+        }
+      remoteConfig:
+        enabled: true
+        url: https://fleet-management-prod-015.grafana.net
+        auth:
+          type: basic
+          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username-fleet"])
+          passwordFrom: remote.kubernetes.secret.password.data["password"]
+        secret:
+          embed: true
     nodeLogs:
       enabled: true
       labelsToKeep: ["instance","level","name","unit","service_name","source"]
@@ -178,6 +223,22 @@ spec:
         auth:
           type: basic
           usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username-prom"])
+          passwordFrom: remote.kubernetes.secret.password.data["password"]
+        secret:
+          embed: true
+      - name: otlp-grafana-cloud
+        type: otlp
+        url: https://otlp-gateway-prod-sa-east-1.grafana.net/otlp
+        protocol: http
+        metrics:
+          enabled: true
+        logs:
+          enabled: false
+        traces:
+          enabled: true
+        auth:
+          type: basic
+          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username-otlp"])
           passwordFrom: remote.kubernetes.secret.password.data["password"]
         secret:
           embed: true
@@ -228,3 +289,13 @@ spec:
       - source
     selfReporting:
       enabled: true             
+    applicationObservability:
+      enabled: true
+      receivers:
+        otlp:
+          grpc:
+            enabled: true
+            port: 4317
+          http:
+            enabled: true
+            port: 4318
