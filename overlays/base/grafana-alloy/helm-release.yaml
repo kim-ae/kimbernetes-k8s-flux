@@ -27,11 +27,11 @@ spec:
     clusterMetrics:
       enabled: true
       kubelet:
-        enabled: true
+        enabled: false
       node-exporter:
         enabled: true
       controlPlane:
-        enabled: true
+        enabled: false
       kepler:
         enabled: true
       windows-expoter:
