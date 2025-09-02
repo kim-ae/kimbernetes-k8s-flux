@@ -301,3 +301,5 @@ spec:
           http:
             enabled: true
             port: 4318
+    global:
+      scrapeInterval: 5m
