@@ -26,6 +26,10 @@ spec:
       labelsToKeep: ["level","namespace","node","source"]
     clusterMetrics:
       enabled: true
+      kube-state-metrics:
+        enabled: false
+      cadvisor:
+        enabled: false
       kubelet:
         enabled: false
       node-exporter:
