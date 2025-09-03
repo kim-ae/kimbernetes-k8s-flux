@@ -29,9 +29,14 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: version-management-kim-tec-br-tls
-    - name: http
-      protocol: HTTP
-      port: 80       # Internally uses NodePort (e.g., 31000)
+    - name: https-yopass
+      protocol: HTTPS
+      port: 443       # Internally uses NodePort (e.g., 31000)
+      hostname: yopass.kim.tec.br
       allowedRoutes:  # Add this block
         namespaces:
           from: All   # Allows any namespace
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: yopass-kim-tec-br-tls

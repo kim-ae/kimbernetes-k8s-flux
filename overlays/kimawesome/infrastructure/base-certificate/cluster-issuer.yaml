@@ -15,4 +15,5 @@ spec:
             - name: http-gateway
               namespace: kube-system
               kind: Gateway
+              sectionName: http
         

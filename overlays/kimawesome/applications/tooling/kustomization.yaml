@@ -1,0 +1,4 @@
+namespace: tooling
+resources:
+  - namespace.yaml
+  - yopass

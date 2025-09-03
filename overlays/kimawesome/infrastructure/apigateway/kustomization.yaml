@@ -2,5 +2,4 @@ namespace: kube-system
 resources:
 - gatewayclass-nodeport.yaml
 - https-gateway.yaml
-- http-to-https-redirect.yaml
-#- version-management-certificate.yaml
+- http-gateway.yaml
