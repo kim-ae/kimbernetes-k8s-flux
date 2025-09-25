@@ -5,3 +5,4 @@ resources:
   - base-certificate/kustomization.flux.yaml
   - metrics-server
   - observability
+  - storage-class.yaml

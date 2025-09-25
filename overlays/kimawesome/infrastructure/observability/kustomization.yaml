@@ -2,3 +2,4 @@ namespace: observability
 resources:
 - namespace.yaml
 - grafana-alloy
+- prometheus-pv.yaml
