@@ -9,16 +9,16 @@ resources:
 configMapGenerator:
   - name: knowledge-hub-html
     files:
-      - index.html=/site/index.html
+      - index.html=site/index.html
   - name: knowledge-hub-css
     files:
-      - styles.css=/site/styles.css
+      - styles.css=site/styles.css
   - name: knowledge-hub-js
     files:
-      - script.js=/site/script.js
+      - script.js=site/script.js
   - name: knowledge-hub-nginx-config
     files:
-      - nginx.conf=/configuration/nginx.conf
+      - nginx.conf=configuration/nginx.conf
 
 commonLabels:
   app: knowledge-hub

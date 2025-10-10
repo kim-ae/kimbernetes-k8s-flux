@@ -1,8 +1,8 @@
 // Navigation Data Model - defines all sections and subsections
 const navigationData = {
     "Tools": {
-        "k8s": { 
-            title: "Kubernetes", 
+        "k8s": {
+            title: "Kubernetes",
             content: `
                 <h2>Kubernetes Articles</h2>
                 <p>Curated collection of essential Kubernetes articles and resources.</p>
@@ -11,106 +11,47 @@ const navigationData = {
                     <h4><a href="https://home.robusta.dev/blog/stop-using-cpu-limits" target="_blank" rel="noopener noreferrer">For the Love of God, Stop Using CPU Limits on Kubernetes (Updated)</a></h4>
                     <p>This article discusses the common pitfalls and performance issues that arise from using CPU limits in Kubernetes. The author explains why CPU limits can cause unexpected throttling and degraded performance, even when your pods aren't actually using their full CPU allocation.</p>
                 </div>
-
-                <div class="article-link">
-                    <h4><a href="https://kubernetes.io/docs/concepts/workloads/pods/" target="_blank" rel="noopener noreferrer">Kubernetes Pods - Official Documentation</a></h4>
-                    <p>Comprehensive guide to understanding Pods, the smallest deployable units in Kubernetes. Covers pod lifecycle, networking, storage, and best practices for pod management.</p>
-                </div>
-
-                <div class="article-link">
-                    <h4><a href="https://kubernetes.io/docs/concepts/services-networking/service/" target="_blank" rel="noopener noreferrer">Kubernetes Services and Networking</a></h4>
-                    <p>Essential guide to Kubernetes Services, explaining how to expose applications running on pods and manage network traffic within your cluster.</p>
-                </div>
-            ` 
+            `
         },
-        "grafana": { 
-            title: "Grafana", 
+        "grafana": {
+            title: "Grafana",
             content: `
                 <h2>Grafana Articles</h2>
                 <p>Essential articles and guides for Grafana monitoring and visualization.</p>
-                
-                <div class="article-link">
-                    <h4><a href="https://grafana.com/docs/grafana/latest/getting-started/" target="_blank" rel="noopener noreferrer">Getting Started with Grafana</a></h4>
-                    <p>Official getting started guide covering installation, basic configuration, and creating your first dashboard. Perfect introduction for beginners to the Grafana ecosystem.</p>
-                </div>
-
-                <div class="article-link">
-                    <h4><a href="https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/best-practices/" target="_blank" rel="noopener noreferrer">Dashboard Best Practices</a></h4>
-                    <p>Comprehensive guide to creating effective dashboards with proper visualization choices, layout principles, and performance optimization techniques.</p>
-                </div>
-            ` 
+            `
         },
-        "elk": { 
-            title: "ELK Stack", 
+        "elk": {
+            title: "ELK Stack",
             content: `
                 <h2>ELK Stack Articles</h2>
                 <p>Curated resources for Elasticsearch, Logstash, and Kibana.</p>
-                
-                <div class="article-link">
-                    <h4><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started.html" target="_blank" rel="noopener noreferrer">Elasticsearch Getting Started Guide</a></h4>
-                    <p>Official Elasticsearch documentation covering installation, basic concepts, indexing, searching, and cluster management fundamentals.</p>
-                </div>
-
-                <div class="article-link">
-                    <h4><a href="https://www.elastic.co/guide/en/logstash/current/getting-started-with-logstash.html" target="_blank" rel="noopener noreferrer">Getting Started with Logstash</a></h4>
-                    <p>Comprehensive guide to Logstash for data processing, including input plugins, filters, and output configurations for log aggregation pipelines.</p>
-                </div>
-
-                <div class="article-link">
-                    <h4><a href="https://www.elastic.co/guide/en/kibana/current/get-started.html" target="_blank" rel="noopener noreferrer">Kibana Visualization Guide</a></h4>
-                    <p>Learn to create powerful visualizations and dashboards in Kibana for analyzing and exploring your Elasticsearch data effectively.</p>
-                </div>
-            ` 
+            `
         }
     },
     "Languages": {
-        "js": { 
-            title: "JavaScript", 
+        "js": {
+            title: "JavaScript",
             content: `
                 <h2>JavaScript Articles</h2>
                 <p>Essential JavaScript articles and modern development practices.</p>
-                
-                <div class="article-link">
-                    <h4><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide" target="_blank" rel="noopener noreferrer">JavaScript Guide - MDN</a></h4>
-                    <p>Comprehensive JavaScript guide from Mozilla Developer Network covering language fundamentals, objects, functions, and advanced concepts with practical examples.</p>
-                </div>
-
-                <div class="article-link">
-                    <h4><a href="https://javascript.info/" target="_blank" rel="noopener noreferrer">The Modern JavaScript Tutorial</a></h4>
-                    <p>In-depth tutorial covering modern JavaScript from basics to advanced topics including ES6+, async/await, modules, and browser APIs.</p>
-                </div>
-
-                <div class="article-link">
-                    <h4><a href="https://github.com/getify/You-Dont-Know-JS" target="_blank" rel="noopener noreferrer">You Don't Know JS (Book Series)</a></h4>
-                    <p>Deep dive into JavaScript's core mechanisms including scope, closures, this binding, prototypes, and asynchronous programming patterns.</p>
-                </div>
-            ` 
+            `
         },
-        "java": { 
-            title: "Java", 
+        "java": {
+            title: "Java",
             content: `
                 <h2>Java Articles</h2>
                 <p>Curated Java programming resources and best practices.</p>
-                
-                <div class="article-link">
-                    <h4><a href="https://docs.oracle.com/javase/tutorial/" target="_blank" rel="noopener noreferrer">Oracle Java Tutorials</a></h4>
-                    <p>Official Oracle Java tutorials covering language fundamentals, object-oriented programming, collections, concurrency, and advanced Java features.</p>
-                </div>
-
-                <div class="article-link">
-                    <h4><a href="https://www.baeldung.com/java-tutorial" target="_blank" rel="noopener noreferrer">Baeldung Java Tutorials</a></h4>
-                    <p>Comprehensive collection of Java tutorials covering Spring Framework, testing, performance optimization, and modern Java development practices.</p>
-                </div>
-
-                <div class="article-link">
-                    <h4><a href="https://openjdk.org/projects/jdk/" target="_blank" rel="noopener noreferrer">OpenJDK Project Documentation</a></h4>
-                    <p>Official OpenJDK documentation and project information, including JEPs (Java Enhancement Proposals) and upcoming language features.</p>
-                </div>
-            ` 
+            `
         }
     },
     "Frameworks": {
-        // Placeholder for future subsections
+        "springboot": {
+            title: "Springboot",
+            content: `
+                <h2>Springboot Articles</h2>
+                <p>Curated springboot articles.</p>
+            `
+        }
     },
     "DIY": {
         // Placeholder for future subsections
@@ -123,6 +64,20 @@ const navigationData = {
     },
     "Cool readings": {
         // Placeholder for future subsections
+    },
+    "Awesome content sources": {
+        "tech": {
+            "title": "Tech",
+            content: `
+                <h2>Tech sources</h2>
+                <p>Awesome tech sources</p>
+
+                <div class="article-link">
+                    <h4><a href="https://my-uncompiled-thoughts.hashnode.dev" target="_blank" rel="noopener noreferrer">My uncompiled thoughts</a></h4>
+                    <p>This is an amazing blog from a fellow develper whom I have the pleasure of work for some year now. Worth the reading.</p>
+                </div>
+            `
+        }
     }
 };
 
@@ -145,15 +100,15 @@ const appState = {
 function updateActiveSelection(section, subsection = null) {
     appState.activeSection = section;
     appState.activeSubsection = subsection;
-    
+
     // Remember the last viewed subsection for this section
     if (subsection) {
         appState.lastViewedSubsections[section] = subsection;
     }
-    
+
     // Persist state to sessionStorage
     persistState();
-    
+
     console.log('Active selection updated:', { section, subsection });
 }
 
@@ -163,7 +118,7 @@ function updateActiveSelection(section, subsection = null) {
  */
 function toggleSectionExpansion(section) {
     const index = appState.expandedSections.indexOf(section);
-    
+
     if (index === -1) {
         // Section is not expanded, add it
         appState.expandedSections.push(section);
@@ -171,10 +126,10 @@ function toggleSectionExpansion(section) {
         // Section is expanded, remove it
         appState.expandedSections.splice(index, 1);
     }
-    
+
     // Persist state to sessionStorage
     persistState();
-    
+
     console.log('Section expansion toggled:', section, 'Expanded sections:', appState.expandedSections);
 }
 
@@ -202,7 +157,7 @@ function getLastViewedSubsection(section) {
 function toggleSidebar() {
     appState.sidebarCollapsed = !appState.sidebarCollapsed;
     persistState();
-    
+
     console.log('Sidebar toggled:', appState.sidebarCollapsed ? 'collapsed' : 'expanded');
 }
 
@@ -215,10 +170,10 @@ function resetState() {
     appState.expandedSections = [];
     appState.sidebarCollapsed = false;
     appState.lastViewedSubsections = {};
-    
+
     // Clear persisted state
     sessionStorage.removeItem('knowledgeHubState');
-    
+
     console.log('Application state reset');
 }
 
@@ -234,7 +189,7 @@ function persistState() {
             sidebarCollapsed: appState.sidebarCollapsed,
             lastViewedSubsections: { ...appState.lastViewedSubsections }
         };
-        
+
         sessionStorage.setItem('knowledgeHubState', JSON.stringify(stateToSave));
     } catch (error) {
         console.warn('Failed to persist state to sessionStorage:', error);
@@ -249,16 +204,16 @@ function restoreState() {
         const savedState = sessionStorage.getItem('knowledgeHubState');
         if (savedState) {
             const parsedState = JSON.parse(savedState);
-            
+
             // Restore state properties with validation
             appState.activeSection = parsedState.activeSection || null;
             appState.activeSubsection = parsedState.activeSubsection || null;
-            appState.expandedSections = Array.isArray(parsedState.expandedSections) 
-                ? parsedState.expandedSections 
+            appState.expandedSections = Array.isArray(parsedState.expandedSections)
+                ? parsedState.expandedSections
                 : [];
             appState.sidebarCollapsed = Boolean(parsedState.sidebarCollapsed);
             appState.lastViewedSubsections = parsedState.lastViewedSubsections || {};
-            
+
             console.log('Application state restored from sessionStorage');
             return true;
         }
@@ -309,8 +264,8 @@ function isValidSection(section) {
  * @returns {boolean} True if the subsection exists
  */
 function isValidSubsection(section, subsection) {
-    return isValidSection(section) && 
-           navigationData[section].hasOwnProperty(subsection);
+    return isValidSection(section) &&
+        navigationData[section].hasOwnProperty(subsection);
 }// Dynamic Content Display System
 
 /**
@@ -327,14 +282,14 @@ function updateContentDisplay(section, subsection) {
 
     // Add loading state
     contentContainer.style.pointerEvents = 'none';
-    
+
     // Start fade out transition with enhanced animation
     contentContainer.classList.add('fade-out');
 
     // Wait for fade out to complete, then update content
     setTimeout(() => {
         const content = getContent(section, subsection);
-        
+
         if (content && content.content) {
             // Display actual content with staggered animation
             contentContainer.innerHTML = `
@@ -381,7 +336,7 @@ function updateContentDisplay(section, subsection) {
 function createComingSoonPlaceholder(section, subsection) {
     const sectionTitle = section ? section.charAt(0).toUpperCase() + section.slice(1) : 'Section';
     const subsectionTitle = subsection ? subsection.toUpperCase() : 'Subsection';
-    
+
     return `
         <div class="coming-soon-placeholder">
             <div class="icon">🚧</div>
@@ -510,16 +465,16 @@ function handleSectionToggle(section) {
     const sectionElement = document.querySelector(`[aria-controls="${sectionName}-subsections"]`);
     const subsectionsElement = document.getElementById(`${sectionName}-subsections`);
     const expandIcon = sectionElement?.querySelector('.nav-expand-icon');
-    
+
     if (!sectionElement || !subsectionsElement || !expandIcon) {
         console.warn(`Section elements not found for: ${section}`);
         return;
     }
-    
+
     // Toggle the expansion state
     toggleSectionExpansion(section);
     const isExpanded = isSectionExpanded(section);
-    
+
     // Update visual states
     if (isExpanded) {
         // Expand the section
@@ -527,11 +482,11 @@ function handleSectionToggle(section) {
         expandIcon.classList.add('expanded');
         expandIcon.textContent = '▼';
         sectionElement.setAttribute('aria-expanded', 'true');
-        
+
         // When expanding, navigate to the last viewed subsection or first available
         const lastViewed = getLastViewedSubsection(section);
         const subsections = getSubsections(section);
-        
+
         if (lastViewed && subsections.includes(lastViewed)) {
             handleSubsectionNavigation(section, lastViewed);
         } else if (subsections.length > 0) {
@@ -546,7 +501,7 @@ function handleSectionToggle(section) {
         expandIcon.classList.remove('expanded');
         expandIcon.textContent = '▶';
         sectionElement.setAttribute('aria-expanded', 'false');
-        
+
         // When collapsing, return to welcome screen if this was the active section
         if (appState.activeSection === section) {
             updateActiveSelection(null, null);
@@ -554,7 +509,7 @@ function handleSectionToggle(section) {
             displayWelcomeContent();
         }
     }
-    
+
     console.log(`Section ${section} ${isExpanded ? 'expanded' : 'collapsed'}`);
 }
 
@@ -571,21 +526,21 @@ function handleSubsectionNavigation(section, subsection) {
         updateContentDisplay(section, subsection);
         return;
     }
-    
+
     // Update application state
     updateActiveSelection(section, subsection);
-    
+
     // Update visual feedback
     updateActiveStateHighlighting();
-    
+
     // Update content display
     switchContent(section, subsection);
-    
+
     // Ensure the parent section is expanded
     if (!isSectionExpanded(section)) {
         handleSectionToggle(section);
     }
-    
+
     console.log(`Navigated to: ${section}/${subsection}`);
 }
 
@@ -597,18 +552,18 @@ function updateActiveStateHighlighting() {
     document.querySelectorAll('.nav-section-header.active').forEach(header => {
         header.classList.remove('active');
     });
-    
+
     document.querySelectorAll('.nav-subsection-link.active').forEach(link => {
         link.classList.remove('active');
     });
-    
+
     // Apply active state to current selection
     if (appState.activeSection && appState.activeSubsection) {
         // Highlight the active subsection
         const activeSubsectionLink = document.querySelector(
             `[data-section="${appState.activeSection.toLowerCase()}"][data-subsection="${appState.activeSubsection}"]`
         );
-        
+
         if (activeSubsectionLink) {
             activeSubsectionLink.classList.add('active');
         }
@@ -623,19 +578,19 @@ function updateActiveStateHighlighting() {
 function handleMobileMenuToggle() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('mobile-overlay');
-    
+
     if (!sidebar || !overlay) {
         console.error('Mobile navigation elements not found');
         return;
     }
-    
+
     // Toggle sidebar visibility
     sidebar.classList.toggle('open');
     overlay.classList.toggle('active');
-    
+
     // Update application state
     toggleSidebar();
-    
+
     console.log('Mobile menu toggled');
 }
 
@@ -645,11 +600,11 @@ function handleMobileMenuToggle() {
 function closeMobileMenu() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('mobile-overlay');
-    
+
     if (sidebar && overlay) {
         sidebar.classList.remove('open');
         overlay.classList.remove('active');
-        
+
         // Update state to not collapsed
         if (appState.sidebarCollapsed) {
             toggleSidebar();
@@ -668,20 +623,20 @@ function setupEventListeners() {
     if (mobileMenuButton) {
         mobileMenuButton.addEventListener('click', handleMobileMenuToggle);
     }
-    
+
     // Mobile overlay (close menu when clicked)
     const mobileOverlay = document.getElementById('mobile-overlay');
     if (mobileOverlay) {
         mobileOverlay.addEventListener('click', closeMobileMenu);
     }
-    
+
     // Section headers (expand/collapse)
     document.querySelectorAll('.nav-section-header').forEach(header => {
         header.addEventListener('click', (e) => {
             const sectionTitle = header.querySelector('.nav-section-title').textContent;
             handleSectionToggle(sectionTitle);
         });
-        
+
         // Keyboard support
         header.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -691,17 +646,17 @@ function setupEventListeners() {
             }
         });
     });
-    
+
     // Subsection links
     document.querySelectorAll('.nav-subsection-link').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const section = link.getAttribute('data-section');
             const subsection = link.getAttribute('data-subsection');
-            
+
             if (section && subsection) {
                 handleSubsectionNavigation(section, subsection);
-                
+
                 // Close mobile menu if open
                 if (window.innerWidth <= 767) {
                     closeMobileMenu();
@@ -709,14 +664,14 @@ function setupEventListeners() {
             }
         });
     });
-    
+
     // Close mobile menu on window resize if screen becomes large
     window.addEventListener('resize', () => {
         if (window.innerWidth > 767) {
             closeMobileMenu();
         }
     });
-    
+
     console.log('Event listeners set up successfully');
 }
 
@@ -726,14 +681,14 @@ function setupEventListeners() {
 function initializeNavigationSystem() {
     // Set up event listeners
     setupEventListeners();
-    
+
     // Restore expanded sections
     appState.expandedSections.forEach(section => {
         const sectionName = section.toLowerCase().replace(/\s+/g, '-');
         const sectionElement = document.querySelector(`[aria-controls="${sectionName}-subsections"]`);
         const subsectionsElement = document.getElementById(`${sectionName}-subsections`);
         const expandIcon = sectionElement?.querySelector('.nav-expand-icon');
-        
+
         if (sectionElement && subsectionsElement && expandIcon) {
             subsectionsElement.classList.add('expanded');
             expandIcon.classList.add('expanded');
@@ -741,10 +696,10 @@ function initializeNavigationSystem() {
             sectionElement.setAttribute('aria-expanded', 'true');
         }
     });
-    
+
     // Update active state highlighting
     updateActiveStateHighlighting();
-    
+
     console.log('Navigation system initialized');
 }
 
@@ -754,7 +709,7 @@ function initializeNavigationSystem() {
 function initializeApp() {
     console.log('Interactive Knowledge Hub initialized');
     console.log('Navigation data loaded:', Object.keys(navigationData));
-    
+
     // Restore previous state if available
     const stateRestored = restoreState();
     if (stateRestored) {
@@ -765,7 +720,7 @@ function initializeApp() {
         // Show welcome content by default
         displayWelcomeContent();
     }
-    
+
     // Log current state for debugging
     console.log('Current application state:', appState);
 }

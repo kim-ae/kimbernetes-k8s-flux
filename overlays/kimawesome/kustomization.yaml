@@ -1,3 +1,4 @@
 resources:
   - infrastructure/kustomization.flux.yaml
   - applications/kustomization.flux.yaml
+  - site/kustomization.flux.yaml

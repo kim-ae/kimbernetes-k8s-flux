@@ -1,3 +1,4 @@
 namespace: site
 resources:
+  - namespace.yaml
   - articles
