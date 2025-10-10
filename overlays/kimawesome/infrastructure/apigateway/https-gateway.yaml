@@ -40,3 +40,25 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: yopass-kim-tec-br-tls
+    - name: https-knowledge-hub
+      protocol: HTTPS
+      port: 443       # Internally uses NodePort (e.g., 31000)
+      hostname: knowledge-hub.kim.tec.br
+      allowedRoutes:  # Add this block
+        namespaces:
+          from: All   # Allows any namespace
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: knowledge-hub-kim-tec-br-tls
+    - name: https-leituras
+      protocol: HTTPS
+      port: 443       # Internally uses NodePort (e.g., 31000)
+      hostname: leituras.kim.tec.br
+      allowedRoutes:  # Add this block
+        namespaces:
+          from: All   # Allows any namespace
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: leituras-kim-tec-br-tls

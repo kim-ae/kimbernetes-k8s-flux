@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kim7s Knowledge Hub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle navigation menu">
+                ☰
+            </button>
+            <h1>Kim7s Knowledge Hub</h1>
+        </header>
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="navigation" role="navigation" aria-label="Knowledge Hub Navigation">
+                <ul class="nav-tree">
+                    <li class="nav-section">
+                        <div class="nav-section-header" tabindex="0" role="button" aria-expanded="false"
+                            aria-controls="tools-subsections">
+                            <span class="nav-expand-icon">▶</span>
+                            <span class="nav-section-title">Tools</span>
+                        </div>
+                        <ul class="nav-subsections" id="tools-subsections">
+                            <li class="nav-subsection">
+                                <a href="#" class="nav-subsection-link" data-section="tools"
+                                    data-subsection="k8s">k8s</a>
+                            </li>
+                            <li class="nav-subsection">
+                                <a href="#" class="nav-subsection-link" data-section="tools"
+                                    data-subsection="grafana">grafana</a>
+                            </li>
+                            <li class="nav-subsection">
+                                <a href="#" class="nav-subsection-link" data-section="tools"
+                                    data-subsection="elk">elk</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-section">
+                        <div class="nav-section-header" tabindex="0" role="button" aria-expanded="false"
+                            aria-controls="languages-subsections">
+                            <span class="nav-expand-icon">▶</span>
+                            <span class="nav-section-title">Languages</span>
+                        </div>
+                        <ul class="nav-subsections" id="languages-subsections">
+                            <li class="nav-subsection">
+                                <a href="#" class="nav-subsection-link" data-section="languages"
+                                    data-subsection="js">JS</a>
+                            </li>
+                            <li class="nav-subsection">
+                                <a href="#" class="nav-subsection-link" data-section="languages"
+                                    data-subsection="java">java</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-section">
+                        <div class="nav-section-header" tabindex="0" role="button" aria-expanded="false"
+                            aria-controls="frameworks-subsections">
+                            <span class="nav-expand-icon">▶</span>
+                            <span class="nav-section-title">Frameworks</span>
+                        </div>
+                        <ul class="nav-subsections" id="frameworks-subsections">
+                            <!-- Subsections to be defined in later tasks -->
+                        </ul>
+                    </li>
+
+                    <li class="nav-section">
+                        <div class="nav-section-header" tabindex="0" role="button" aria-expanded="false"
+                            aria-controls="diy-subsections">
+                            <span class="nav-expand-icon">▶</span>
+                            <span class="nav-section-title">DIY</span>
+                        </div>
+                        <ul class="nav-subsections" id="diy-subsections">
+                            <!-- Subsections to be defined in later tasks -->
+                        </ul>
+                    </li>
+
+                    <li class="nav-section">
+                        <div class="nav-section-header" tabindex="0" role="button" aria-expanded="false"
+                            aria-controls="management-subsections">
+                            <span class="nav-expand-icon">▶</span>
+                            <span class="nav-section-title">Management</span>
+                        </div>
+                        <ul class="nav-subsections" id="management-subsections">
+                            <!-- Subsections to be defined in later tasks -->
+                        </ul>
+                    </li>
+
+                    <li class="nav-section">
+                        <div class="nav-section-header" tabindex="0" role="button" aria-expanded="false"
+                            aria-controls="craze-ideas-subsections">
+                            <span class="nav-expand-icon">▶</span>
+                            <span class="nav-section-title">Craze ideas</span>
+                        </div>
+                        <ul class="nav-subsections" id="craze-ideas-subsections">
+                            <!-- Subsections to be defined in later tasks -->
+                        </ul>
+                    </li>
+
+                    <li class="nav-section">
+                        <div class="nav-section-header" tabindex="0" role="button" aria-expanded="false"
+                            aria-controls="cool-readings-subsections">
+                            <span class="nav-expand-icon">▶</span>
+                            <span class="nav-section-title">Cool readings</span>
+                        </div>
+                        <ul class="nav-subsections" id="cool-readings-subsections">
+                            <!-- Subsections to be defined in later tasks -->
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="main-content">
+            <!-- Dynamic content will be loaded here -->
+            <div class="content-container" id="content-container">
+                <div class="welcome-content">
+                    <h2>Welcome to the Interactive Knowledge Hub</h2>
+                    <p>Your curated collection of essential technical articles and resources. Browse through organized sections to discover valuable content with previews and direct links to the original sources.</p>
+                    
+                    <div class="welcome-features">
+                        <div class="welcome-feature">
+                            <h4>🛠️ Tools</h4>
+                            <p>Curated articles on Kubernetes, Grafana, ELK Stack and more</p>
+                        </div>
+                        <div class="welcome-feature">
+                            <h4>💻 Languages</h4>
+                            <p>Essential resources for JavaScript, Java and other languages</p>
+                        </div>
+                        <div class="welcome-feature">
+                            <h4>🚀 Frameworks</h4>
+                            <p>Handpicked articles on popular frameworks and libraries</p>
+                        </div>
+                        <div class="welcome-feature">
+                            <h4>📚 More</h4>
+                            <p>DIY guides, management articles, and interesting reads</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

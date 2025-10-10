@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: knowledge-hub
+  labels:
+    app: knowledge-hub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: knowledge-hub
+  template:
+    metadata:
+      labels:
+        app: knowledge-hub
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.25-alpine
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: html-content
+          mountPath: /usr/share/nginx/html/index.html
+          subPath: index.html
+        - name: css-content
+          mountPath: /usr/share/nginx/html/styles.css
+          subPath: styles.css
+        - name: js-content
+          mountPath: /usr/share/nginx/html/script.js
+          subPath: script.js
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d/default.conf
+          subPath: nginx.conf
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: html-content
+        configMap:
+          name: knowledge-hub-html
+      - name: css-content
+        configMap:
+          name: knowledge-hub-css
+      - name: js-content
+        configMap:
+          name: knowledge-hub-js
+      - name: nginx-config
+        configMap:
+          name: knowledge-hub-nginx-config
