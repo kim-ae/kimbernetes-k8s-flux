@@ -42,7 +42,11 @@ const navigationData = {
         "java": {
             title: "Java",
             subsectionContent: "Curated Java programming resources and best practices.",
-            links: []
+            links: [{
+                link: "https://vladmihalcea.com/hibernate-lazytoone-annotation/",
+                title: "Hibernate LazyToOne annotation",
+                resume: "This article explains how to use the @LazyToOne annotation in Hibernate to control lazy loading behavior for @OneToOne and @ManyToOne associations. It covers the different LazyToOneOption values (PROXY, NO_PROXY, FALSE) and demonstrates how to avoid the N+1 query problem while maintaining optimal performance through proper lazy loading configuration."
+            }]
         }
     },
     "Frameworks": {
