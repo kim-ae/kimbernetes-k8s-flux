@@ -1,56 +1,55 @@
 // Navigation Data Model - defines all sections and subsections
+const templates = {
+    subsectionHeader: `
+        <h2>{{TITLE}}</h2>
+        <p>{{RESUME}}</p>
+    `,
+    link: `
+        <div class="article-link">
+            <h4><a href="{{LINK}}" target="_blank" rel="noopener noreferrer">{{LINK_TITLE}}</a></h4>
+            <p>{{RESUME}}</p>
+        </div>
+    `
+}
 const navigationData = {
     "Tools": {
         "k8s": {
             title: "Kubernetes",
-            content: `
-                <h2>Kubernetes Articles</h2>
-                <p>Curated collection of essential Kubernetes articles and resources.</p>
-                
-                <div class="article-link">
-                    <h4><a href="https://home.robusta.dev/blog/stop-using-cpu-limits" target="_blank" rel="noopener noreferrer">For the Love of God, Stop Using CPU Limits on Kubernetes (Updated)</a></h4>
-                    <p>This article discusses the common pitfalls and performance issues that arise from using CPU limits in Kubernetes. The author explains why CPU limits can cause unexpected throttling and degraded performance, even when your pods aren't actually using their full CPU allocation.</p>
-                </div>
-            `
+            subsectionContent: "Curated collection of essential Kubernetes articles and resources.",
+            links: [{
+                link: "https://home.robusta.dev/blog/stop-using-cpu-limits",
+                title: "For the Love of God, Stop Using CPU Limits on Kubernetes (Updated)",
+                resume: "This article discusses the common pitfalls and performance issues that arise from using CPU limits in Kubernetes. The author explains why CPU limits can cause unexpected throttling and degraded performance, even when your pods aren't actually using their full CPU allocation."
+            }]
         },
         "grafana": {
             title: "Grafana",
-            content: `
-                <h2>Grafana Articles</h2>
-                <p>Essential articles and guides for Grafana monitoring and visualization.</p>
-            `
+            subsectionContent: "Essential articles and guides for Grafana monitoring and visualization.",
+            links: []
         },
         "elk": {
             title: "ELK Stack",
-            content: `
-                <h2>ELK Stack Articles</h2>
-                <p>Curated resources for Elasticsearch, Logstash, and Kibana.</p>
-            `
+            subsectionContent: "Curated resources for Elasticsearch, Logstash, and Kibana.",
+            links: []
         }
     },
     "Languages": {
         "js": {
             title: "JavaScript",
-            content: `
-                <h2>JavaScript Articles</h2>
-                <p>Essential JavaScript articles and modern development practices.</p>
-            `
+            subsectionContent: "Essential JavaScript articles and modern development practices.",
+            links: []
         },
         "java": {
             title: "Java",
-            content: `
-                <h2>Java Articles</h2>
-                <p>Curated Java programming resources and best practices.</p>
-            `
+            subsectionContent: "Curated Java programming resources and best practices.",
+            links: []
         }
     },
     "Frameworks": {
         "springboot": {
             title: "Springboot",
-            content: `
-                <h2>Springboot Articles</h2>
-                <p>Curated springboot articles.</p>
-            `
+            subsectionContent: "Essential Spring Boot articles and guides for building production-ready applications.",
+            links: []
         }
     },
     "DIY": {
@@ -67,16 +66,13 @@ const navigationData = {
     },
     "Awesome content sources": {
         "tech": {
-            "title": "Tech",
-            content: `
-                <h2>Tech sources</h2>
-                <p>Awesome tech sources</p>
-
-                <div class="article-link">
-                    <h4><a href="https://my-uncompiled-thoughts.hashnode.dev" target="_blank" rel="noopener noreferrer">My uncompiled thoughts</a></h4>
-                    <p>This is an amazing blog from a fellow develper whom I have the pleasure of work for some year now. Worth the reading.</p>
-                </div>
-            `
+            title: "Tech",
+            subsectionContent: "Awesome tech sources",
+            links: [{
+                link: "https://my-uncompiled-thoughts.hashnode.dev",
+                title: "My uncompiled thoughts",
+                resume: "This is an amazing blog from a fellow develper whom I have the pleasure of work for some year now. Worth the reading."
+            }]
         }
     }
 };
@@ -268,6 +264,12 @@ function isValidSubsection(section, subsection) {
         navigationData[section].hasOwnProperty(subsection);
 }// Dynamic Content Display System
 
+function templateLink(link){
+    return templates.link.replace("{{LINK}}", link.link)
+        .replace("{{LINK_TITLE}}", link.title)
+        .replace("{{RESUME}}", link.resume);
+}
+
 /**
  * Updates the main content area based on navigation selection with enhanced animations
  * @param {string} section - The main section name
@@ -290,11 +292,14 @@ function updateContentDisplay(section, subsection) {
     setTimeout(() => {
         const content = getContent(section, subsection);
 
-        if (content && content.content) {
+        if (content && content.title) {
             // Display actual content with staggered animation
             contentContainer.innerHTML = `
                 <div class="content-section">
-                    ${content.content}
+                    ${templates.subsectionHeader
+                        .replace("{{TITLE}}", content.title)
+                        .replace("{{RESUME}}", content.subsectionContent)}
+                    ${content.links.map(templateLink).reduce((a,b) => a+b, "")}
                 </div>
             `;
         } else {
