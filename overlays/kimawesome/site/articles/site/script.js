@@ -47,6 +47,15 @@ const navigationData = {
                 title: "Hibernate LazyToOne annotation",
                 resume: "This article explains how to use the @LazyToOne annotation in Hibernate to control lazy loading behavior for @OneToOne and @ManyToOne associations. It covers the different LazyToOneOption values (PROXY, NO_PROXY, FALSE) and demonstrates how to avoid the N+1 query problem while maintaining optimal performance through proper lazy loading configuration."
             }]
+        },
+        "yaml": {
+            title: "Yaml",
+            subsectionContent: "",
+            links: [{
+                title: "The yaml document from hell",
+                link: "https://ruudvanasseldonk.com/2023/01/11/the-yaml-document-from-hell",
+                resume: "This article explores the dark corners of YAML specification through a deliberately malicious YAML document that exploits various parsing vulnerabilities and edge cases. The author demonstrates how YAML's complex features like anchors, aliases, merge keys, and type coercion can be abused to create documents that consume excessive memory, cause infinite loops, or behave unexpectedly across different parsers. It serves as both a cautionary tale about YAML's hidden complexity and a practical guide for developers to understand potential security risks when parsing untrusted YAML input."
+            }]
         }
     },
     "Frameworks": {
