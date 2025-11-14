@@ -20,6 +20,22 @@ const navigationData = {
                 link: "https://home.robusta.dev/blog/stop-using-cpu-limits",
                 title: "For the Love of God, Stop Using CPU Limits on Kubernetes (Updated)",
                 resume: "This article discusses the common pitfalls and performance issues that arise from using CPU limits in Kubernetes. The author explains why CPU limits can cause unexpected throttling and degraded performance, even when your pods aren't actually using their full CPU allocation."
+            },{
+                link: "https://kubernetes.io/blog/2025/08/28/kubernetes-v1-34-kubectl-kuberc-beta/",
+                title: "Kubernetes v1.34: Kubectl Kuberc Beta",
+                resume: "This article introduces the Kubectl Kuberc Beta, a new feature that allows you to manage your Kubernetes clusters more efficiently. It explains how to use the Kubectl Kuberc Beta to manage your Kubernetes clusters and the benefits of using it."
+            },{
+                link: "https://dev.to/sarony11/hpa-vs-keda-in-kubernetes-the-autoscaling-guide-to-know-when-and-where-to-use-them-m96",
+                title: "HPA vs. KEDA in Kubernetes - The Autoscaling Guide to Know When and Where to Use Them",
+                resume: "This comprehensive guide compares Horizontal Pod Autoscaler (HPA) and Kubernetes Event-Driven Autoscaler (KEDA) for different scaling scenarios. It explains when to use HPA for basic CPU/memory-based scaling versus KEDA for event-driven scaling based on external metrics like queue length, database connections, or custom metrics. The article provides practical examples and decision criteria to help you choose the right autoscaling solution for your Kubernetes workloads."
+            },{
+                link: "https://opensource.com/article/22/6/kubernetes-networking-fundamentals",
+                title: "A visual guide to Kubernetes networking fundamentals",
+                resume: "This comprehensive visual guide breaks down Kubernetes networking concepts into digestible components, covering pods, services, ingress, and network policies. It explains how containers communicate within pods, how pods connect across nodes, and how services provide stable endpoints for dynamic pod environments. The article includes clear diagrams and practical examples to help developers and operators understand the networking stack that enables scalable, resilient applications in Kubernetes clusters."
+            },{
+                link: "https://opensource.com/article/22/3/visual-map-kubernetes-deployment",
+                title: "A visual map of a Kubernetes deployment",
+                resume: "This article provides a comprehensive visual breakdown of Kubernetes deployment architecture, walking through the relationships between deployments, replica sets, pods, and services. It uses clear diagrams and step-by-step explanations to help developers understand how these components work together to create scalable, resilient applications. The guide covers the deployment lifecycle, rolling updates, and how Kubernetes maintains desired state through its control plane, making it an excellent resource for visualizing complex Kubernetes concepts."
             }]
         },
         "grafana": {
@@ -30,7 +46,11 @@ const navigationData = {
         "elk": {
             title: "ELK Stack",
             subsectionContent: "Curated resources for Elasticsearch, Logstash, and Kibana.",
-            links: []
+            links: [{
+                link: "https://www.datadoghq.com/blog/elasticsearch-unassigned-shards/",
+                title: "How to resolve unassigned shards in Elasticsearch",
+                resume: "This comprehensive guide explains how to diagnose and fix unassigned shards in Elasticsearch clusters. It covers common causes like insufficient disk space, replica configuration issues, and node failures, while providing step-by-step troubleshooting techniques using Elasticsearch APIs and cluster health commands to restore shard allocation and maintain cluster stability."
+            }]
         }
     },
     "Languages": {
