@@ -27,6 +27,9 @@ spec:
       enabled: false
     prometheus:
       prometheusSpec:
+        tolerations:
+        - effect: NoSchedule
+          operator: Exists
         externalLabels:
           cluster: ${CLUSTER}
         enableRemoteWriteReceiver: false
