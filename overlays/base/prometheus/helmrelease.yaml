@@ -27,6 +27,11 @@ spec:
       enabled: false
     prometheus:
       prometheusSpec:
+        externalUrl: "https://keepupprom.kim.tec.br"
+        additionalArgs:
+          - --web.config.file=/etc/prometheus/configmaps/web.yml
+        configMaps:
+          - prometheus-web-config
         tolerations:
         - effect: NoSchedule
           operator: Exists
