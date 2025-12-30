@@ -25,7 +25,7 @@ spec:
       enabled: true
       labelsToKeep: ["level","namespace","node","source"]
     clusterMetrics:
-      enabled: true
+      enabled: false
       kube-state-metrics:
         enabled: false
       cadvisor:
@@ -92,7 +92,7 @@ spec:
           name = "access-policy"
         }
     alloy-singleton:
-      enabled: true
+      enabled: false
       enableReporting: false
       alloy:
         extraEnv:
@@ -128,7 +128,7 @@ spec:
         secret:
           embed: true
     alloy-metrics:
-      enabled: true
+      enabled: false
       enableReporting: false
       alloy:
         extraEnv:
@@ -164,7 +164,7 @@ spec:
         secret:
           embed: true
     alloy-receiver:
-      enabled: true
+      enabled: false
       enableReporting: false
       alloy:
         extraPorts:
@@ -296,7 +296,7 @@ spec:
     selfReporting:
       enabled: true             
     applicationObservability:
-      enabled: true
+      enabled: false
       receivers:
         otlp:
           grpc:
