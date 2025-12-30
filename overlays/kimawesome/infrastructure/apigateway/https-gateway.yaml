@@ -62,3 +62,14 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: leituras-kim-tec-br-tls
+    - name: https-prom
+      protocol: HTTPS
+      port: 443       # Internally uses NodePort (e.g., 31000)
+      hostname: keepupprom.kim.tec.br
+      allowedRoutes:  # Add this block
+        namespaces:
+          from: All   # Allows any namespace
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: keepupprom-kim-tec-br-tls
