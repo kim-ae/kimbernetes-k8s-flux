@@ -29,7 +29,8 @@ spec:
       prometheusSpec:
         externalUrl: "https://keepupprom.kim.tec.br"
         additionalArgs:
-          - --web.config.file=/etc/prometheus/configmaps/web.yml
+          - name: web.config.file
+            value: /etc/prometheus/configmaps/web.yml
         configMaps:
           - prometheus-web-config
         tolerations:
