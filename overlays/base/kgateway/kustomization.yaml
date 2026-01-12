@@ -1,5 +1,4 @@
 resources:
-  - crd-helm-repository.yaml
   - crd-helm-release.yaml
   - helm-repository.yaml
   - helm-release.yaml

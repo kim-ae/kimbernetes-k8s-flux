@@ -1,3 +1,4 @@
 namespace: gatewayapi
 resources:
+  - namespace.yaml
   - ../../../base/kgateway/

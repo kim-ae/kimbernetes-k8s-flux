@@ -7,11 +7,11 @@ spec:
   chart:
     spec:
       chart: kgateway-crds
-      version: 
       sourceRef:
         kind: HelmRepository
-        name: kgateway-crds
+        name: kgateway
       interval: 5m
+      version:  "v2.1.2"
   install:
     crds: CreateReplace
   upgrade:

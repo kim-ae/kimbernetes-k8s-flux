@@ -7,10 +7,10 @@ spec:
   chart:
     spec:
       chart: kgateway
-      version: 
       sourceRef:
         kind: HelmRepository
         name: kgateway
       interval: 5m
+      version:  "v2.1.2"
   dependsOn:
     - name: kgateway-crds
