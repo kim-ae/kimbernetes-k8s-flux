@@ -94,3 +94,5 @@ export GITHUB_TOKEN="<>" && flux bootstrap github \
 11. Configured DNS kim.tec.br
 	1. Added new certificate in the cluster for version-management.kim.tec.br
 		1. To add * I need a DNS server that can use DNS01 Challange (maybe cloudflare that is free for now)
+    
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/standard-install.yaml
