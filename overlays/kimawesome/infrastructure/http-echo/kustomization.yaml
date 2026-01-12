@@ -1,0 +1,4 @@
+namespace: default
+resources:
+- ../../../base/tools/http-echo
+- httproute.yaml

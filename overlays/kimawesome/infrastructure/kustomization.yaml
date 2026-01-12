@@ -7,3 +7,4 @@ resources:
   - observability
   - storage-class.yaml
   - gatewayapi/kustomization.flux.yaml
+  - http-echo
