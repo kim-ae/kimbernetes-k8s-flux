@@ -1,4 +1,5 @@
 resources:
+  - loadbalancer/kustomization.flux.yaml
   - infrastructure/kustomization.flux.yaml
   - applications/kustomization.flux.yaml
   - site/kustomization.flux.yaml
