@@ -2,10 +2,8 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: http-gateway
-  annotations:
-    io.cilium.gateway/service-type: "NodePort"
 spec:
-  gatewayClassName: cilium
+  gatewayClassName: kgateway
   listeners:
     - name: http
       protocol: HTTP
