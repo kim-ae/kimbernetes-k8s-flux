@@ -96,3 +96,5 @@ export GITHUB_TOKEN="<>" && flux bootstrap github \
 		1. To add * I need a DNS server that can use DNS01 Challange (maybe cloudflare that is free for now)
     
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/standard-install.yaml
+
+Instlled kgateway and removed cilium gatewayapi
