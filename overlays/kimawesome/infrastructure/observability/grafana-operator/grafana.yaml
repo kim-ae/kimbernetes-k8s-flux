@@ -30,14 +30,6 @@ spec:
             - name: grafana-data
               persistentVolumeClaim:
                 claimName: grafana-pvc
-  httpRoute:
-    spec:
-      parentRefs:
-        - name: https-gateway
-          namespace: kube-system
-          sectionName: https-grafana
-      hostnames:
-        - grafana.kim.tec.br
 ---
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource

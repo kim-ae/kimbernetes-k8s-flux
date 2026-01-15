@@ -3,3 +3,4 @@ resources:
  - credentials.sealed.yaml
  - grafana-persistence.yaml
  - grafana.yaml
+ - httproute.yaml
