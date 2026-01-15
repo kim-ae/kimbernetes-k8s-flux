@@ -22,7 +22,7 @@ spec:
     # For kube state metrics: Structured logs must be addresed by k8s team.
     # https://github.com/kubernetes/kube-state-metrics/issues/1485
     nodeExporter:
-      enabled: false
+      enabled: true
     grafana:
       enabled: false
     prometheus:
