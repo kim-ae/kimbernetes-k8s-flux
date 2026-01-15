@@ -13,3 +13,19 @@ spec:
   - port: "http-monitoring"
     interval: 30s
     path: /metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: kgateway-app-monitor
+  namespace: observability
+spec:
+  selector:
+    matchLabels:
+      kgateway: kgateway
+  namespaceSelector:
+    any: true
+  podMetricsEndpoints:
+  - port: "metrics"
+    interval: 30s
+    path: /metrics
