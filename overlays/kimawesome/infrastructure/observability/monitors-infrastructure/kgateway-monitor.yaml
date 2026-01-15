@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: kgateway-monitor
+  namespace: observability
+spec:
+  selector:
+    matchLabels:
+      kgateway: kube-gateway
+  namespaceSelector:
+    any: true
+  podMetricsEndpoints:
+  - port: "http-monitoring"
+    interval: 30s
+    path: /metrics

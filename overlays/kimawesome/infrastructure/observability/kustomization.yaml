@@ -5,3 +5,4 @@ resources:
 - prometheus
 - ../../../base/grafana/helm-repository.yaml
 - grafana-operator
+- monitors-infrastructure/kustomization.flux.yaml
