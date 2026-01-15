@@ -1,5 +1,5 @@
 resources:
- - ../../../../base/grafana/helm-repository.yaml
  - ../../../../base/grafana/grafana-operator
  - credentials.sealed.yaml
- - grafana.yaml
+ - grafana-persistence.yaml
+# - grafana.yaml

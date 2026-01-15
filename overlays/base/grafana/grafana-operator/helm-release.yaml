@@ -12,7 +12,7 @@ spec:
         name: grafana
       version: 5.21.4
   interval: 24h
-  releaseName: grafana-monitoring
+  releaseName: grafana-operator
   install:
     crds: Create
   upgrade:

@@ -3,4 +3,5 @@ resources:
 - namespace.yaml
 - grafana-alloy
 - prometheus
+- ../../../base/grafana/helm-repository.yaml
 - grafana-operator
