@@ -1,3 +1,4 @@
 namespace: observability
 resources:
   - kgateway-monitor.yaml
+  - metallb-monitor.yaml

@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: metallb-monitor
+  namespace: observability
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: metallb
+  namespaceSelector:
+    any: true
+  podMetricsEndpoints:
+  - port: "monitoring"
+    interval: 30s
+    path: /metrics
