@@ -30,6 +30,8 @@ spec:
               type: RuntimeDefault
             privileged: false
             readOnlyRootFilesystem: true
+            runAsUser: 9000
+            runAsGroup: 9000
             runAsNonRoot: true
             capabilities:
               drop:
