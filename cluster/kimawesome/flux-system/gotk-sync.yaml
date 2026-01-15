@@ -11,7 +11,7 @@ spec:
     branch: main
   secretRef:
     name: flux-system
-  url: ssh://git@github.com/kim-ae/kimawesome-k8s-flux
+  url: ssh://git@github.com/kim-ae/kimbernetes-k8s-flux
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
