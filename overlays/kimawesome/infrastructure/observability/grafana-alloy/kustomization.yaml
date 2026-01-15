@@ -1,5 +1,6 @@
 resources:
-  - ../../../../base/grafana-alloy
+  - ../../../../base/grafana/helm-repository.yaml
+  - ../../../../base/grafana/grafana-alloy
   - access-policy.sealed.yaml
 
 patches:

@@ -1,8 +1,0 @@
-# TODO: We should not have more than 1 resource for each helm repository.
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: grafana-alloy
-spec:
-  interval: 24h
-  url: https://grafana.github.io/helm-charts

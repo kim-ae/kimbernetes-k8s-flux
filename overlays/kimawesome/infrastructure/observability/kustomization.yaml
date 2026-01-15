@@ -1,5 +1,6 @@
 namespace: observability
 resources:
 - namespace.yaml
-#- grafana-alloy
+- grafana-alloy
 - prometheus
+- grafana-operator

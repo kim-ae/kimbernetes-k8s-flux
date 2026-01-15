@@ -9,7 +9,7 @@ spec:
       chart: k8s-monitoring
       sourceRef:
         kind: HelmRepository
-        name: grafana-alloy
+        name: grafana
       version: 3.2.2
   interval: 24h
   releaseName: grafana-monitoring
