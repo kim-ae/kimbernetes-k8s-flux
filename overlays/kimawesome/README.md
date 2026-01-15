@@ -98,3 +98,5 @@ export GITHUB_TOKEN="<>" && flux bootstrap github \
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/standard-install.yaml
 
 Instlled kgateway and removed cilium gatewayapi
+
+https://metallb.io/configuration/

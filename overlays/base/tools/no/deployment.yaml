@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: no-as-a-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: no-as-a-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: no-as-a-service
+    spec:
+      containers:
+        - name: no-as-a-service
+          image: no-as-a-service-placeholder
+          ports:
+            - name: http
+              containerPort: 3000
+          resources:
+            limits:
+              memory: 50Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - ALL

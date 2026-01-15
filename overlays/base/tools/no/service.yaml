@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: no-as-a-service
+spec:
+  selector:
+    app.kubernetes.io/name: no-as-a-service
+  type: ClusterIP
+  ports:
+    - name: http
+      targetPort: http
+      port: 3000
