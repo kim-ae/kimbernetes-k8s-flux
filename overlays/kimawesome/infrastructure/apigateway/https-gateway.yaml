@@ -84,3 +84,25 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: no-as-a-service-kim-tec-br-tls
+    - name: https-grafana
+      protocol: HTTPS
+      port: 443       # Internally uses NodePort (e.g., 31000)
+      hostname: grafana.kim.tec.br
+      allowedRoutes:  # Add this block
+        namespaces:
+          from: All   # Allows any namespace
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: grafana-kim-tec-br-tls
+    - name: https-root
+      protocol: HTTPS
+      port: 443       # Internally uses NodePort (e.g., 31000)
+      hostname: kim.tec.br
+      allowedRoutes:  # Add this block
+        namespaces:
+          from: All   # Allows any namespace
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: kim-tec-br-tls
