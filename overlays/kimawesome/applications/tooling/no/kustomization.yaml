@@ -1,3 +1,8 @@
 resources:
   - ../../../../base/tools/no
   - httproute.yaml
+
+images:
+  - name: no-as-a-service-placeholder
+    newName: docker.io/kimae09/no-as-a-service
+    newTag: "20260115"
