@@ -2,4 +2,4 @@ resources:
  - ../../../../base/grafana/grafana-operator
  - credentials.sealed.yaml
  - grafana-persistence.yaml
-# - grafana.yaml
+ - grafana.yaml
