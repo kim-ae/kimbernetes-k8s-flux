@@ -1,0 +1,3 @@
+resources:
+- loki-pv.yaml
+- ../../../../base/grafana/grafana-loki/
