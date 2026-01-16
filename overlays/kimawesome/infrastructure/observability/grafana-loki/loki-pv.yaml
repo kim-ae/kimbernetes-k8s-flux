@@ -8,8 +8,8 @@ spec:
   volumeMode: Filesystem
   accessModes:
   - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Delete
-  storageClassName: local-storage
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage-immediate
   local:
     path: /mnt/loki
   nodeAffinity:
@@ -31,8 +31,8 @@ spec:
   volumeMode: Filesystem
   accessModes:
   - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Delete
-  storageClassName: local-storage
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage-immediate
   local:
     path: /mnt/minio1
   nodeAffinity:
@@ -54,8 +54,8 @@ spec:
   volumeMode: Filesystem
   accessModes:
   - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Delete
-  storageClassName: local-storage
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage-immediate
   local:
     path: /mnt/minio2
   nodeAffinity:

@@ -14,6 +14,7 @@ spec:
   interval: 24h
   releaseName: loki-monolith
   values:
+    backend.persistence.storageClass: local-storage
     loki:
       commonConfig:
         replication_factor: 1
