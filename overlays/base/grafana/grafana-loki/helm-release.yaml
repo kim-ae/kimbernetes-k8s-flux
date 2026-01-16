@@ -14,7 +14,6 @@ spec:
   interval: 24h
   releaseName: loki-monolith
   values:
-    backend.persistence.storageClass: local-storage
     loki:
       commonConfig:
         replication_factor: 1
@@ -45,6 +44,10 @@ spec:
 
     singleBinary:
       replicas: 1
+      persistence:
+        storageClass: local-storage
+      extraArgs:
+        - -store.retention=31d
 
     # Zero out replica counts of other deployment modes
     backend:
@@ -65,9 +68,6 @@ spec:
     distributor:
       replicas: 0
     compactor:
-      enabled: true
-      extraArgs:
-        - -store.retention=31d
       replicas: 0
     indexGateway:
       replicas: 0

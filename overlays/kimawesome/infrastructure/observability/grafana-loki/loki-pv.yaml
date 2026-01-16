@@ -8,8 +8,8 @@ spec:
   volumeMode: Filesystem
   accessModes:
   - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage-immediate
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
   local:
     path: /mnt/loki
   nodeAffinity:
@@ -19,7 +19,7 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - node01-82md
+          - node01-82nm
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -31,8 +31,8 @@ spec:
   volumeMode: Filesystem
   accessModes:
   - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage-immediate
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
   local:
     path: /mnt/minio1
   nodeAffinity:
@@ -42,7 +42,7 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - node01-82md
+          - node01-82nm
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -54,8 +54,8 @@ spec:
   volumeMode: Filesystem
   accessModes:
   - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage-immediate
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
   local:
     path: /mnt/minio2
   nodeAffinity:
@@ -65,4 +65,4 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - node01-82md
+          - node01-82nm
