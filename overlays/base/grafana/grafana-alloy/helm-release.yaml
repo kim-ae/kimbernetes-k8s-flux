@@ -42,25 +42,11 @@ spec:
         enabled: false
       opencost:
         enabled: false
-        metricsSource: prometheus-grafana-cloud
-        opencost:
-          exporter:
-            defaultClusterId: kim7s
-          prometheus:
-            existingSecretName: access-policy
-            username_key: username-prom
-            external:
-              url: https://prometheus-prod-40-prod-sa-east-1.grafana.net./api/prom
     alloy-logs:
       enabled: true
       enableReporting: false
       alloy:
         extraEnv:
-          - name: GCLOUD_RW_API_KEY
-            valueFrom:
-              secretKeyRef:
-                name: access-policy
-                key: password
           - name: CLUSTER_NAME
             value: ""
           - name: NAMESPACE
@@ -75,32 +61,11 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: spec.nodeName
-          - name: GCLOUD_FM_COLLECTOR_ID
-            value: grafana-k8s-monitoring-$(CLUSTER_NAME)-$(NAMESPACE)-$(POD_NAME)-$(NODE_NAME)
-      remoteConfig:
-        enabled: true
-        url: https://fleet-management-prod-015.grafana.net
-        auth:
-          type: basic
-          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username-fleet"])
-          passwordFrom: remote.kubernetes.secret.password.data["password"]
-        secret:
-          embed: true
-      extraConfig: |
-        remote.kubernetes.secret "password" {
-          namespace = "observability"
-          name = "access-policy"
-        }
     alloy-singleton:
       enabled: true
       enableReporting: false
       alloy:
         extraEnv:
-          - name: GCLOUD_RW_API_KEY
-            valueFrom:
-              secretKeyRef:
-                name: access-policy
-                key: password
           - name: CLUSTER_NAME
             value: ""
           - name: NAMESPACE
@@ -111,103 +76,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
-          - name: GCLOUD_FM_COLLECTOR_ID
-            value: grafana-k8s-monitoring-$(CLUSTER_NAME)-$(NAMESPACE)-$(POD_NAME)
-      extraConfig: |
-        remote.kubernetes.secret "password" {
-          namespace = "observability"
-          name = "access-policy"
-        }
-      remoteConfig:
-        enabled: true
-        url: https://fleet-management-prod-015.grafana.net
-        auth:
-          type: basic
-          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username-fleet"])
-          passwordFrom: remote.kubernetes.secret.password.data["password"]
-        secret:
-          embed: true
     alloy-metrics:
       enabled: false
-      enableReporting: false
-      alloy:
-        extraEnv:
-          - name: GCLOUD_RW_API_KEY
-            valueFrom:
-              secretKeyRef:
-                name: access-policy
-                key: password
-          - name: CLUSTER_NAME
-            value: ""
-          - name: NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
-          - name: POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          - name: GCLOUD_FM_COLLECTOR_ID
-            value: grafana-k8s-monitoring-$(CLUSTER_NAME)-$(NAMESPACE)-$(POD_NAME)
-      extraConfig: |
-        remote.kubernetes.secret "password" {
-          namespace = "observability"
-          name = "access-policy"
-        }
-      remoteConfig:
-        enabled: true
-        url: https://fleet-management-prod-015.grafana.net
-        auth:
-          type: basic
-          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username-fleet"])
-          passwordFrom: remote.kubernetes.secret.password.data["password"]
-        secret:
-          embed: true
     alloy-receiver:
       enabled: false
-      enableReporting: false
-      alloy:
-        extraPorts:
-          - name: otlp-grpc
-            port: 4317
-            targetPort: 4317
-            protocol: TCP
-          - name: otlp-http
-            port: 4318
-            targetPort: 4318
-            protocol: TCP
-        extraEnv:
-          - name: GCLOUD_RW_API_KEY
-            valueFrom:
-              secretKeyRef:
-                name: access-policy
-                key: password
-          - name: CLUSTER_NAME
-            value: ""
-          - name: NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
-          - name: POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          - name: GCLOUD_FM_COLLECTOR_ID
-            value: grafana-k8s-monitoring-$(CLUSTER_NAME)-$(NAMESPACE)-$(POD_NAME)
-      extraConfig: |
-        remote.kubernetes.secret "password" {
-          namespace = "observability"
-          name = "access-policy"
-        }
-      remoteConfig:
-        enabled: true
-        url: https://fleet-management-prod-015.grafana.net
-        auth:
-          type: basic
-          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username-fleet"])
-          passwordFrom: remote.kubernetes.secret.password.data["password"]
-        secret:
-          embed: true
     nodeLogs:
       enabled: true
       labelsToKeep: ["instance","level","name","unit","service_name","source"]
@@ -218,36 +90,7 @@ spec:
     destinations:
       - name: loki-grafana-cloud
         type: loki
-        url: https://logs-prod-024.grafana.net/loki/api/v1/push
-        auth:
-          type: basic
-          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username-loki"])
-          passwordFrom: remote.kubernetes.secret.password.data["password"]
-      - name: prometheus-grafana-cloud
-        type: prometheus
-        url: https://prometheus-prod-40-prod-sa-east-1.grafana.net/api/prom/push
-        auth:
-          type: basic
-          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username-prom"])
-          passwordFrom: remote.kubernetes.secret.password.data["password"]
-        secret:
-          embed: true
-      - name: otlp-grafana-cloud
-        type: otlp
-        url: https://otlp-gateway-prod-sa-east-1.grafana.net/otlp
-        protocol: http
-        metrics:
-          enabled: true
-        logs:
-          enabled: false
-        traces:
-          enabled: true
-        auth:
-          type: basic
-          usernameFrom: convert.nonsensitive(remote.kubernetes.secret.password.data["username-otlp"])
-          passwordFrom: remote.kubernetes.secret.password.data["password"]
-        secret:
-          embed: true
+        url: http://loki-monolith.observability.svc:3100/loki/api/v1/push
     podLogs:
       enabled: true
       staticLabels:
@@ -297,13 +140,5 @@ spec:
       enabled: true             
     applicationObservability:
       enabled: false
-      receivers:
-        otlp:
-          grpc:
-            enabled: true
-            port: 4317
-          http:
-            enabled: true
-            port: 4318
     global:
       scrapeInterval: 5m
