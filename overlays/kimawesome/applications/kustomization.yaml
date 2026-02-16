@@ -1,3 +1,4 @@
 resources:
   - version-management
   - tooling
+  - steering-k8s
