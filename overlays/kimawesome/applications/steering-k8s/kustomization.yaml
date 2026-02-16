@@ -1,0 +1,4 @@
+namespace: steering-k8s
+resources:
+  - namespace.yaml
+  

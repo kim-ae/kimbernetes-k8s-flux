@@ -95,3 +95,14 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: grafana-kim-tec-br-tls
+    - name: https-steering-k8s
+      protocol: HTTPS
+      port: 443       # Internally uses NodePort (e.g., 31000)
+      hostname: steering-k8s.kim.tec.br
+      allowedRoutes:  # Add this block
+        namespaces:
+          from: steering-k8s   # Allows any namespace
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: steering-k8s-kim-tec-br-tls
