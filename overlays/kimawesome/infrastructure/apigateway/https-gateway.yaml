@@ -101,7 +101,10 @@ spec:
       hostname: steering-k8s.kim.tec.br
       allowedRoutes:  # Add this block
         namespaces:
-          from: steering-k8s   # Allows any namespace
+          from: Selector
+          selector:
+            matchLabels:
+              app: steering-k8s
       tls:
         mode: Terminate
         certificateRefs:
