@@ -1,4 +1,5 @@
 namespace: kube-system
 resources:
-- https-gateway.yaml
-- http-gateway.yaml
+  - https-gateway.yaml
+  - http-gateway.yaml
+  - internal-gateway.yaml
