@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: knowledge-hub
+  labels:
+    app: knowledge-hub
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: knowledge-hub
+  template:
+    metadata:
+      labels:
+        app: knowledge-hub
+    spec:
+      containers:
+        - name: nextjs
+          image: kimae09/knowledge-hub:v1
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MD_SOURCE
+              value: "https://raw.githubusercontent.com/kim-ae/knowledge-hub/refs/heads/main/knowledge-hub.md"
+          resources:
+            limits:
+              memory: "512Mi"
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 5

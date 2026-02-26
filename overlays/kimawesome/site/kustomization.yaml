@@ -1,4 +1,4 @@
 namespace: site
 resources:
   - namespace.yaml
-  - articles
+  - knowledge-hub
