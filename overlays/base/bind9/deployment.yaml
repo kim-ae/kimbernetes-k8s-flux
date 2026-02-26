@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bind9
+  labels:
+    app: bind9
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bind9
+  template:
+    metadata:
+      labels:
+        app: bind9
+    spec:
+      containers:
+        - name: bind9
+          image: internetsystemsconsortium/bind9:9.18
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: dns
+              containerPort: 53
+              protocol: UDP
+            - name: dns-tcp
+              containerPort: 53
+              protocol: TCP
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          volumeMounts:
+            - name: bind-config
+              mountPath: /etc/bind/named.conf
+              subPath: named.conf
+            - name: bind-zones
+              mountPath: /etc/bind/zones
+            - name: bind-cache
+              mountPath: /var/cache/bind
+            - name: bind-records
+              mountPath: /var/lib/bind
+          livenessProbe:
+            exec:
+              command:
+                - nslookup
+                - localhost
+                - 127.0.0.1
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            exec:
+              command:
+                - nslookup
+                - localhost
+                - 127.0.0.1
+            initialDelaySeconds: 10
+            periodSeconds: 5
+      volumes:
+        - name: bind-config
+          configMap:
+            name: bind9-config
+        - name: bind-zones
+          configMap:
+            name: bind9-zones
+        - name: bind-cache
+          emptyDir: {}
+        - name: bind-records
+          emptyDir: {}
+      securityContext:
+        fsGroup: 101

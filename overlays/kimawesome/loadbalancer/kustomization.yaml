@@ -2,4 +2,5 @@ namespace: kube-system
 resources:
   - ../../base/metallb/
   - ippool.yaml
+  - dhcp-server-pool.yaml
   - l2advertisement.yaml

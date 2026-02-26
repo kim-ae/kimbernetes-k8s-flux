@@ -1,0 +1,15 @@
+namespace: dhcp-server
+resources:
+  - namespace.yaml
+  - ../../../base/bind9/
+
+configMapGenerator:
+  - name: bind9-zones
+    files:
+      - "internal-kim-tec-br.zone=config/internal-kim-tec-br.zone"
+  - name: bind9-config
+    literals:
+      - "named.conf=config/named.conf"
+
+patches:
+  - path: service.patch.yaml

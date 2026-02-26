@@ -1,0 +1,27 @@
+$TTL 2d
+
+$ORIGIN internal.kim.tec.br.
+
+@   IN  SOA ns.internal.kim.tec.br. kim.ae09.gmail.com (
+            2026020600
+            12h ; refresh
+            15m ; retry
+            3w ; expire
+            2h ; minimum ttl
+            )
+
+    IN  NS  ns.internal.kim.tec.br.
+
+ns  IN  A   192.168.0.2
+
+; -- add dns records
+
+k8s-controlplane    IN  A   192.168.0.101
+camera-quarto       IN  A   192.168.0.108
+camera-sala         IN  A   192.168.0.196
+impressora          IN  A   192.168.0.99
+router1             IN  A   192.168.0.1
+xps.notebook        IN  A   192.168.0.221
+luck-of-the-day     IN  A   192.168.10.2
+nas                 IN  A   192.168.0.104
+media               IN  A   192.168.0.110
