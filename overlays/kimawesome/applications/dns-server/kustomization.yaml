@@ -1,4 +1,4 @@
-namespace: dhcp-server
+namespace: dns-server
 resources:
   - namespace.yaml
   - ../../../base/bind9/

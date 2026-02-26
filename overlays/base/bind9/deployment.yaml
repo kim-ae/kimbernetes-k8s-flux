@@ -42,22 +42,6 @@ spec:
               mountPath: /var/cache/bind
             - name: bind-records
               mountPath: /var/lib/bind
-          livenessProbe:
-            exec:
-              command:
-                - nslookup
-                - localhost
-                - 127.0.0.1
-            initialDelaySeconds: 30
-            periodSeconds: 10
-          readinessProbe:
-            exec:
-              command:
-                - nslookup
-                - localhost
-                - 127.0.0.1
-            initialDelaySeconds: 10
-            periodSeconds: 5
       volumes:
         - name: bind-config
           configMap:
