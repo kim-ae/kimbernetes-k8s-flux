@@ -4,11 +4,9 @@ resources:
   - ../../../base/bind9/
 
 configMapGenerator:
-  - name: bind9-zones
+  - name: bind9-config
     files:
       - "internal-kim-tec-br.zone=config/internal-kim-tec-br.zone"
-  - name: bind9-config
-    literals:
       - "named.conf=config/named.conf"
 
 patches:

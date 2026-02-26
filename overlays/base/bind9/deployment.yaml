@@ -41,10 +41,7 @@ spec:
               cpu: "500m"
           volumeMounts:
             - name: bind-config
-              mountPath: /etc/bind/named.conf
-              subPath: named.conf
-            - name: bind-zones
-              mountPath: /etc/bind/zones
+              mountPath: /etc/bind/
             - name: bind-cache
               mountPath: /var/cache/bind
             - name: bind-records
@@ -53,9 +50,6 @@ spec:
         - name: bind-config
           configMap:
             name: bind9-config
-        - name: bind-zones
-          configMap:
-            name: bind9-zones
         - name: bind-cache
           emptyDir: {}
         - name: bind-records
