@@ -16,11 +16,9 @@ spec:
     spec:
       containers:
         - name: bind9
-          image: internetsystemsconsortium/bind9:9.18
+          image: ubuntu/bind9:9.18-22.04_edge
           imagePullPolicy: IfNotPresent
           env:
-            - name: DOCKER_LOGS
-              value: "1"
             - name: BIND9_USER
               value: "root"
             - name: "TZ"
