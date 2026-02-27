@@ -28,7 +28,7 @@ spec:
               prefix: loki_index_
               period: 24h
       pattern_ingester:
-          enabled: true
+        enabled: true
       limits_config:
         allow_structured_metadata: true
         volume_enabled: true
@@ -40,7 +40,7 @@ spec:
       persistence:
         size: 30Gi
         storageClass: local-storage
-          
+
     deploymentMode: SingleBinary
 
     singleBinary:
@@ -76,3 +76,15 @@ spec:
       replicas: 0
     bloomGateway:
       replicas: 0
+    chunksCache:
+      resources:
+        limits:
+          memory: "1Gi"
+        requests:
+          memory: "512Mi"
+    resultsCache:
+      resources:
+        limits:
+          memory: "256Mi"
+        requests:
+          memory: "128Mi"
