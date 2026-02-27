@@ -25,3 +25,4 @@ xps.notebook        IN  A   192.168.0.221
 luck-of-the-day     IN  A   192.168.10.2
 nas                 IN  A   192.168.0.104
 media               IN  A   192.168.0.110
+n8n                 IN  A   192.168.10.2

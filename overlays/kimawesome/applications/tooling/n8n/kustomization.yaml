@@ -1,0 +1,6 @@
+resources:
+  - ../../../../base/n8n
+  - httproute.yaml
+
+patches:
+  - path: helm-release.patch.yaml

@@ -3,3 +3,4 @@ resources:
   - namespace.yaml
   - yopass
   - no/
+  - n8n
