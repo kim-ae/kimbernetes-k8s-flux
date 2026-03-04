@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bind9-tailscale
+  namespace: dns-server
+  annotations:
+    # Anotação que ativa a integração com Tailscale
+    tailscale.com/expose: "true"
+spec:
+  type: LoadBalancer
+  loadBalancerClass: tailscale  # Usa o Tailscale como load balancer [citation:1]
+  ports:
+    - port: 53
+      targetPort: 53
+      protocol: UDP
+      name: dns
+    - port: 53
+      targetPort: 53
+      protocol: TCP
+      name: dns-tcp
+  selector:
+    app: bind9  # Mesmo selector do seu deployment atual
