@@ -8,3 +8,4 @@ resources:
   - storage-class.yaml
   - gatewayapi/kustomization.flux.yaml
   - http-echo
+  - vpn/kustomization.flux.yaml

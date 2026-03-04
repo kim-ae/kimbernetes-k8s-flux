@@ -1,0 +1,16 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: router
+  namespace: vpn
+spec:
+  interval: 10m
+  path: "./overlays/kimawesome/infrastructure/vpn/router"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  dependsOn:
+    - name: tailscale-operator
+      namespace: flux-system

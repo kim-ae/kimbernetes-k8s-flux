@@ -1,0 +1,7 @@
+namespace: vpn
+resources:
+  - namespace.yaml
+  - ../../../base/tailscale/
+  - operator-oauth.sealed.yaml
+  - router/kustomization.flux.yaml
+
