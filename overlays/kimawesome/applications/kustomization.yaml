@@ -3,3 +3,11 @@ resources:
   - tooling
   - steering-k8s
   - dns-server
+
+configMapGenerator:
+  - name: coredns-custom
+    namespace: kube-system
+    options:
+      disableNameSuffixHash: true
+    files:
+      - "kimtec.server=dns-server/config/kimtec.server"
