@@ -12,7 +12,7 @@ $ORIGIN internal.kim.tec.br.
 
     IN  NS  ns.internal.kim.tec.br.
 
-ns  IN  A   192.168.0.2
+ns  IN  A   192.168.10.3
 
 ; -- add dns records
 
