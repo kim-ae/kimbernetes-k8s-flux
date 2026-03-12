@@ -108,4 +108,18 @@ spec:
       tls:
         mode: Terminate
         certificateRefs:
-          - name: steering-k8s-kim-tec-br-tls
+          - name: steering-k8s-kim-tec-br-
+    - name: https-faulty-thingy
+      protocol: HTTPS
+      port: 443       # Internally uses NodePort (e.g., 31000)
+      hostname: faulty-thingy.kim.tec.br
+      allowedRoutes:  # Add this block
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              app: faulty-thingy
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: faulty-thingy-kim-tec-br-tls
