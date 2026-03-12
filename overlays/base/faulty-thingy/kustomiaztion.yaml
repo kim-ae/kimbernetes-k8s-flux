@@ -1,0 +1,9 @@
+resources:
+- service.yaml
+- deployment.yaml
+
+configmapGenerator:
+- name: faulty-thingy-scripts
+  files:
+    - server.sh=app-config/server.sh
+    - server.py=app-config/server.py
