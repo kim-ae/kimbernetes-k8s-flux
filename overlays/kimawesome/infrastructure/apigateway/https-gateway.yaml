@@ -108,7 +108,7 @@ spec:
       tls:
         mode: Terminate
         certificateRefs:
-          - name: steering-k8s-kim-tec-br-
+          - name: steering-k8s-kim-tec-br-tls
     - name: https-faulty-thingy
       protocol: HTTPS
       port: 443       # Internally uses NodePort (e.g., 31000)
