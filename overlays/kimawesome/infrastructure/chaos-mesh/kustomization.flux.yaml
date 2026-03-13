@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: chaos-mesh
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: "./overlays/kimawesome/infrastructure/chaos-mesh"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system

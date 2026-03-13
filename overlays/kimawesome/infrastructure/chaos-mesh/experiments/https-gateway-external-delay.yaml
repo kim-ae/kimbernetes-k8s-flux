@@ -1,0 +1,19 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: https-gateway-external-delay
+spec:
+  action: delay
+  mode: all
+  selector:
+    namespaces:
+      - kube-system
+    labelSelectors:
+      app.kubernetes.io/instance: https-gateway
+      app.kubernetes.io/name: https-gateway
+      gateway.networking.k8s.io/gateway-name: https-gateway
+  device: eth0
+  delay:
+    latency: "65s"
+    correlation: "100"
+    jitter: "0ms"
