@@ -3,3 +3,4 @@ resources:
   - https-gateway.yaml
   - http-gateway.yaml
   - internal-gateway.yaml
+  - httppolicy-access-logs.yaml
