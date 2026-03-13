@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Plain HTTP 200 server — always returns 200 OK.
-TCP connect failures (30%) are handled entirely by the iptables DROP rule
-in server.sh. This code only runs for connections that get through.
+TCP handshake delay is handled entirely by the tc/netem configuration in
+server.sh. This code only runs after the connection is finally established.
 """
 import http.server, json
 
@@ -24,5 +24,5 @@ class OKHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, fmt, *args):
         pass
 
-print("HTTP server on :8080  (30% TCP connect timeout via iptables DROP)", flush=True)
+print("HTTP server on :8080 (TCP connect delayed by tc/netem)", flush=True)
 http.server.ThreadingHTTPServer(("0.0.0.0", 8080), OKHandler).serve_forever()
