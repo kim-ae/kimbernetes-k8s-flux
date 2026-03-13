@@ -1,3 +1,5 @@
 resources:
 - ../../../../base/faulty-thingy
 - httproute.yaml
+- backendconfigpolicy.yaml
+- trafficpolicy.yaml

@@ -1,0 +1,10 @@
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: BackendConfigPolicy
+metadata:
+  name: faulty-thingy-backend
+spec:
+  targetRefs:
+    - group: ""
+      kind: Service
+      name: faulty-thingy
+  connectTimeout: 75s
