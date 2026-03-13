@@ -52,7 +52,7 @@ Steps:
 	1. Add worker nodes
 2. Install cilium
 ```
-cilium install --set kubeProxyReplacement=true --set k8sServiceHost=192.168.0.101 --set k8sServicePort=6443 --set nodePort.enabled=true --set gatewayAPI.enabled=true 
+cilium install --set kubeProxyReplacement=true --set k8sServiceHost=192.168.0.101 --set k8sServicePort=6443 --set nodePort.enabled=true --set gatewayAPI.enabled=true
 ```
 Cilium cli:
 ```
@@ -70,9 +70,9 @@ ref: https://docs.cilium.io/en/stable/installation/k8s-install-kubeadm/
 ```
 export GITHUB_TOKEN="<>" && flux bootstrap github \
           --owner= \
-          --repository= \          
-          --private=false \      
-          --personal=true \       
+          --repository= \
+          --private=false \
+          --personal=true \
           --path= \
           --token-auth=false \
           --read-write-key=true \
@@ -82,7 +82,7 @@ export GITHUB_TOKEN="<>" && flux bootstrap github \
 5. Install apigateway
    1. Add the helmchart to flux
 6. Modify cilium to use apigateway and update the GatewayClass to be configured with config file to enable NodePort
-   1. cilium upgrade --set nodePort.enabled=true --set gatewayAPI.enabled=true 
+   1. cilium upgrade --set nodePort.enabled=true --set gatewayAPI.enabled=true
 7. Install sealed secrets
 8. Install cert-manager
 9.  Install metrics-server
@@ -94,9 +94,27 @@ export GITHUB_TOKEN="<>" && flux bootstrap github \
 11. Configured DNS kim.tec.br
 	1. Added new certificate in the cluster for version-management.kim.tec.br
 		1. To add * I need a DNS server that can use DNS01 Challange (maybe cloudflare that is free for now)
-    
+
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/standard-install.yaml
 
 Instlled kgateway and removed cilium gatewayapi
 
 https://metallb.io/configuration/
+
+## In case have nay issue with "too many files open"
+
+Create this file to increase watchers and descriptiors that each user can create
+
+```bash
+sudo tee /etc/sysctl.d/99-increase-watchers-limit.conf >/dev/null <<'EOF'
+fs.inotify.max_user_instances = 1024
+fs.inotify.max_user_watches = 1048576
+fs.inotify.max_queued_events = 32768
+EOF
+```
+
+execute:
+
+```bash
+sudo sysctl --system
+```

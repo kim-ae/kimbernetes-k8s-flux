@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
 Plain HTTP 200 server — always returns 200 OK.
-TCP handshake delay is handled entirely by the tc/netem configuration in
-server.sh. This code only runs after the connection is finally established.
+TCP handshake delay and SYN-ACK drops are handled entirely by the network
+configuration in server.sh. This code only runs after the connection is
+finally established.
 """
 import http.server, json
 
@@ -24,5 +25,5 @@ class OKHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, fmt, *args):
         pass
 
-print("HTTP server on :8080 (TCP connect delayed by tc/netem)", flush=True)
+print("HTTP server on :8080 (handshake behavior configured by server.sh)", flush=True)
 http.server.ThreadingHTTPServer(("0.0.0.0", 8080), OKHandler).serve_forever()

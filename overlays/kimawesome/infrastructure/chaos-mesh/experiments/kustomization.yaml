@@ -1,3 +1,3 @@
 namespace: chaos-mesh
 resources:
-  - networkchaos.yaml
+  - https-gateway-external-delay.yaml

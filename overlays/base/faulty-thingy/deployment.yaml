@@ -14,22 +14,26 @@ spec:
       labels:
         app: faulty-thingy
       annotations:
-        linkerd.io/inject: disabled   # not injected — client proxy observes raw failures
+        linkerd.io/inject: disabled # not injected — client proxy observes raw failures
     spec:
       containers:
         - name: faulty-thingy
           image: python:3.12-alpine
           command: ["/bin/sh", "/scripts/server.sh"]
           env:
+            - name: CONNECT_DELAY_ENABLED
+              value: "false"
             - name: CONNECT_DELAY_SECONDS
               value: "65"
+            - name: SYN_ACK_DROP_PROBABILITY
+              value: "0"
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
           securityContext:
             capabilities:
-              add: ["NET_ADMIN"]   # required for iptables
+              add: ["NET_ADMIN"] # required for iptables
           resources:
             requests:
               cpu: 50m

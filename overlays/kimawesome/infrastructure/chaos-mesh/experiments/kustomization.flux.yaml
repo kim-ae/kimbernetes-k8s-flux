@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: "./overlays/kimawesome/infrastructure/chaos-mesh/https-gateway-delay"
+  path: "./overlays/kimawesome/infrastructure/chaos-mesh/experiments"
   prune: true
   suspend: true
   sourceRef:

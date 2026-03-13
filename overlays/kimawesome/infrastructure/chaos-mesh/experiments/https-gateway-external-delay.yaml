@@ -13,6 +13,16 @@ spec:
       app.kubernetes.io/name: https-gateway
       gateway.networking.k8s.io/gateway-name: https-gateway
   device: eth0
+  direction: to
+  externalTargets:
+    - 192.168.0.221
+    - 108.143.252.129
+    - 108.143.252.133
+    - 108.143.252.134
+    - 108.143.252.131
+    - 108.143.252.132
+    - 108.143.252.135
+    - 10.65.67.219
   delay:
     latency: "65s"
     correlation: "100"

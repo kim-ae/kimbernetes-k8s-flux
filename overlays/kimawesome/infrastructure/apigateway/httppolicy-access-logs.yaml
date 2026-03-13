@@ -12,6 +12,7 @@ spec:
       path: /dev/stdout
       jsonFormat:
           start_time: "%START_TIME%"
+          client_ip: "%DOWNSTREAM_REMOTE_ADDRESS%"
           method: "%REQ(X-ENVOY-ORIGINAL-METHOD?:METHOD)%"
           path: "%REQ(X-ENVOY-ORIGINAL-PATH?:PATH)%"
           protocol: "%PROTOCOL%"
