@@ -113,12 +113,9 @@ spec:
       protocol: HTTPS
       port: 443       # Internally uses NodePort (e.g., 31000)
       hostname: faulty-thingy.kim.tec.br
-      allowedRoutes:  # Add this block
+      allowedRoutes:
         namespaces:
-          from: Selector
-          selector:
-            matchLabels:
-              app: faulty-thingy
+          from: All
       tls:
         mode: Terminate
         certificateRefs:
