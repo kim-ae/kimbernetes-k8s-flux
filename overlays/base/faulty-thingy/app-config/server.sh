@@ -7,7 +7,7 @@ apk add --no-cache iptables python3 2>/dev/null
 # --mode random --probability 0.30 : stateless per-packet random drop
 echo "==> iptables: DROP 30% SYN packets on :8080"
 iptables -A INPUT -p tcp --dport 8080 --syn \
-    -m statistic --mode random --probability 0.30 \
+    -m statistic --mode random --probability 0.99 \
     -j DROP
 
 iptables -L INPUT -n -v | grep 8080 || true
