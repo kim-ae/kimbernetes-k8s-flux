@@ -22,10 +22,10 @@ spec:
               mountPath: /downloads
           resources:
             requests:
-              memory: "256Mi"
+              memory: "1Gi"
               cpu: "500m"
             limits:
-              memory: "512Mi"
+              memory: "2Gi"
       volumes:
         - name: downloads
           persistentVolumeClaim:
