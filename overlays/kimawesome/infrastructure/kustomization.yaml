@@ -2,7 +2,7 @@ resources:
   - sealed-secrets
   - apigateway
   - chaos-mesh/kustomization.flux.yaml
-  - chaos-mesh/experiments/kustomization.flux.yaml
+#  - chaos-mesh/experiments/kustomization.flux.yaml
   - cert-manager
   - base-certificate/kustomization.flux.yaml
   - metrics-server
