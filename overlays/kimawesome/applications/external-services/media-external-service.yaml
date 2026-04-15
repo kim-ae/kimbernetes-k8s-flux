@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: media-external-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 8096
+      protocol: TCP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: media-external-service
+subsets:
+  - addresses:
+      - ip: 192.168.0.110
+    ports:
+      - port: 8096
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: media-external-service
+spec:
+  parentRefs:
+    - name: internal-gateway
+      namespace: kube-system
+  hostnames:
+    - media-center.internal.kim.tec.br
+  rules:
+    - backendRefs:
+        - name: media-external-service
+          port: 80
