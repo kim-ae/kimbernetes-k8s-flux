@@ -4,5 +4,5 @@ resources:
   - yopass
   - no/
   - n8n
-  - faulty-thing
+#  - faulty-thing
   - metube

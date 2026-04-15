@@ -3,6 +3,7 @@ resources:
   - tooling
   - steering-k8s
   #- dns-server
+  - media
 
 # configMapGenerator:
 #   - name: coredns-custom

@@ -1,0 +1,11 @@
+resources:
+  - ../../../../base/calibre-web-automated
+  - httproute.yaml
+  - pvc-config.yaml
+  - pvc-library.yaml
+  - pvc-ingest.yaml
+
+images:
+  - name: calibre-web-automated-placeholder
+    newName: crocodilestick/calibre-web-automated
+    newTag: "v4.0.6"
