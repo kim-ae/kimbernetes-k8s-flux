@@ -1,6 +1,7 @@
+namespace: kube-system
 resources:
-- ../../../base/acme-dns/
-- pvc.yaml
+  - ../../../base/acme-dns/
+  - pvc.yaml
 
 configMapGenerator:
   - name: acme-dns-config
