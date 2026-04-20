@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: acme-dns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: acme-dns
+  template:
+    metadata:
+      labels:
+        app: acme-dns
+    spec:
+      containers:
+      - name: acme-dns
+        image: joohoi/acme-dns:latest
+        ports:
+        - containerPort: 53
+          protocol: UDP
+        - containerPort: 53
+          protocol: TCP
+        - containerPort: 80
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/acme-dns
+        - name: config
+          mountPath: /etc/acme-dns/config.cfg
+          subPath: config.cfg
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: acme-dns-pvc
+      - name: config
+        configMap:
+          name: acme-dns-config
