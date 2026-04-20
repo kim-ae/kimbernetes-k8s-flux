@@ -1,0 +1,15 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: acme-dns-account
+  namespace: cert-manager
+spec:
+  encryptedData:
+    acmedns.json: AgCsa29yvgWI+8QARFHNVCtFmcg+s3t6RZexLoJf/vbTAuQjy0gLIKeoyuVs1QVQxTzdkNire21rAT0pY5vqLwjB1SqfTW3PK+BE68Bt2pVOMr6n7mDPaAA3N3Hvh5EGnDG0wYNtOBmnG9vlYcwGQBoBkYQPzKMTDPcv7wLknTMb0Z0Gnnh3q9W4L0hYTKEZdunaDArk3HcAS/s6Yjdj41K/C00j4bKGjuuWsFigsAMQXHlEp4iTGO1Lxkz6q8WdZsvfJUHMRpHBM+U1kAulYNE/ZrbHDXify11ca0QaEYxPLKg/IuccmmxtEoMYw0E15cJLCN3iPVA0VHhrWlLkQJEShQhqLorCJ54q2JcndzrtT8oyJ/wItKdysyscfmPesUhwQm6LhwzVsBlOTlcW2SUEPIGXxX1EvcCCADvMyuFcnHJi+JacrTnLfVIl6f4xUp76ysVayNm8hLi7jJ/iJKCipqrFvapoyyKx+2vZvFVYs0+0cJMBUcMmLRqz39F9fJU2r8QeCY74NX9IapYHfeQbe2bGP/jvYVwuoYwuBhf7uhEfCDjPLMvJacJO3UzJ5F4mEFDH6u96H6yBiZy5E4UMUUmpec47wOrg9/4ge/9TICo5yReHuSLPej5cXMU64aXyFhQsxUsuVTcEB/r7TBHkPQbyS3O1FUctyaBVrwcu23nvQ2rDPcCbPIckfBTNcJokuUxMxoAfzpJbMtGk1aqRo3+XrdrGZBYWBpNOW/BrwcLB0SzJN+6pbed5n7ijPHDRsLB2kOMRbPrru7UOX0XV4COfpckE1ftWeJqLF+LFOvsANW08iC51TNSVFISum1goo53eOQh8zWgPIEovKtE9WJnrHNjV1B63rsnyLmSZTC/Vm0hmGXz1iZYNK2SOxr/i7euTFFeFAge8n4NAUxYtyQk1sP2rH/lFGZmuUdLFr5PCUC4GIeasGaS1gB0+NdzhyO4yglUqgEUULSZn1v0cgbi+VCHOLwI+ovm0MGkkprJW3VFqBKVKOOauJ9onXwpNEBVf9iiMHq4Ihn9QBmUyC41S7Tum68gU2c1XSR07XGFHtg==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: acme-dns-account
+      namespace: cert-manager
