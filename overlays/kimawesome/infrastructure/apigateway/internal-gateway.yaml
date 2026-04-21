@@ -9,14 +9,16 @@ spec:
       protocol: HTTP
       hostname: "*.internal.kim.tec.br"
       port: 80 # Internally uses NodePort (e.g., 31000)
-      allowedRoutes: # Add this block
+      allowedRoutes:
+        # Add this block
         namespaces:
           from: All # Allows any namespace
     - name: https
       protocol: HTTPS
-      hostname: "*.internal.kim.tec.br"
+      hostname: "*.kim.tec.br"
       port: 443 # Internally uses NodePort (e.g., 31000)
-      allowedRoutes: # Add this block
+      allowedRoutes:
+        # Add this block
         namespaces:
           from: All # Allows any namespace
       tls:
