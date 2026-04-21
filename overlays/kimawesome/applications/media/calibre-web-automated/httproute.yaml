@@ -6,6 +6,7 @@ spec:
   parentRefs:
     - name: internal-gateway
       namespace: kube-system
+      sectionName: https
   hostnames:
     - calibre.internal.kim.tec.br
   rules:
