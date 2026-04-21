@@ -1,4 +1,4 @@
 resources:
 - ../../../../base/metube
 - pv.yaml
-
+- httproute.yaml
