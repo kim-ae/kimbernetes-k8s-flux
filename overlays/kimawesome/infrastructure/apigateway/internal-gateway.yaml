@@ -15,7 +15,7 @@ spec:
           from: All # Allows any namespace
     - name: https
       protocol: HTTPS
-      hostname: "*.kim.tec.br"
+      hostname: "*.internal.kim.tec.br"
       port: 443 # Internally uses NodePort (e.g., 31000)
       allowedRoutes:
         # Add this block
@@ -24,4 +24,4 @@ spec:
       tls:
         mode: Terminate
         certificateRefs:
-          - name: wildcard-kim-tec-br-tls
+          - name: wildcard-internal-kim-tec-br-tls

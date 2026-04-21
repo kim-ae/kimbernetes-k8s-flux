@@ -4,3 +4,4 @@ resources:
   - http-gateway.yaml
   - internal-gateway.yaml
   - httppolicy-access-logs.yaml
+  - http-internal-redirect.yaml
