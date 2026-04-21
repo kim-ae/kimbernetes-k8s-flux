@@ -7,6 +7,17 @@ metadata:
 spec:
   gatewayClassName: kgateway
   listeners:
+    - name: https-root
+      protocol: HTTPS
+      port: 443       # Internally uses NodePort (e.g., 31000)
+      hostname: "kim.tec.br"
+      allowedRoutes:  # Add this block
+        namespaces:
+          from: All   # Allows any namespace
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: root-kim-tec-br-tls
     - name: https-wildcard
       protocol: HTTPS
       port: 443       # Internally uses NodePort (e.g., 31000)
