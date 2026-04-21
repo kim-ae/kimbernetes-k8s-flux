@@ -2,3 +2,4 @@ namespace: external-services
 resources:
   - namespace.yaml
   - media-external-service.yaml
+  - drive-external-service.yaml
