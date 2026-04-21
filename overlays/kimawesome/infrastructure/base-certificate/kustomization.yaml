@@ -1,4 +1,4 @@
 namespace: cert-manager
 resources:
   - cluster-issuer.yaml
-  - acme-dns-account.sealed.yaml
+  - claudflare-api-token-secret.sealed.yaml

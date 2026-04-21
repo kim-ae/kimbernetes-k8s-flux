@@ -19,9 +19,9 @@ spec:
       - selector:
           dnsNames:
             - "kim.tec.br"
+            - "*.kim.tec.br"
         dns01:
-          acmeDNS:
-            host: http://acme-dns.kube-system.svc.cluster.local
-            accountSecretRef:
-              name: acme-dns-account
-              key: acmedns.json
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-api-token-secret
+              key: api-token
