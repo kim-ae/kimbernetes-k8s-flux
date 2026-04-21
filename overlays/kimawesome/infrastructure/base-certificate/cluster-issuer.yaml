@@ -20,6 +20,7 @@ spec:
           dnsNames:
             - "kim.tec.br"
             - "*.kim.tec.br"
+            - "*.internal.kim.tec.br"
         dns01:
           cloudflare:
             apiTokenSecretRef:
