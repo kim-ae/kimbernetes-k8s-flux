@@ -4,9 +4,11 @@ metadata:
   name: proxmox-external-service
 spec:
   ports:
-    - port: 8006
+    - name: https
+      port: 8006
       targetPort: 8006
       protocol: TCP
+      appProtocol: https
 ---
 apiVersion: v1
 kind: Endpoints
@@ -17,6 +19,7 @@ subsets:
       - ip: 192.168.0.4
     ports:
       - port: 8006
+        name: https
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -33,3 +36,16 @@ spec:
     - backendRefs:
         - name: proxmox-external-service
           port: 8006
+---
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: BackendConfigPolicy
+metadata:
+  name: proxmox-tls-insecure
+  namespace: default
+spec:
+  targetRefs:
+    - group: ""
+      kind: Service
+      name: proxmox-external-service
+  tls:
+    insecureSkipVerify: true
