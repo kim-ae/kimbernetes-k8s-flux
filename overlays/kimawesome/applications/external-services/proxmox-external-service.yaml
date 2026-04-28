@@ -33,6 +33,12 @@ spec:
   hostnames:
     - proxmox.internal.kim.tec.br
   rules:
+    - matches:
+      - headers:
+        - name: "Upgrade"
+          value: "websocket"
+        - name: "Connection"
+          value: "Upgrade"
     - backendRefs:
         - name: proxmox-external-service
           port: 8006
