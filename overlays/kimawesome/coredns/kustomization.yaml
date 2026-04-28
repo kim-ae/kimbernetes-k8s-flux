@@ -1,0 +1,7 @@
+namespace: kube-system
+configMapGenerator:
+  - name: coredns-custom
+    options:
+      disableNameSuffixHash: true
+    files:
+      - internal-kim-tec-br.server=internal-kim-tec-br.server
