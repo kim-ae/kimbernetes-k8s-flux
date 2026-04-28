@@ -1,4 +1,13 @@
 resources:
-- ../../../../base/metube
-- pv.yaml
-- httproute.yaml
+  - ../../../../base/metube
+  - pv.yaml
+  - httproute.yaml
+  - pv-nfs.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: metube
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
+        value: metube-nfs-pvc
