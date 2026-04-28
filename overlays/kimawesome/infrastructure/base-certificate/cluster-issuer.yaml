@@ -21,6 +21,8 @@ spec:
             - "kim.tec.br"
             - "*.kim.tec.br"
             - "*.internal.kim.tec.br"
+            - "marianacabral.odo.br"
+            - "*.marianacabral.odo.br"
         dns01:
           cloudflare:
             apiTokenSecretRef:
