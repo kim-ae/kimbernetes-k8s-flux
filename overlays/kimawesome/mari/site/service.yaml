@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mari-site
+  labels:
+    app: mari-site
+spec:
+  type: ClusterIP
+  selector:
+    app: mari-site
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP

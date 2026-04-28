@@ -1,6 +1,0 @@
-# Example: Override forward for specific domain
-internal.kim.tec.br:53 {
-    errors
-    cache 30
-    forward . 192.168.53.53
-}

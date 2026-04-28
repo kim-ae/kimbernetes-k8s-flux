@@ -3,4 +3,4 @@ resources:
   - infrastructure/kustomization.flux.yaml
   - applications/kustomization.flux.yaml
   - site/kustomization.flux.yaml
-  - coredns
+  - mari/kustomization.flux.yaml

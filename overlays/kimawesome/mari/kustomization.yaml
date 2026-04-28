@@ -1,0 +1,4 @@
+namespace: mari
+resources:
+  - namespace.yaml
+  - site
