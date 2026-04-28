@@ -1,0 +1,12 @@
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: HTTPListenerPolicy
+metadata:
+  name: internal-gateway-policy
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: internal-gateway
+  upgradeConfig:
+    enabledUpgrades:
+      - websocket
