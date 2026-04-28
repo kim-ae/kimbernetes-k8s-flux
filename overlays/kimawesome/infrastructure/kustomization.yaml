@@ -2,7 +2,7 @@ resources:
   - sealed-secrets
   - apigateway
   - chaos-mesh/kustomization.flux.yaml
-#  - chaos-mesh/experiments/kustomization.flux.yaml
+  #  - chaos-mesh/experiments/kustomization.flux.yaml
   - cert-manager
   - base-certificate/kustomization.flux.yaml
   - metrics-server
@@ -11,3 +11,4 @@ resources:
   - gatewayapi/kustomization.flux.yaml
   - http-echo
   - vpn/kustomization.flux.yaml
+  - csi-driver-nfs
