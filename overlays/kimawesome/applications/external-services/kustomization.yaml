@@ -4,3 +4,4 @@ resources:
   - media-external-service.yaml
   - drive-external-service.yaml
   - proxmox-external-service.yaml
+  - truenas-external-service.yaml
