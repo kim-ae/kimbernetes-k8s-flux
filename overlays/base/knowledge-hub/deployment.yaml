@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nextjs
-          image: kimae09/knowledge-hub:v1
+          image: knowledge-hub-placeholder
           ports:
             - containerPort: 3000
           env:

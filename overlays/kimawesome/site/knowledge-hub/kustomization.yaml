@@ -1,3 +1,8 @@
 resources:
 - ../../../base/knowledge-hub
 - httproute.yaml
+
+images:
+- name: knowledge-hub-placeholder
+  newName: kimae09/knowledge-hub
+  newTag: v1.1
