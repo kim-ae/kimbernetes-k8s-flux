@@ -5,4 +5,4 @@ resources:
 images:
 - name: knowledge-hub-placeholder
   newName: kimae09/knowledge-hub
-  newTag: 1.0.0
+  newTag: 1.0.1
