@@ -40,17 +40,6 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: kim-iplinkdns-tls
-    - name: https-vm
-      protocol: HTTPS
-      port: 443       # Internally uses NodePort (e.g., 31000)
-      hostname: version-management.kim.tec.br
-      allowedRoutes:  # Add this block
-        namespaces:
-          from: All   # Allows any namespace
-      tls:
-        mode: Terminate
-        certificateRefs:
-          - name: version-management-kim-tec-br-tls
     - name: https-yopass
       protocol: HTTPS
       port: 443       # Internally uses NodePort (e.g., 31000)
@@ -117,31 +106,6 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: grafana-kim-tec-br-tls
-    - name: https-steering-k8s
-      protocol: HTTPS
-      port: 443       # Internally uses NodePort (e.g., 31000)
-      hostname: steering-k8s.kim.tec.br
-      allowedRoutes:  # Add this block
-        namespaces:
-          from: Selector
-          selector:
-            matchLabels:
-              app: steering-k8s
-      tls:
-        mode: Terminate
-        certificateRefs:
-          - name: steering-k8s-kim-tec-br-tls
-    - name: https-faulty-thingy
-      protocol: HTTPS
-      port: 443       # Internally uses NodePort (e.g., 31000)
-      hostname: faulty-thingy.kim.tec.br
-      allowedRoutes:
-        namespaces:
-          from: All
-      tls:
-        mode: Terminate
-        certificateRefs:
-          - name: faulty-thingy-kim-tec-br-tls
     - name: https-mari-wildcard
       protocol: HTTPS
       port: 443       # Internally uses NodePort (e.g., 31000)
