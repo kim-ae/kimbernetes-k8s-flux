@@ -1,0 +1,11 @@
+apiVersion: tailscale.com/v1alpha1
+kind: ProxyClass
+metadata:
+  name: subnet-router-proxyclass
+spec:
+  statefulSet:
+    pod:
+      tailscaleContainer:
+        env:
+          - name: TS_DEBUG_FIREWALL_MODE
+            value: iptables
