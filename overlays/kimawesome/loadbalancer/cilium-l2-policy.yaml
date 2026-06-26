@@ -1,0 +1,10 @@
+apiVersion: cilium.io/v2alpha1
+kind: CiliumL2AnnouncementPolicy
+metadata:
+  name: l2-policy
+  namespace: kube-system
+spec:
+  interfaces:
+    - wlp0s20f3          # WiFi interface on the k8s node
+  externalIPs: false
+  loadBalancerIPs: true   # Announce MetalLB-assigned LoadBalancer IPs
