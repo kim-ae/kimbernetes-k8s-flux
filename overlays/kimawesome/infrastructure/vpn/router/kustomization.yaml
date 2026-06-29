@@ -2,4 +2,3 @@ namespace: vpn
 resources:
   - router.yaml
   - proxyclass.yaml
-  - dnat-daemonset.yaml
