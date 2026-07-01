@@ -2,5 +2,5 @@ namespace: kube-system
 resources:
   - ../../base/metallb/
   - ippool.yaml
-#  - cilium-l2-policy.yaml
-  - l2advertisement.yaml
+  - cilium-l2-policy.yaml
+#  - l2advertisement.yaml
