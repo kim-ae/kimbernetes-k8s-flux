@@ -35,6 +35,22 @@ spec:
         - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs|erofs)$
         - --collector.systemd
         - --collector.wifi
+      # The systemd collector needs the host's D-Bus system bus socket, which
+      # is not mounted into the container by default (wifi needs no extra
+      # mount, it only reads /proc and /sys which are already bind-mounted).
+      # Mount the whole /run/dbus directory at both /run/dbus and
+      # /var/run/dbus in case the base image resolves either path.
+      extraHostVolumeMounts:
+        - name: dbus-socket-run
+          hostPath: /run/dbus
+          mountPath: /run/dbus
+          readOnly: true
+          type: Directory
+        - name: dbus-socket-var-run
+          hostPath: /run/dbus
+          mountPath: /var/run/dbus
+          readOnly: true
+          type: Directory
       prometheus:
         monitor:
           enabled: true
