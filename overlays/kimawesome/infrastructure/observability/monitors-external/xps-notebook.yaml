@@ -4,7 +4,7 @@ metadata:
   name: xps-notebook-exporters
   labels:
     app: xps-notebook-exporters
-    machine: xps-notebook
+    machine_name: xps-notebook
 spec:
   ports:
     - name: node
@@ -18,7 +18,7 @@ metadata:
   name: xps-notebook-exporters
   labels:
     app: xps-notebook-exporters
-    machine: xps-notebook
+    machine_name: xps-notebook
 subsets:
   - addresses:
       - ip: 192.168.0.221
@@ -34,10 +34,10 @@ spec:
   selector:
     matchLabels:
       app: xps-notebook-exporters
-  # Copies the Service's "machine" label onto every metric scraped from this
-  # target, so Prometheus/Grafana can filter/group by machine=xps-notebook.
+  # Copies the Service's "machine_name" label onto every metric scraped from this
+  # target, so Prometheus/Grafana can filter/group by machine_name=xps-notebook.
   targetLabels:
-    - machine
+    - machine_name
   endpoints:
     - port: node
       interval: 30s
