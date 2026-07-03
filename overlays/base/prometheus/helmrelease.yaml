@@ -51,6 +51,13 @@ spec:
           mountPath: /var/run/dbus
           readOnly: true
           type: Directory
+      # The host's D-Bus daemon enforces an AppArmor policy that blocks the
+      # default container-confined process from talking to it; run this
+      # container unconfined so the systemd collector's D-Bus "Hello" call
+      # is allowed through.
+      containerSecurityContext:
+        appArmorProfile:
+          type: Unconfined
       prometheus:
         monitor:
           enabled: true
