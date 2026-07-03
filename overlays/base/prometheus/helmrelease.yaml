@@ -23,6 +23,25 @@ spec:
     # https://github.com/kubernetes/kube-state-metrics/issues/1485
     nodeExporter:
       enabled: true
+    # Enable systemd and wifi collectors (disabled by default) to match the
+    # same node_exporter configuration used on the external bare-metal machines,
+    # and stamp every metric with machine_name=<k8s node name> so it can be
+    # selected the same way in the "Machine Overview" Grafana dashboard.
+    # NOTE: extraArgs below must include the chart's own default filesystem
+    # excludes too, since Helm replaces (does not merge) list values.
+    prometheus-node-exporter:
+      extraArgs:
+        - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|run/containerd/.+|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
+        - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs|erofs)$
+        - --collector.systemd
+        - --collector.wifi
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              targetLabel: machine_name
+              action: replace
     grafana:
       enabled: false
     prometheus:
