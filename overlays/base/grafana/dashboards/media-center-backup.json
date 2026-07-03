@@ -48,7 +48,7 @@
       "gridPos": { "h": 4, "w": 5, "x": 4, "y": 0 },
       "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
-        { "expr": "media_backup_last_run_timestamp_seconds{machine_name=\"media-center\"}", "refId": "A", "instant": true }
+        { "expr": "media_backup_last_run_timestamp_seconds{machine_name=\"media-center\"} * 1000", "refId": "A", "instant": true }
       ],
       "fieldConfig": { "defaults": { "unit": "dateTimeAsLocal" }, "overrides": [] },
       "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value", "colorMode": "none" }
