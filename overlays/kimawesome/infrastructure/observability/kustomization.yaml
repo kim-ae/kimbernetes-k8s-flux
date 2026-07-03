@@ -6,4 +6,5 @@ resources:
 - ../../../base/grafana/helm-repository.yaml
 - grafana-operator
 - monitors-infrastructure/kustomization.flux.yaml
+- monitors-external
 - grafana-loki
