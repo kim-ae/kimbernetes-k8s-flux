@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: pve-exporter
+spec:
+  selector:
+    matchLabels:
+      app: pve-exporter
+  endpoints:
+    - port: metrics
+      interval: 30s
+      path: /pve
+      params:
+        module:
+          - default
+        # target defaults to "localhost"; since pve-exporter runs in-cluster
+        # rather than on the Proxmox host itself, point it at Proxmox via the
+        # existing proxmox-external-service Service in the external-services
+        # namespace.
+        target:
+          - proxmox-external-service.external-services.svc.cluster.local

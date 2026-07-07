@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pve-exporter
+  labels:
+    app: pve-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pve-exporter
+  template:
+    metadata:
+      labels:
+        app: pve-exporter
+    spec:
+      containers:
+        - name: pve-exporter
+          image: prompve/prometheus-pve-exporter:latest
+          args:
+            - --config.file=/etc/pve-exporter/pve.yml
+          ports:
+            - name: metrics
+              containerPort: 9221
+              protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: /etc/pve-exporter
+              readOnly: true
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+      volumes:
+        - name: config
+          secret:
+            secretName: pve-exporter-secrets
