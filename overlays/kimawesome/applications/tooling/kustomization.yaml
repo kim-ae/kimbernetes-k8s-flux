@@ -3,6 +3,6 @@ resources:
   - namespace.yaml
   - yopass
   - no/
-  - n8n
+  #- n8n
 #  - faulty-thing
   - metube
