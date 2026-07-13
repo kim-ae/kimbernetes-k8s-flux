@@ -14,7 +14,8 @@ spec:
     - "knowledge-hub.kim.tec.br"       # Specific hostname for this app
     - "leituras.kim.tec.br"
   rules:
-    - matches:
+    - name: root
+      matches:
         - path:
             type: PathPrefix
             value: /

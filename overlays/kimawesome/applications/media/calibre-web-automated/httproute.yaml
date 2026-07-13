@@ -10,6 +10,7 @@ spec:
   hostnames:
     - calibre.internal.kim.tec.br
   rules:
-    - backendRefs:
+    - name: root
+      backendRefs:
         - name: calibre-web-automated
           port: 8083

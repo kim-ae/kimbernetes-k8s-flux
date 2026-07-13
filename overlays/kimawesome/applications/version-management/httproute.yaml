@@ -10,7 +10,8 @@ spec:
   hostnames:
     - "kim.tplinkdns.com"       # Specific hostname for this app
   rules:
-    - matches:
+    - name: version-management
+      matches:
         - path:
             type: PathPrefix
             value: /version-management

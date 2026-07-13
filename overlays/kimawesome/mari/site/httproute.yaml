@@ -10,7 +10,8 @@ spec:
   hostnames:
     - "dra.marianacabral.odo.br"
   rules:
-    - matches:
+    - name: root
+      matches:
         - path:
             type: PathPrefix
             value: /

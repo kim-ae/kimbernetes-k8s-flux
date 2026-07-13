@@ -10,7 +10,8 @@ spec:
   hostnames:
   - "*.internal.kim.tec.br"
   rules:
-  - filters:
+  - name: https-redirect
+    filters:
     - type: RequestRedirect
       requestRedirect:
         scheme: https

@@ -15,6 +15,7 @@ spec:
           client_ip: "%DOWNSTREAM_REMOTE_ADDRESS%"
           method: "%REQ(X-ENVOY-ORIGINAL-METHOD?:METHOD)%"
           path: "%REQ(X-ENVOY-ORIGINAL-PATH?:PATH)%"
+          route: "%ROUTE_NAME%"
           protocol: "%PROTOCOL%"
           response_code: "%RESPONSE_CODE%"
           response_flags: "%RESPONSE_FLAGS%"

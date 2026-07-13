@@ -9,6 +9,7 @@ spec:
   hostnames:
     - n8n.internal.kim.tec.br
   rules:
-    - backendRefs:
+    - name: root
+      backendRefs:
         - name: n8n
           port: 80

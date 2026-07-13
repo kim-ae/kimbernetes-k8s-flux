@@ -10,7 +10,8 @@ spec:
   hostnames:
     - "version-management.kim.tec.br"       # Specific hostname for this app
   rules:
-    - matches:
+    - name: root-redirect
+      matches:
         - path:
             type: Exact
             value: /
@@ -23,7 +24,8 @@ spec:
       backendRefs:
         - name: version-management
           port: 3000
-    - matches:
+    - name: version-management
+      matches:
         - path:
             type: PathPrefix
             value: /version-management

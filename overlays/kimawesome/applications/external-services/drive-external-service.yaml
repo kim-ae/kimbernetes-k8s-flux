@@ -30,6 +30,7 @@ spec:
   hostnames:
     - drive.internal.kim.tec.br
   rules:
-    - backendRefs:
+    - name: root
+      backendRefs:
         - name: drive-external-service
           port: 80

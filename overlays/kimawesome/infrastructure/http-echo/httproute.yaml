@@ -10,7 +10,8 @@ spec:
   hostnames:
     - "kim.tplinkdns.com"       # Specific hostname for this app
   rules:
-    - matches:
+    - name: echo
+      matches:
         - path:
             type: PathPrefix
             value: /echo

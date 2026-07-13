@@ -10,6 +10,7 @@ spec:
   hostnames:
     - youtube.internal.kim.tec.br
   rules:
-    - backendRefs:
+    - name: root
+      backendRefs:
         - name: metube
           port: 8081

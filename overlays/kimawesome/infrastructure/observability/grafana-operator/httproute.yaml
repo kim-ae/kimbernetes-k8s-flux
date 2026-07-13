@@ -10,7 +10,8 @@ spec:
   hostnames:
     - "grafana.kim.tec.br"       # Specific hostname for this app
   rules:
-    - matches:
+    - name: root
+      matches:
         - path:
             type: PathPrefix
             value: /

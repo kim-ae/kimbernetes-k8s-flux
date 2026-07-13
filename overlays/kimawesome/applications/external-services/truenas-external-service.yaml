@@ -33,7 +33,8 @@ spec:
   hostnames:
     - truenas.internal.kim.tec.br
   rules:
-    - backendRefs:
+    - name: root
+      backendRefs:
         - name: truenas-external-service
           port: 443
 ---
