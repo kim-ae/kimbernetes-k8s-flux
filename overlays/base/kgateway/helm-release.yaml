@@ -11,6 +11,6 @@ spec:
         kind: HelmRepository
         name: kgateway
       interval: 5m
-      version:  "v2.1.2"
+      version:  "v2.4.0-main"
   dependsOn:
     - name: kgateway-crds
