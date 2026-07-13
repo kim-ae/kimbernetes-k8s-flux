@@ -13,6 +13,19 @@ spec:
   - port: "http-monitoring"
     interval: 30s
     path: /metrics
+    metricRelabelings:
+    - sourceLabels: [envoy_cluster_name]
+      regex: 'kube_(.+)_(.+)_(\d+)'
+      targetLabel: kube_namespace
+      replacement: '$1'
+    - sourceLabels: [envoy_cluster_name]
+      regex: 'kube_(.+)_(.+)_(\d+)'
+      targetLabel: kube_service
+      replacement: '$2'
+    - sourceLabels: [envoy_cluster_name]
+      regex: 'kube_(.+)_(.+)_(\d+)'
+      targetLabel: kube_service_port
+      replacement: '$3'
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
