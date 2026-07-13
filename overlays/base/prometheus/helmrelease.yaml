@@ -74,7 +74,7 @@ spec:
           operator: Exists
         externalLabels:
           cluster: ${CLUSTER}
-        enableRemoteWriteReceiver: false
+        enableRemoteWriteReceiver: true
         podAntiAffinity: hard
         replicas: 2
         retention: 2d

@@ -61,6 +61,130 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: spec.nodeName
+        extraConfig: |
+          // Dedicated, metrics-only pipeline for kgateway/Envoy access logs.
+          // Tails the on-node log file for just the kgateway-proxy container
+          // directly (its own discovery, not the podLogs pipeline above), and
+          // discards the content after deriving metrics (forward_to = []) --
+          // nothing is written to Loki from this pipeline, and the podLogs
+          // pipeline above is untouched.
+
+          discovery.kubernetes "kgateway_proxy_pods" {
+            role = "pod"
+
+            namespaces {
+              names = ["kube-system"]
+            }
+          }
+
+          discovery.relabel "kgateway_proxy_pods" {
+            targets = discovery.kubernetes.kgateway_proxy_pods.targets
+
+            rule {
+              source_labels = ["__meta_kubernetes_pod_container_name"]
+              regex         = "kgateway-proxy"
+              action        = "keep"
+            }
+
+            rule {
+              source_labels = ["__meta_kubernetes_pod_uid", "__meta_kubernetes_pod_container_name"]
+              separator     = "/"
+              action        = "replace"
+              replacement   = "/var/log/pods/*$1/*.log"
+              target_label  = "__path__"
+            }
+          }
+
+          local.file_match "kgateway_proxy_pods" {
+            path_targets = discovery.relabel.kgateway_proxy_pods.output
+          }
+
+          loki.source.file "kgateway_proxy_logs" {
+            targets    = local.file_match.kgateway_proxy_pods.targets
+            forward_to = [loki.process.kgateway_access_log_metrics.receiver]
+          }
+
+          loki.process "kgateway_access_log_metrics" {
+            forward_to = []  // metrics-only: nothing is written to Loki from here
+
+            stage.cri {}  // unwrap the containerd log envelope to get the raw JSON line
+
+            // loki.source.file always sets a "filename" label pointing at the
+            // tailed file path, which embeds the pod UID -- drop it before it
+            // reaches stage.metrics below, or every gateway pod restart would
+            // mint a permanent new metric series.
+            stage.label_drop {
+              values = ["filename"]
+            }
+
+            stage.json {
+              expressions = {
+                authority      = "authority",
+                rule_name      = "route",
+                total_duration = "total_duration",
+                response_code  = "response_code",
+              }
+            }
+
+            // Keep the label set small and low-cardinality: authority
+            // (hostname), rule_name (HTTPRoute rule name) and response_code
+            // only -- do not also label by path/request_id.
+            stage.labels {
+              values = {
+                authority     = "",
+                rule_name     = "",
+                response_code = "",
+              }
+            }
+
+            stage.metrics {
+              metric.counter {
+                name              = "envoy_route_requests_total"
+                description       = "Requests observed in Envoy access logs, by hostname (authority), HTTPRoute rule (rule_name) and response code"
+                prefix            = ""
+                source            = "response_code"
+                action            = "inc"
+                max_idle_duration = "24h"
+              }
+
+              metric.histogram {
+                name              = "envoy_route_request_duration_milliseconds"
+                description       = "Request duration observed in Envoy access logs, by hostname (authority), HTTPRoute rule (rule_name) and response code"
+                prefix            = ""
+                source            = "total_duration"
+                buckets           = [5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000]
+                max_idle_duration = "24h"
+              }
+            }
+          }
+
+          // stage.metrics registers these in this Alloy instance's own
+          // Prometheus registry -- nothing leaves until something scrapes it.
+          // Self-scrape and remote_write it onward instead of exposing it for
+          // Prometheus to pull.
+          prometheus.scrape "kgateway_access_log_metrics_self" {
+            targets = [{"__address__" = "127.0.0.1:12345"}]
+            metrics_path    = "/metrics"
+            job_name        = "kgateway-access-log-metrics"
+            scrape_interval = "30s"
+            forward_to      = [prometheus.relabel.envoy_route_metrics.receiver]
+          }
+
+          prometheus.relabel "envoy_route_metrics" {
+            forward_to = [prometheus.remote_write.local_prometheus.receiver]
+
+            rule {
+              source_labels = ["__name__"]
+              regex         = "envoy_route_.*"
+              action        = "keep"
+            }
+          }
+
+          prometheus.remote_write "local_prometheus" {
+            endpoint {
+              url = "http://prometheus-kube-prometheus-prometheus.observability.svc:9090/api/v1/write"
+            }
+          }
     alloy-singleton:
       enabled: true
       enableReporting: false
