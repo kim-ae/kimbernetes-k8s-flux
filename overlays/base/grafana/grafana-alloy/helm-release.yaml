@@ -61,7 +61,7 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: spec.nodeName
-        extraConfig: |
+      extraConfig: |
           // Dedicated, metrics-only pipeline for kgateway/Envoy access logs.
           // Tails the on-node log file for just the kgateway-proxy container
           // directly (its own discovery, not the podLogs pipeline above), and
