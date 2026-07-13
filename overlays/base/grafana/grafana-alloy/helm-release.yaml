@@ -196,9 +196,20 @@ spec:
             }
           }
 
+          // Prometheus runs as a 2-replica StatefulSet (prometheus/helmrelease.yaml
+          // spec.prometheusSpec.replicas). A remote_write through the regular
+          // ClusterIP service only lands on whichever single replica the
+          // connection gets routed to -- the other replica, and any query
+          // that happens to hit it, would never see these samples. Writing to
+          // both pods directly via the prometheus-operated headless service
+          // avoids that. If the replica count ever changes, this needs a
+          // matching endpoint added/removed.
           prometheus.remote_write "local_prometheus" {
             endpoint {
-              url = "http://prometheus-kube-prometheus-prometheus.observability.svc:9090/api/v1/write"
+              url = "http://prometheus-prometheus-kube-prometheus-prometheus-0.prometheus-operated.observability.svc:9090/api/v1/write"
+            }
+            endpoint {
+              url = "http://prometheus-prometheus-kube-prometheus-prometheus-1.prometheus-operated.observability.svc:9090/api/v1/write"
             }
           }
     alloy-singleton:
