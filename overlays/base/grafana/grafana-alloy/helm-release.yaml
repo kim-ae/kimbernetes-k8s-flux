@@ -128,14 +128,36 @@ spec:
               }
             }
 
+            // kgateway synthesizes rule_name (Envoy's %ROUTE_NAME%) by joining
+            // the gateway listener, hostname, HTTPRoute name, namespace, rule
+            // name and match index with dashes, with no escaping -- so the
+            // split between the HTTPRoute name and its namespace is only
+            // unambiguous because this anchors on the known, finite set of
+            // namespaces that actually have HTTPRoutes in this cluster today
+            // (external-services, tooling, version-management, default,
+            // kube-system, observability, media, mari, site). Validated
+            // against every rule_name currently in Prometheus plus the
+            // not-yet-seen routes, including the deliberately tricky
+            // mari-site-route/mari case. If a new app lands in a namespace
+            // not listed here, this stage just fails to match for that route
+            // (kube_namespace/kube_service/path stay unset) rather than
+            // mis-attribute it -- add the namespace to the alternation below
+            // when that happens.
+            stage.regex {
+              source     = "rule_name"
+              expression = "^(?P<gateway>[^~]+)~(?P<host>.+)-route-\\d+-httproute-(?P<kube_service>.+)-(?P<kube_namespace>external-services|tooling|version-management|default|kube-system|observability|media|mari|site)-\\d+-\\d+-(?P<path>.+)-matcher-\\d+$"
+            }
+
             // Keep the label set small and low-cardinality: authority
-            // (hostname), rule_name (HTTPRoute rule name) and response_code
-            // only -- do not also label by path/request_id.
+            // (hostname), the decomposed HTTPRoute identity
+            // (kube_namespace/kube_service/path) and response_code only.
             stage.labels {
               values = {
-                authority     = "",
-                rule_name     = "",
-                response_code = "",
+                authority      = "",
+                kube_namespace = "",
+                kube_service   = "",
+                path           = "",
+                response_code  = "",
               }
             }
 
@@ -150,7 +172,7 @@ spec:
             stage.metrics {
               metric.counter {
                 name              = "envoy_route_requests_total"
-                description       = "Requests observed in Envoy access logs, by hostname (authority), HTTPRoute rule (rule_name) and response code"
+                description       = "Requests observed in Envoy access logs, by hostname (authority), HTTPRoute identity (kube_namespace/kube_service/path) and response code"
                 source            = "response_code"
                 action            = "inc"
                 max_idle_duration = "24h"
@@ -158,7 +180,7 @@ spec:
 
               metric.histogram {
                 name              = "envoy_route_request_duration_milliseconds"
-                description       = "Request duration observed in Envoy access logs, by hostname (authority), HTTPRoute rule (rule_name) and response code"
+                description       = "Request duration observed in Envoy access logs, by hostname (authority), HTTPRoute identity (kube_namespace/kube_service/path) and response code"
                 source            = "total_duration"
                 buckets           = [5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000]
                 max_idle_duration = "24h"
