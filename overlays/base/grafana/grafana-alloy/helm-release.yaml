@@ -112,9 +112,11 @@ spec:
             // loki.source.file always sets a "filename" label pointing at the
             // tailed file path, which embeds the pod UID -- drop it before it
             // reaches stage.metrics below, or every gateway pod restart would
-            // mint a permanent new metric series.
+            // mint a permanent new metric series. stage.cri also implicitly
+            // sets "stream" (stdout/stderr) as a label; drop it too, it's not
+            // a dimension we want on these metrics.
             stage.label_drop {
-              values = ["filename"]
+              values = ["filename", "stream"]
             }
 
             stage.json {
@@ -137,11 +139,18 @@ spec:
               }
             }
 
+            // Note: metric.counter/metric.histogram accept a "prefix"
+            // argument documented to default to "loki_process_custom_", but
+            // setting prefix = "" here does NOT clear it in this Alloy
+            // version -- verified live, the metrics still land as
+            // loki_process_custom_envoy_route_*. Rather than fight that, the
+            // prometheus.relabel stage below strips the prefix back off
+            // before remote_write, so what actually reaches Prometheus is
+            // the clean envoy_route_* name.
             stage.metrics {
               metric.counter {
                 name              = "envoy_route_requests_total"
                 description       = "Requests observed in Envoy access logs, by hostname (authority), HTTPRoute rule (rule_name) and response code"
-                prefix            = ""
                 source            = "response_code"
                 action            = "inc"
                 max_idle_duration = "24h"
@@ -150,7 +159,6 @@ spec:
               metric.histogram {
                 name              = "envoy_route_request_duration_milliseconds"
                 description       = "Request duration observed in Envoy access logs, by hostname (authority), HTTPRoute rule (rule_name) and response code"
-                prefix            = ""
                 source            = "total_duration"
                 buckets           = [5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000]
                 max_idle_duration = "24h"
@@ -175,8 +183,16 @@ spec:
 
             rule {
               source_labels = ["__name__"]
-              regex         = "envoy_route_.*"
+              regex         = "loki_process_custom_envoy_route_.*"
               action        = "keep"
+            }
+
+            rule {
+              source_labels = ["__name__"]
+              regex         = "loki_process_custom_(envoy_route_.*)"
+              replacement   = "$1"
+              target_label  = "__name__"
+              action        = "replace"
             }
           }
 
