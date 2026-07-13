@@ -33,7 +33,7 @@ spec:
   hostnames:
     - proxmox.internal.kim.tec.br
   rules:
-    - name: root
+    - name: "/"
       backendRefs:
         - name: proxmox-external-service
           port: 8006
