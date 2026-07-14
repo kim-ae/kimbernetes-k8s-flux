@@ -86,6 +86,19 @@ spec:
               action        = "keep"
             }
 
+            // kgateway deploys one Envoy proxy Deployment per Gateway
+            // resource (http-gateway/https-gateway/internal-gateway), so the
+            // Gateway's identity is just the pod's owning Deployment name --
+            // no need to parse it out of rule_name. Same hash-stripping
+            // regex the podLogs pipeline above already uses for its "app"
+            // label, applied here to the ReplicaSet-owned pod's controller
+            // name.
+            rule {
+              source_labels = ["__meta_kubernetes_pod_controller_name"]
+              regex         = "([0-9a-z-.]+?)(-[0-9a-f]{8,10})?"
+              target_label  = "gateway"
+            }
+
             rule {
               source_labels = ["__meta_kubernetes_pod_uid", "__meta_kubernetes_pod_container_name"]
               separator     = "/"
@@ -145,12 +158,17 @@ spec:
             // when that happens.
             stage.regex {
               source     = "rule_name"
-              expression = "^(?P<gateway>[^~]+)~(?P<host>.+)-route-\\d+-httproute-(?P<kube_service>.+)-(?P<kube_namespace>external-services|tooling|version-management|default|kube-system|observability|media|mari|site)-\\d+-\\d+-(?P<path>.+)-matcher-\\d+$"
+              expression = "^(?P<listener_section>[^~]+)~(?P<host>.+)-route-\\d+-httproute-(?P<kube_service>.+)-(?P<kube_namespace>external-services|tooling|version-management|default|kube-system|observability|media|mari|site)-\\d+-\\d+-(?P<path>.+)-matcher-\\d+$"
             }
 
-            // Keep the label set small and low-cardinality: authority
-            // (hostname), the decomposed HTTPRoute identity
-            // (kube_namespace/kube_service/path) and response_code only.
+            // "gateway" is already a real label at this point (set above by
+            // discovery.relabel, from the pod's own Deployment identity) --
+            // it doesn't need promoting here, and stage.labels' behavior for
+            // a source key that's absent from the extracted map isn't
+            // documented, so don't risk clobbering it by referencing it here.
+            // Keep the rest of the label set small and low-cardinality:
+            // authority (hostname), the decomposed HTTPRoute identity
+            // (kube_namespace/kube_service/path) and response_code.
             stage.labels {
               values = {
                 authority      = "",
@@ -172,7 +190,7 @@ spec:
             stage.metrics {
               metric.counter {
                 name              = "envoy_route_requests_total"
-                description       = "Requests observed in Envoy access logs, by hostname (authority), HTTPRoute identity (kube_namespace/kube_service/path) and response code"
+                description       = "Requests observed in Envoy access logs, by gateway, hostname (authority), HTTPRoute identity (kube_namespace/kube_service/path) and response code"
                 source            = "response_code"
                 action            = "inc"
                 max_idle_duration = "24h"
@@ -180,7 +198,7 @@ spec:
 
               metric.histogram {
                 name              = "envoy_route_request_duration_milliseconds"
-                description       = "Request duration observed in Envoy access logs, by hostname (authority), HTTPRoute identity (kube_namespace/kube_service/path) and response code"
+                description       = "Request duration observed in Envoy access logs, by gateway, hostname (authority), HTTPRoute identity (kube_namespace/kube_service/path) and response code"
                 source            = "total_duration"
                 buckets           = [5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000]
                 max_idle_duration = "24h"
