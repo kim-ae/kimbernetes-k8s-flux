@@ -381,19 +381,19 @@
       },
       "targets": [
         {
-          "expr": "sum by (authority) (rate(envoy_route_requests_total[$__rate_interval]))",
+          "expr": "sum by (gateway, authority) (rate(envoy_route_requests_total[$__rate_interval]))",
           "refId": "A",
           "format": "table",
           "instant": true
         },
         {
-          "expr": "100 * (sum by (authority) (rate(envoy_route_requests_total{response_code=~\"5..\"}[$__rate_interval])) OR (sum by (authority) (rate(envoy_route_requests_total[$__rate_interval])) * 0)) / sum by (authority) (rate(envoy_route_requests_total[$__rate_interval]))",
+          "expr": "100 * (sum by (gateway, authority) (rate(envoy_route_requests_total{response_code=~\"5..\"}[$__rate_interval])) OR (sum by (gateway, authority) (rate(envoy_route_requests_total[$__rate_interval])) * 0)) / sum by (gateway, authority) (rate(envoy_route_requests_total[$__rate_interval]))",
           "refId": "B",
           "format": "table",
           "instant": true
         },
         {
-          "expr": "histogram_quantile(0.95, sum by (authority, le) (rate(envoy_route_request_duration_milliseconds_bucket[$__rate_interval])))",
+          "expr": "histogram_quantile(0.95, sum by (gateway, authority, le) (rate(envoy_route_request_duration_milliseconds_bucket[$__rate_interval])))",
           "refId": "C",
           "format": "table",
           "instant": true
@@ -411,6 +411,7 @@
               "Time": true
             },
             "renameByName": {
+              "gateway": "Gateway",
               "authority": "Domain",
               "Value #A": "Req/s",
               "Value #B": "Error % (5xx)",
@@ -564,19 +565,19 @@
       },
       "targets": [
         {
-          "expr": "sum by (kube_namespace, kube_service, path) (rate(envoy_route_requests_total[$__rate_interval]))",
+          "expr": "sum by (gateway, kube_namespace, kube_service, path) (rate(envoy_route_requests_total[$__rate_interval]))",
           "refId": "A",
           "format": "table",
           "instant": true
         },
         {
-          "expr": "100 * (sum by (kube_namespace, kube_service, path) (rate(envoy_route_requests_total{response_code=~\"5..\"}[$__rate_interval])) OR (sum by (kube_namespace, kube_service, path) (rate(envoy_route_requests_total[$__rate_interval])) * 0)) / sum by (kube_namespace, kube_service, path) (rate(envoy_route_requests_total[$__rate_interval]))",
+          "expr": "100 * (sum by (gateway, kube_namespace, kube_service, path) (rate(envoy_route_requests_total{response_code=~\"5..\"}[$__rate_interval])) OR (sum by (gateway, kube_namespace, kube_service, path) (rate(envoy_route_requests_total[$__rate_interval])) * 0)) / sum by (gateway, kube_namespace, kube_service, path) (rate(envoy_route_requests_total[$__rate_interval]))",
           "refId": "B",
           "format": "table",
           "instant": true
         },
         {
-          "expr": "histogram_quantile(0.95, sum by (kube_namespace, kube_service, path, le) (rate(envoy_route_request_duration_milliseconds_bucket[$__rate_interval])))",
+          "expr": "histogram_quantile(0.95, sum by (gateway, kube_namespace, kube_service, path, le) (rate(envoy_route_request_duration_milliseconds_bucket[$__rate_interval])))",
           "refId": "C",
           "format": "table",
           "instant": true
@@ -594,6 +595,7 @@
               "Time": true
             },
             "renameByName": {
+              "gateway": "Gateway",
               "kube_namespace": "Namespace",
               "kube_service": "HTTPRoute",
               "path": "Rule",
