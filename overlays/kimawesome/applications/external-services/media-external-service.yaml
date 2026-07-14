@@ -30,7 +30,7 @@ spec:
   hostnames:
     - media-center.internal.kim.tec.br
   rules:
-    - name: "/"
+    - name: "root"
       backendRefs:
         - name: media-external-service
           port: 80
