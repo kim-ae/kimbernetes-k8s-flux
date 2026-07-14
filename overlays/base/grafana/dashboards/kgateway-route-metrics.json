@@ -1,10 +1,17 @@
 {
   "title": "kgateway Route Metrics",
   "uid": "kgateway-route-metrics",
-  "tags": ["kgateway", "envoy", "gateway-api"],
+  "tags": [
+    "kgateway",
+    "envoy",
+    "gateway-api"
+  ],
   "timezone": "browser",
   "refresh": "30s",
-  "time": { "from": "now-6h", "to": "now" },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
   "schemaVersion": 39,
   "version": 1,
   "templating": {
@@ -25,7 +32,12 @@
       "id": 100,
       "type": "row",
       "title": "Overview",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
       "collapsed": false,
       "panels": []
     },
@@ -34,21 +46,45 @@
       "type": "stat",
       "title": "Total Request Rate",
       "description": "Requests/sec across all kgateway HTTPRoutes, derived from Envoy access logs.",
-      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 1 },
-      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "targets": [
-        { "expr": "sum(rate(envoy_route_requests_total[$__rate_interval]))", "refId": "A", "instant": true }
+        {
+          "expr": "sum(rate(envoy_route_requests_total[$__rate_interval]))",
+          "refId": "A",
+          "instant": true
+        }
       ],
       "fieldConfig": {
         "defaults": {
           "unit": "reqps",
           "decimals": 2,
-          "thresholds": { "mode": "absolute", "steps": [{ "color": "blue", "value": null }] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
         "textMode": "value_and_name",
         "colorMode": "value"
       }
@@ -58,11 +94,19 @@
       "type": "stat",
       "title": "Error Rate (5xx)",
       "description": "Share of requests answered with a 5xx response code.",
-      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 1 },
-      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 1
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "targets": [
         {
-          "expr": "100 * sum(rate(envoy_route_requests_total{response_code=~\"5..\"}[$__rate_interval])) / sum(rate(envoy_route_requests_total[$__rate_interval]))",
+          "expr": "100 * (sum(rate(envoy_route_requests_total{response_code=~\"5..\"}[$__rate_interval])) OR (sum(rate(envoy_route_requests_total[$__rate_interval])) * 0)) / sum(rate(envoy_route_requests_total[$__rate_interval]))",
           "refId": "A",
           "instant": true
         }
@@ -76,16 +120,29 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 1 },
-              { "color": "red", "value": 5 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 5
+              }
             ]
           }
         },
         "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
         "textMode": "value_and_name",
         "colorMode": "background"
       }
@@ -95,8 +152,16 @@
       "type": "stat",
       "title": "P95 Latency",
       "description": "95th percentile request duration across all routes.",
-      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 1 },
-      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "targets": [
         {
           "expr": "histogram_quantile(0.95, sum by (le) (rate(envoy_route_request_duration_milliseconds_bucket[$__rate_interval])))",
@@ -111,16 +176,29 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 200 },
-              { "color": "red", "value": 1000 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 200
+              },
+              {
+                "color": "red",
+                "value": 1000
+              }
             ]
           }
         },
         "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
         "textMode": "value_and_name",
         "colorMode": "background"
       }
@@ -130,8 +208,16 @@
       "type": "stat",
       "title": "Active Routes",
       "description": "Distinct (namespace, HTTPRoute, rule) combinations that have served traffic in the selected range.",
-      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 1 },
-      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "targets": [
         {
           "expr": "count(count by (kube_namespace, kube_service, path) (envoy_route_requests_total))",
@@ -143,12 +229,24 @@
         "defaults": {
           "unit": "short",
           "decimals": 0,
-          "thresholds": { "mode": "absolute", "steps": [{ "color": "blue", "value": null }] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": []
       },
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
         "textMode": "value_and_name",
         "colorMode": "value"
       }
@@ -157,7 +255,12 @@
       "id": 101,
       "type": "row",
       "title": "Per Domain (authority)",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
       "collapsed": false,
       "panels": []
     },
@@ -166,8 +269,16 @@
       "type": "timeseries",
       "title": "Request Rate by Domain (top 8)",
       "description": "The 8 busiest hostnames by request rate. See the summary table below for every domain.",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 6 },
-      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "targets": [
         {
           "expr": "topk(8, sum by (authority) (rate(envoy_route_requests_total[$__rate_interval])))",
@@ -189,8 +300,18 @@
         "overrides": []
       },
       "options": {
-        "legend": { "displayMode": "list", "placement": "bottom", "calcs": ["mean", "max"] },
-        "tooltip": { "mode": "multi", "sort": "desc" }
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
       }
     },
     {
@@ -198,8 +319,16 @@
       "type": "bargauge",
       "title": "Request Rate by Domain",
       "description": "Current request rate per hostname, ranked.",
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 6 },
-      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "targets": [
         {
           "expr": "sum by (authority) (rate(envoy_route_requests_total[$__rate_interval]))",
@@ -212,7 +341,15 @@
         "defaults": {
           "unit": "reqps",
           "decimals": 2,
-          "thresholds": { "mode": "absolute", "steps": [{ "color": "blue", "value": null }] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
           "min": 0
         },
         "overrides": []
@@ -220,7 +357,11 @@
       "options": {
         "orientation": "horizontal",
         "displayMode": "gradient",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
@@ -228,8 +369,16 @@
       "type": "table",
       "title": "Per-Domain Summary",
       "description": "Request rate, 5xx error rate and p95 latency for every domain kgateway serves.",
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 14 },
-      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "targets": [
         {
           "expr": "sum by (authority) (rate(envoy_route_requests_total[$__rate_interval]))",
@@ -238,7 +387,7 @@
           "instant": true
         },
         {
-          "expr": "100 * sum by (authority) (rate(envoy_route_requests_total{response_code=~\"5..\"}[$__rate_interval])) / sum by (authority) (rate(envoy_route_requests_total[$__rate_interval]))",
+          "expr": "100 * (sum by (authority) (rate(envoy_route_requests_total{response_code=~\"5..\"}[$__rate_interval])) OR (sum by (authority) (rate(envoy_route_requests_total[$__rate_interval])) * 0)) / sum by (authority) (rate(envoy_route_requests_total[$__rate_interval]))",
           "refId": "B",
           "format": "table",
           "instant": true
@@ -251,11 +400,16 @@
         }
       ],
       "transformations": [
-        { "id": "merge", "options": {} },
+        {
+          "id": "merge",
+          "options": {}
+        },
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true },
+            "excludeByName": {
+              "Time": true
+            },
             "renameByName": {
               "authority": "Domain",
               "Value #A": "Req/s",
@@ -269,62 +423,127 @@
         "defaults": {},
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "Req/s" },
+            "matcher": {
+              "id": "byName",
+              "options": "Req/s"
+            },
             "properties": [
-              { "id": "unit", "value": "reqps" },
-              { "id": "decimals", "value": 2 }
+              {
+                "id": "unit",
+                "value": "reqps"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "Error % (5xx)" },
+            "matcher": {
+              "id": "byName",
+              "options": "Error % (5xx)"
+            },
             "properties": [
-              { "id": "unit", "value": "percent" },
-              { "id": "decimals", "value": 2 },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 1 },
-                    { "color": "red", "value": 5 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "red",
+                      "value": 5
+                    }
                   ]
                 }
               },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "P95 (ms)" },
+            "matcher": {
+              "id": "byName",
+              "options": "P95 (ms)"
+            },
             "properties": [
-              { "id": "unit", "value": "ms" },
-              { "id": "decimals", "value": 1 },
+              {
+                "id": "unit",
+                "value": "ms"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 200 },
-                    { "color": "red", "value": 1000 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 200
+                    },
+                    {
+                      "color": "red",
+                      "value": 1000
+                    }
                   ]
                 }
               },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           }
         ]
       },
       "options": {
         "showHeader": true,
-        "sortBy": [{ "displayName": "Req/s", "desc": true }]
+        "sortBy": [
+          {
+            "displayName": "Req/s",
+            "desc": true
+          }
+        ]
       }
     },
     {
       "id": 102,
       "type": "row",
       "title": "Per Rule (namespace / HTTPRoute / rule)",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 22 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
       "collapsed": false,
       "panels": []
     },
@@ -333,8 +552,16 @@
       "type": "table",
       "title": "Per-Rule Summary",
       "description": "Every (namespace, HTTPRoute, rule) combination that has served traffic, with request rate, 5xx error rate and p95 latency.",
-      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 23 },
-      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "targets": [
         {
           "expr": "sum by (kube_namespace, kube_service, path) (rate(envoy_route_requests_total[$__rate_interval]))",
@@ -343,7 +570,7 @@
           "instant": true
         },
         {
-          "expr": "100 * sum by (kube_namespace, kube_service, path) (rate(envoy_route_requests_total{response_code=~\"5..\"}[$__rate_interval])) / sum by (kube_namespace, kube_service, path) (rate(envoy_route_requests_total[$__rate_interval]))",
+          "expr": "100 * (sum by (kube_namespace, kube_service, path) (rate(envoy_route_requests_total{response_code=~\"5..\"}[$__rate_interval])) OR (sum by (kube_namespace, kube_service, path) (rate(envoy_route_requests_total[$__rate_interval])) * 0)) / sum by (kube_namespace, kube_service, path) (rate(envoy_route_requests_total[$__rate_interval]))",
           "refId": "B",
           "format": "table",
           "instant": true
@@ -356,11 +583,16 @@
         }
       ],
       "transformations": [
-        { "id": "merge", "options": {} },
+        {
+          "id": "merge",
+          "options": {}
+        },
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true },
+            "excludeByName": {
+              "Time": true
+            },
             "renameByName": {
               "kube_namespace": "Namespace",
               "kube_service": "HTTPRoute",
@@ -376,55 +608,115 @@
         "defaults": {},
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "Req/s" },
+            "matcher": {
+              "id": "byName",
+              "options": "Req/s"
+            },
             "properties": [
-              { "id": "unit", "value": "reqps" },
-              { "id": "decimals", "value": 2 }
+              {
+                "id": "unit",
+                "value": "reqps"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "Error % (5xx)" },
+            "matcher": {
+              "id": "byName",
+              "options": "Error % (5xx)"
+            },
             "properties": [
-              { "id": "unit", "value": "percent" },
-              { "id": "decimals", "value": 2 },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 1 },
-                    { "color": "red", "value": 5 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "red",
+                      "value": 5
+                    }
                   ]
                 }
               },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "P95 (ms)" },
+            "matcher": {
+              "id": "byName",
+              "options": "P95 (ms)"
+            },
             "properties": [
-              { "id": "unit", "value": "ms" },
-              { "id": "decimals", "value": 1 },
+              {
+                "id": "unit",
+                "value": "ms"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "green", "value": null },
-                    { "color": "yellow", "value": 200 },
-                    { "color": "red", "value": 1000 }
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 200
+                    },
+                    {
+                      "color": "red",
+                      "value": 1000
+                    }
                   ]
                 }
               },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } }
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
             ]
           }
         ]
       },
       "options": {
         "showHeader": true,
-        "sortBy": [{ "displayName": "Req/s", "desc": true }]
+        "sortBy": [
+          {
+            "displayName": "Req/s",
+            "desc": true
+          }
+        ]
       }
     },
     {
@@ -432,8 +724,16 @@
       "type": "timeseries",
       "title": "P95 Latency by HTTPRoute (top 8)",
       "description": "The 8 HTTPRoute/rule combinations with the highest p95 latency.",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 33 },
-      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 33
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "targets": [
         {
           "expr": "topk(8, histogram_quantile(0.95, sum by (kube_service, path, le) (rate(envoy_route_request_duration_milliseconds_bucket[$__rate_interval]))))",
@@ -455,8 +755,18 @@
         "overrides": []
       },
       "options": {
-        "legend": { "displayMode": "list", "placement": "bottom", "calcs": ["mean", "max"] },
-        "tooltip": { "mode": "multi", "sort": "desc" }
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
       }
     },
     {
@@ -464,8 +774,16 @@
       "type": "bargauge",
       "title": "Top 10 by Error Rate (4xx/5xx)",
       "description": "HTTPRoute/rule combinations generating the most 4xx/5xx responses per second.",
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 33 },
-      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 33
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "targets": [
         {
           "expr": "topk(10, sum by (kube_namespace, kube_service, path) (rate(envoy_route_requests_total{response_code=~\"[45]..\"}[$__rate_interval])))",
@@ -482,8 +800,14 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "yellow", "value": null },
-              { "color": "red", "value": 1 }
+              {
+                "color": "yellow",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
             ]
           }
         },
@@ -492,14 +816,23 @@
       "options": {
         "orientation": "horizontal",
         "displayMode": "gradient",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 103,
       "type": "row",
       "title": "Response Codes",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 41 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 41
+      },
       "collapsed": false,
       "panels": []
     },
@@ -508,8 +841,16 @@
       "type": "timeseries",
       "title": "Request Rate by Response Code Class",
       "description": "Request rate grouped into 2xx/3xx/4xx/5xx classes across all routes.",
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 42 },
-      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 42
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "targets": [
         {
           "expr": "sum by (response_code_class) (label_replace(sum by (response_code) (rate(envoy_route_requests_total[$__rate_interval])), \"response_code_class\", \"${1}xx\", \"response_code\", \"(.)..\"))",
@@ -524,19 +865,84 @@
             "drawStyle": "bars",
             "lineWidth": 1,
             "fillOpacity": 60,
-            "stacking": { "mode": "normal", "group": "A" }
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            }
           }
         },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "2xx" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }] },
-          { "matcher": { "id": "byName", "options": "3xx" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } }] },
-          { "matcher": { "id": "byName", "options": "4xx" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "yellow" } }] },
-          { "matcher": { "id": "byName", "options": "5xx" }, "properties": [{ "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "2xx"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "3xx"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "4xx"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "yellow"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "5xx"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          }
         ]
       },
       "options": {
-        "legend": { "displayMode": "list", "placement": "bottom" },
-        "tooltip": { "mode": "multi", "sort": "desc" }
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
       }
     }
   ]
