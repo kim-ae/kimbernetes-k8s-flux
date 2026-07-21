@@ -1,0 +1,272 @@
+{
+  "title": "Per-Process Overview (process-exporter)",
+  "uid": "process-exporter-overview",
+  "tags": [
+    "machines",
+    "process-exporter",
+    "external-services"
+  ],
+  "timezone": "browser",
+  "refresh": "30s",
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "schemaVersion": 39,
+  "version": 1,
+  "templating": {
+    "list": [
+      {
+        "name": "DS_PROMETHEUS",
+        "type": "datasource",
+        "query": "prometheus",
+        "label": "Prometheus",
+        "current": {},
+        "hide": 0,
+        "refresh": 1
+      },
+      {
+        "name": "machine",
+        "type": "query",
+        "label": "Machine",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "query": {
+          "query": "label_values(namedprocess_namegroup_num_procs, machine_name)",
+          "refId": "machine-variable"
+        },
+        "refresh": 2,
+        "sort": 1,
+        "multi": true,
+        "includeAll": true,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        }
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 200,
+      "type": "row",
+      "title": "CPU",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 10,
+      "type": "timeseries",
+      "title": "CPU Usage by Application (top 10)",
+      "description": "Fractional CPU cores consumed per (machine, application) group. Grouped by process-exporter's groupname label, which buckets processes by command name.",
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 1 },
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "targets": [
+        {
+          "expr": "topk(10, sum by (machine_name, groupname) (rate(namedprocess_namegroup_cpu_seconds_total{machine_name=~\"$machine\"}[$__rate_interval])))",
+          "refId": "A",
+          "legendFormat": "{{machine_name}} - {{groupname}}",
+          "interval": "30s"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short" },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "calcs": ["mean", "max"]
+        }
+      }
+    },
+    {
+      "id": 300,
+      "type": "row",
+      "title": "Memory",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 10 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 20,
+      "type": "timeseries",
+      "title": "Memory Usage by Application (top 10, resident)",
+      "description": "Resident memory (RSS) per (machine, application) group.",
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 11 },
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "targets": [
+        {
+          "expr": "topk(10, sum by (machine_name, groupname) (namedprocess_namegroup_memory_bytes{machine_name=~\"$machine\", memtype=\"resident\"}))",
+          "refId": "A",
+          "legendFormat": "{{machine_name}} - {{groupname}}",
+          "interval": "30s"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "bytes" },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "calcs": ["mean", "max"]
+        }
+      }
+    },
+    {
+      "id": 400,
+      "type": "row",
+      "title": "Disk",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 20 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 30,
+      "type": "timeseries",
+      "title": "Disk I/O by Application (top 10)",
+      "description": "Bytes/s read and written per (machine, application) group, from /proc/[pid]/io. Requires the CAP_DAC_READ_SEARCH capability granted in the process-exporter systemd unit.",
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 21 },
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "targets": [
+        {
+          "expr": "topk(10, sum by (machine_name, groupname) (rate(namedprocess_namegroup_read_bytes_total{machine_name=~\"$machine\"}[$__rate_interval])))",
+          "refId": "A",
+          "legendFormat": "{{machine_name}} - {{groupname}} read",
+          "interval": "30s"
+        },
+        {
+          "expr": "topk(10, sum by (machine_name, groupname) (rate(namedprocess_namegroup_write_bytes_total{machine_name=~\"$machine\"}[$__rate_interval])))",
+          "refId": "B",
+          "legendFormat": "{{machine_name}} - {{groupname}} write",
+          "interval": "30s"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "Bps" },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "calcs": ["mean", "max"]
+        }
+      }
+    },
+    {
+      "id": 500,
+      "type": "row",
+      "title": "Top Consumers",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 30 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 40,
+      "type": "table",
+      "title": "Top 10 CPU Consumers",
+      "gridPos": { "h": 10, "w": 12, "x": 0, "y": 31 },
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "targets": [
+        {
+          "expr": "topk(10, sum by (machine_name, groupname) (rate(namedprocess_namegroup_cpu_seconds_total{machine_name=~\"$machine\"}[5m])))",
+          "refId": "A",
+          "instant": true,
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true, "__name__": true, "job": true, "instance": true
+            },
+            "renameByName": {
+              "machine_name": "Machine",
+              "groupname": "Application",
+              "Value": "CPU (cores)"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [{ "field": "CPU (cores)", "desc": true }]
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": { "align": "auto" }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "CPU (cores)" },
+            "properties": [{ "id": "custom.displayMode", "value": "gradient-gauge" }]
+          }
+        ]
+      },
+      "options": { "showHeader": true }
+    },
+    {
+      "id": 41,
+      "type": "table",
+      "title": "Top 10 Memory Consumers",
+      "gridPos": { "h": 10, "w": 12, "x": 12, "y": 31 },
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "targets": [
+        {
+          "expr": "topk(10, sum by (machine_name, groupname) (namedprocess_namegroup_memory_bytes{machine_name=~\"$machine\", memtype=\"resident\"}))",
+          "refId": "A",
+          "instant": true,
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true, "__name__": true, "job": true, "instance": true
+            },
+            "renameByName": {
+              "machine_name": "Machine",
+              "groupname": "Application",
+              "Value": "Memory"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [{ "field": "Memory", "desc": true }]
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "custom": { "align": "auto" }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Memory" },
+            "properties": [{ "id": "custom.displayMode", "value": "gradient-gauge" }]
+          }
+        ]
+      },
+      "options": { "showHeader": true }
+    }
+  ]
+}
