@@ -1,6 +1,6 @@
 # kimbernetes-k8s-flux — Full Reference Memory
 
-This document is a comprehensive technical memory of the `kimbernetes-k8s-flux` GitOps repository. It exists so that anyone (human or AI) picking this repo back up can understand the whole architecture without re-deriving it from scratch. It complements (does not replace) `.github/copilot-instructions.md`, which holds the condensed day-to-day operating conventions.
+This document is a comprehensive technical memory of the `kimbernetes-k8s-flux` GitOps repository. It exists so that anyone (human or AI) picking this repo back up can understand the whole architecture without re-deriving it from scratch. It complements (does not replace) `CLAUDE.md`, which holds the condensed day-to-day operating conventions.
 
 Cluster codename: **kim7s** (Flux calls it `awesome-kim7s` in `externalLabels.cluster: ${CLUSTER}`).
 
@@ -104,7 +104,7 @@ Current external services defined:
 - **`truenas-external-service.yaml`** — TrueNAS `192.168.0.40:443` → `truenas.internal.kim.tec.br` via `internal-gateway` `https` listener, insecure TLS skip-verify.
 - `drive-external-service.yaml`, `media-external-service.yaml` — same pattern for other LAN services (not fully inspected here; follow same shape).
 
-This is the exact template to replicate for exposing `node_exporter`/`process-exporter` targets running on bare-metal machines (see section 6 below).
+This is the exact template used for exposing `node_exporter`/`process-exporter` targets running on bare-metal machines too — see `overlays/kimawesome/infrastructure/observability/monitors-external/` and section 4.3 below.
 
 ## 3. Flux GitOps structure
 
@@ -211,6 +211,12 @@ Key values set:
   - `kgateway-app-monitor`: selects pods labeled `kgateway: kgateway`, scrapes port `metrics`, `interval: 30s`, `path: /metrics`.
 - **`metallb-monitor.yaml`** — `PodMonitor` `metallb-monitor`, selects pods labeled `app.kubernetes.io/instance: metallb`, scrapes port `monitoring`, `interval: 30s`, `path: /metrics`.
 
+`overlays/kimawesome/infrastructure/observability/monitors-external/` (bare-metal, non-cluster machines — headless `Service` + manual `Endpoints`, then a `ServiceMonitor` pointing at the Service since these aren't pods):
+- **`xps-notebook.yaml`** — `192.168.0.221`, `xps-notebook-exporters` bundle, two named ports: `node` (`9100`, `node_exporter`) and `process` (`9256`, `process-exporter`), both scraped every `30s` at `/metrics`. `machine_name: xps-notebook` label propagated onto every metric via `targetLabels`.
+- **`media-center.yaml`** — `192.168.0.110`, `media-center-exporters` bundle, same shape (`node`/`9100` + `process`/`9256`), `machine_name: media-center`.
+
+Visualized in Grafana via `overlays/base/grafana/dashboards/process-exporter-overview.json` (uid `process-exporter-overview`) for the per-process metrics, alongside the existing `machine-overview.json` (uid `machine-overview-node-exporter`) for host-level `node_exporter` metrics.
+
 **Conclusion for the "PodMonitor vs ServiceMonitor vs static config" question**: this cluster already uses **`PodMonitor`** as its standard pattern for in-cluster components. Since `podMonitorSelectorNilUsesHelmValues: false`, any new `PodMonitor`/`ServiceMonitor` you add anywhere in the cluster (any namespace, due to `namespaceSelector.any: true` style selectors) will automatically be picked up — no extra Prometheus config needed. For the external bare-metal machines (notebooks, desktop, Proxmox, TrueNAS), reuse the exact `external-services` pattern (headless `Service` + manual `Endpoints`) already used for Proxmox/TrueNAS, then attach a `ServiceMonitor` (Service-backed, since these aren't pods) pointing at that Service's port(s) (9100 for node_exporter, 9256 for process-exporter). No `additionalScrapeConfigs`/static config needed — the existing Prometheus Operator setup already supports both monitor CRDs cluster-wide.
 
 ## 5. Certificates & DNS
@@ -289,12 +295,12 @@ These are things worth double-checking directly in the repo before relying on th
 - Exact NFS server path backing `nfs-csi` StorageClass (parent repo docs previously suggested `storage.internal.kim.tec.br:/mnt/default-mirror-hdd-1tb/kubernetes` — reconfirm against `overlays/kimawesome/infrastructure/csi-driver-nfs/`).
 - What `managed-csi-zrs` StorageClass actually resolves to (used only by Alertmanager).
 - Full contents of `overlays/base/tools`, `overlays/base/version-management`, `overlays/base/knowledge-hub`, `overlays/base/n8n`, `overlays/base/metube`, `overlays/base/calibre-web-automated`, `overlays/base/yopass`, `overlays/base/chaos-mesh`, `overlays/base/kgateway`, `overlays/base/metrics-server` — base manifests weren't opened line by line this pass, only their file listing.
-- Whether `bind9` actually runs from this cluster's `overlays/base/bind9` or from Proxmox directly, per the parent `home-server` repo's `.github/copilot-instructions.md` which states bind9 runs on Proxmox at `192.168.53.53:53`.
+- Whether `bind9` actually runs from this cluster's `overlays/base/bind9` or from Proxmox directly, per the parent `home-server` repo's `CLAUDE.md` which states bind9 runs on Proxmox at `192.168.53.53:53`.
 - `keepupprom.kim.tec.br` listener purpose (likely an uptime/monitoring tool, not yet identified precisely).
 
 ## References
-- `.github/copilot-instructions.md` (this repo) — condensed day-to-day build/lint/architecture conventions.
+- `CLAUDE.md` (this repo) — condensed day-to-day build/lint/architecture conventions.
 - `overlays/kimawesome/README.md` — original cluster bring-up runbook (kubeadm, Cilium install, Flux bootstrap, kgateway migration, sysctl fixes).
 - `overlays/minikube/README.md` — dev/minikube overlay notes (separate from production).
 - `https-gateway-tcp-delay-options.md` — deep dive on simulating TCP delay in front of `https-gateway`, useful reference for the real MetalLB VIP/NodePort/pod placement facts it documents.
-- Parent repo `home-server/.github/copilot-instructions.md` and `home-server/tailscale-metallb-troubleshooting.md` — cross-cluster/network facts (Tailscale, WiFi L2 ARP issue, bind9 on Proxmox).
+- Parent repo `home-server/CLAUDE.md` and `home-server/tailscale-metallb-troubleshooting.md` — cross-cluster/network facts (Tailscale, WiFi L2 ARP issue, bind9 on Proxmox).
