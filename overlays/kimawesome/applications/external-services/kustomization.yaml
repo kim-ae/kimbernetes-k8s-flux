@@ -5,3 +5,4 @@ resources:
   - drive-external-service.yaml
   - proxmox-external-service.yaml
   - truenas-external-service.yaml
+  - qbittorrent-external-service.yaml
