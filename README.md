@@ -102,6 +102,7 @@ Key facts:
 Current external services defined:
 - **`proxmox-external-service.yaml`** — Proxmox host `192.168.0.4:8006` → `proxmox.internal.kim.tec.br` via `internal-gateway` `https` listener, insecure TLS skip-verify.
 - **`truenas-external-service.yaml`** — TrueNAS `192.168.0.40:443` → `truenas.internal.kim.tec.br` via `internal-gateway` `https` listener, insecure TLS skip-verify.
+- **`qbittorrent-external-service.yaml`** (added 2026/08/10) — qBittorrent LXC (Proxmox LXC `109`) `192.168.3.111:8080` → `torrent.internal.kim.tec.br` via `internal-gateway` `https` listener. No TLS skip-verify override needed here since the backend is plain HTTP, unlike the two examples above.
 - `drive-external-service.yaml`, `media-external-service.yaml` — same pattern for other LAN services (not fully inspected here; follow same shape).
 
 This is the exact template used for exposing `node_exporter`/`process-exporter` targets running on bare-metal machines too — see `overlays/kimawesome/infrastructure/observability/monitors-external/` and section 4.3 below.
@@ -272,6 +273,7 @@ Visualized in Grafana via `overlays/base/grafana/dashboards/process-exporter-ove
 | kgateway | `kube-system` | `overlays/base/kgateway` | n/a | Gateway API controller/data plane |
 | proxmox-external-service | default (or `applications` root) | n/a (raw manifest) | `internal-gateway` `https` (`proxmox.internal.kim.tec.br`) | Proxmox host `192.168.0.4:8006`, TLS skip-verify |
 | truenas-external-service | default | n/a (raw manifest) | `internal-gateway` `https` (`truenas.internal.kim.tec.br`) | TrueNAS `192.168.0.40:443`, TLS skip-verify |
+| qbittorrent-external-service | default | n/a (raw manifest) | `internal-gateway` `https` (`torrent.internal.kim.tec.br`) | qBittorrent LXC (Proxmox LXC `109`) `192.168.3.111:8080`, plain HTTP backend, no TLS skip-verify needed |
 | drive-external-service, media-external-service | default | n/a (raw manifest) | `internal-gateway` | Same external-service pattern, targets not reconfirmed this pass |
 | mari (`overlays/kimawesome/mari/`) | `mari` | minimal, just `kustomization.yaml` currently | `https-gateway` `https-mari-wildcard` (`*.marianacabral.odo.br`) | Second tenant/domain, mostly scaffold so far |
 
