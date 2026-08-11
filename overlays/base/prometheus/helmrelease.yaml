@@ -76,7 +76,7 @@ spec:
           cluster: ${CLUSTER}
         enableRemoteWriteReceiver: true
         podAntiAffinity: hard
-        replicas: 2
+        replicas: 1
         retention: 2d
         retentionSize: 25GiB
         serviceMonitorSelectorNilUsesHelmValues: false
@@ -378,4 +378,3 @@ spec:
                       ready: [ status, conditions, "[type=Ready]", status ]
                       suspended: [ spec, suspend ]
                       source_name: [ spec, sourceRef, name ]
-                      
