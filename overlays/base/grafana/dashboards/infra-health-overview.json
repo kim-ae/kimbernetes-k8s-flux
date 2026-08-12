@@ -679,6 +679,71 @@
       }
     },
     {
+      "id": 35,
+      "type": "stat",
+      "title": "TrueNAS",
+      "gridPos": {
+        "x": 16,
+        "y": 4,
+        "w": 4,
+        "h": 3
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966"
+      },
+      "targets": [
+        {
+          "expr": "(time() - graphite_last_processed_timestamp_seconds{job=\"graphite-exporter\"}) < bool 90",
+          "refId": "A",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "red"
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green"
+                }
+              }
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "noValue": "DOWN"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "textMode": "value",
+        "colorMode": "background"
+      }
+    },
+    {
       "id": 13,
       "type": "row",
       "title": "CPU & Memory Usage",

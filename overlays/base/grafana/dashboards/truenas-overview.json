@@ -1,0 +1,199 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": { "type": "grafana", "uid": "-- Grafana --" },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }, "id": 100, "panels": [], "title": "Health", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "color": "red", "text": "DOWN" }, "1": { "color": "green", "text": "UP" } }, "type": "value" }],
+          "noValue": "DOWN",
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "red" }, { "color": "green", "value": 1 }] }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 1 },
+      "id": 1,
+      "options": { "colorMode": "background", "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value_and_name" },
+      "targets": [{ "expr": "(time() - graphite_last_processed_timestamp_seconds{job=\"graphite-exporter\"}) < bool 90", "instant": true, "refId": "A" }],
+      "title": "TrueNAS Status",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": {
+        "defaults": {
+          "max": 100, "min": 0,
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green" }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
+      "id": 2,
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "targets": [{ "expr": "100 - cpu_total{job=\"graphite-exporter\",kind=\"idle\"}", "instant": true, "refId": "A" }],
+      "title": "CPU Usage",
+      "type": "gauge"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": {
+        "defaults": {
+          "max": 100, "min": 0,
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green" }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 1 },
+      "id": 3,
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "targets": [{ "expr": "100 * sum(physical_memory{job=\"graphite-exporter\",kind=\"used\"}) / sum(physical_memory{job=\"graphite-exporter\",kind=~\"used|free|cached|buffers\"})", "instant": true, "refId": "A" }],
+      "title": "Memory Usage",
+      "type": "gauge"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 1 },
+      "id": 4,
+      "options": { "colorMode": "none", "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value_and_name" },
+      "targets": [{ "expr": "system_load{job=\"graphite-exporter\"}", "instant": true, "legendFormat": "{{kind}}", "refId": "A" }],
+      "title": "Load Average",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "dtdurations" }, "overrides": [] },
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 1 },
+      "id": 5,
+      "options": { "colorMode": "none", "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value" },
+      "targets": [{ "expr": "uptime{job=\"graphite-exporter\"}", "instant": true, "refId": "A" }],
+      "title": "Uptime",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "bytes" }, "overrides": [] },
+      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 1 },
+      "id": 6,
+      "options": { "colorMode": "none", "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value" },
+      "targets": [{ "expr": "truenas_arcstats{job=\"graphite-exporter\",subtype=\"size\"}", "instant": true, "refId": "A" }],
+      "title": "ZFS ARC Size",
+      "type": "stat"
+    },
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 }, "id": 200, "panels": [], "title": "CPU & Memory", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "percent" }, "overrides": [] },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 6 },
+      "id": 10,
+      "targets": [{ "expr": "100 - cpu_total{job=\"graphite-exporter\",kind=\"idle\"}", "legendFormat": "CPU usage", "refId": "A" }],
+      "title": "CPU Usage",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "mbytes" }, "overrides": [] },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 6 },
+      "id": 11,
+      "targets": [{ "expr": "physical_memory{job=\"graphite-exporter\"}", "legendFormat": "{{kind}}", "refId": "A" }],
+      "title": "Memory Usage",
+      "type": "timeseries"
+    },
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 13 }, "id": 300, "panels": [], "title": "Disk & I/O", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "Bps" }, "overrides": [] },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 14 },
+      "id": 20,
+      "targets": [{ "expr": "disk_io{job=\"graphite-exporter\",disk=~\"sda|sdb|nvme0n1\",op=~\"reads|writes\"} * 1024", "legendFormat": "{{disk}} {{op}}", "refId": "A" }],
+      "title": "Physical Disk I/O",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": {
+        "defaults": {
+          "max": 1, "min": 0,
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green" }, { "color": "yellow", "value": 0.7 }, { "color": "red", "value": 0.9 }] },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 14 },
+      "id": 21,
+      "options": { "displayMode": "gradient", "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "targets": [{ "expr": "disk_bytes_used{job=\"graphite-exporter\",mountpoint=~\"_mnt_default_mirror_hdd_1tb.*\"} / (disk_bytes_used{job=\"graphite-exporter\",mountpoint=~\"_mnt_default_mirror_hdd_1tb.*\"} + disk_bytes_avail{job=\"graphite-exporter\",mountpoint=~\"_mnt_default_mirror_hdd_1tb.*\"})", "instant": true, "legendFormat": "{{mountpoint}}", "refId": "A" }],
+      "title": "Dataset Usage %",
+      "type": "bargauge"
+    },
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 21 }, "id": 400, "panels": [], "title": "ZFS", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+      "gridPos": { "h": 7, "w": 16, "x": 0, "y": 22 },
+      "id": 30,
+      "targets": [{ "expr": "truenas_arcstats{job=\"graphite-exporter\",subtype=~\"ddhit|dmhit|ddmis|dmmis|l2hits|l2miss\"}", "legendFormat": "{{subtype}}", "refId": "A" }],
+      "title": "ARC Hit/Miss Rates",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "bytes" }, "overrides": [] },
+      "gridPos": { "h": 7, "w": 8, "x": 16, "y": 22 },
+      "id": 31,
+      "targets": [{ "expr": "truenas_arcstats{job=\"graphite-exporter\",subtype=\"size\"}", "legendFormat": "ARC size", "refId": "A" }],
+      "title": "ARC Size Over Time",
+      "type": "timeseries"
+    },
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 29 }, "id": 500, "panels": [], "title": "Cgroups (systemd units)", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "min": 0, "unit": "percent" }, "overrides": [] },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 30 },
+      "id": 40,
+      "options": { "displayMode": "gradient", "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "targets": [{ "expr": "topk(8, sum by (cgroup) (cgroup_cpu_usage{job=\"graphite-exporter\"}))", "instant": true, "legendFormat": "{{cgroup}}", "refId": "A" }],
+      "title": "Top CPU Consumers",
+      "type": "bargauge"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "min": 0, "unit": "mbytes" }, "overrides": [] },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 30 },
+      "id": 41,
+      "options": { "displayMode": "gradient", "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "targets": [{ "expr": "topk(8, sum by (cgroup) (cgroup_memory_detailed_usage{job=\"graphite-exporter\"}))", "instant": true, "legendFormat": "{{cgroup}}", "refId": "A" }],
+      "title": "Top Memory Consumers",
+      "type": "bargauge"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 42,
+  "tags": ["truenas", "graphite-exporter"],
+  "templating": { "list": [] },
+  "time": { "from": "now-6h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "TrueNAS Overview (graphite-exporter)",
+  "uid": "truenas-overview",
+  "weekStart": ""
+}
