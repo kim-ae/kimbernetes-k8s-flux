@@ -204,6 +204,7 @@ Key values set:
   ```
 - Grafana is exposed externally at **`grafana.kim.tec.br`** via the `https-gateway` `https-grafana` listener.
 - There's also a hostname `keepupprom.kim.tec.br` on the https-gateway — likely a Grafana/Prometheus adjacent tool ("keep up" / uptime style?), not fully inspected — check `overlays/kimawesome/applications/` if this needs revisiting.
+- **Dashboards are Grafana-authored, not GitOps-provisioned.** The JSON files in `overlays/base/grafana/dashboards/` (`infra-health-overview.json`, `proxmox-overview.json`, `truenas-overview.json`, etc.) are backups of dashboards created/edited directly in Grafana (UI or API) — this instance has no provisioning/git-sync repository configured (confirmed: the provisioning-repositories API returns `404`), so nothing in this repo actually pushes these files into Grafana. Editing a JSON file here has **no live effect**; to change a dashboard, edit it in Grafana first, then re-export/overwrite the matching backup file and commit.
 
 ### 4.3 Existing ServiceMonitor/PodMonitor examples (proof of pattern)
 `overlays/kimawesome/infrastructure/observability/monitors-infrastructure/`:
