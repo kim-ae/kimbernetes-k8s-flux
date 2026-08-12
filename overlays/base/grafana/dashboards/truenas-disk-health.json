@@ -1,0 +1,123 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": { "type": "grafana", "uid": "-- Grafana --" },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }, "id": 100, "panels": [], "title": "Health", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green" }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 85 }] },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 8, "x": 0, "y": 1 },
+      "id": 1,
+      "options": { "colorMode": "value", "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value" },
+      "targets": [{ "expr": "avg(cpu_temperature{job=\"graphite-exporter\"})", "instant": true, "refId": "A" }],
+      "title": "CPU Temperature (avg)",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "min": 0, "unit": "ms" }, "overrides": [] },
+      "gridPos": { "h": 4, "w": 8, "x": 8, "y": 1 },
+      "id": 2,
+      "options": { "displayMode": "gradient", "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "targets": [{ "expr": "disk_busy{job=\"graphite-exporter\"}", "instant": true, "legendFormat": "{{disk}}", "refId": "A" }],
+      "title": "Disk Busy % (by serial)",
+      "type": "bargauge"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": {
+        "defaults": {
+          "max": 100, "min": 0,
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green" }, { "color": "yellow", "value": 70 }, { "color": "red", "value": 90 }] },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 8, "x": 16, "y": 1 },
+      "id": 3,
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "targets": [{ "expr": "avg(disk_utilization{job=\"graphite-exporter\"})", "instant": true, "refId": "A" }],
+      "title": "Disk Utilization % (avg)",
+      "type": "gauge"
+    },
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 }, "id": 200, "panels": [], "title": "Latency", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "ms" }, "overrides": [] },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 6 },
+      "id": 10,
+      "targets": [{ "expr": "disk_await{job=\"graphite-exporter\",op=~\"reads|writes\"}", "legendFormat": "{{disk}} {{op}}", "refId": "A" }],
+      "title": "Disk Await (Read/Write Latency)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "ms" }, "overrides": [] },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 6 },
+      "id": 11,
+      "targets": [{ "expr": "disk_svctm{job=\"graphite-exporter\"}", "legendFormat": "{{disk}}", "refId": "A" }],
+      "title": "Disk Service Time",
+      "type": "timeseries"
+    },
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 13 }, "id": 300, "panels": [], "title": "Utilization & Queue", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "percent" }, "overrides": [] },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 14 },
+      "id": 20,
+      "targets": [{ "expr": "disk_utilization{job=\"graphite-exporter\"}", "legendFormat": "{{disk}}", "refId": "A" }],
+      "title": "Disk Utilization %",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 14 },
+      "id": 21,
+      "targets": [{ "expr": "disk_qops{job=\"graphite-exporter\"}", "legendFormat": "{{disk}}", "refId": "A" }],
+      "title": "Disk Queue Depth",
+      "type": "timeseries"
+    },
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 21 }, "id": 400, "panels": [], "title": "Temperature", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "celsius" }, "overrides": [] },
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 22 },
+      "id": 30,
+      "targets": [{ "expr": "cpu_temperature{job=\"graphite-exporter\"}", "legendFormat": "{{cpu}}", "refId": "A" }],
+      "title": "CPU Core Temperatures",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 42,
+  "tags": ["truenas", "graphite-exporter"],
+  "templating": { "list": [] },
+  "time": { "from": "now-6h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "TrueNAS Disk Health & Performance",
+  "uid": "truenas-disk-health",
+  "weekStart": ""
+}

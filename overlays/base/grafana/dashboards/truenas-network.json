@@ -1,0 +1,97 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": { "type": "grafana", "uid": "-- Grafana --" },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }, "id": 100, "panels": [], "title": "Network", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [{ "options": { "0": { "color": "red", "text": "DOWN" }, "1": { "color": "green", "text": "UP" } }, "type": "value" }],
+          "noValue": "DOWN",
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "red" }, { "color": "green", "value": 1 }] }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 1 },
+      "id": 1,
+      "options": { "colorMode": "background", "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value_and_name" },
+      "targets": [{ "expr": "interface_operationstate{job=\"graphite-exporter\",state=\"up\",interface!~\"docker.*|veth.*|lo\"}", "instant": true, "legendFormat": "{{interface}}", "refId": "A" }],
+      "title": "Link State",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "bps" }, "overrides": [] },
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
+      "id": 2,
+      "options": { "colorMode": "none", "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value_and_name" },
+      "targets": [{ "expr": "interface_speed{job=\"graphite-exporter\",interface!~\"docker.*|veth.*|lo\"} * 1000", "instant": true, "legendFormat": "{{interface}}", "refId": "A" }],
+      "title": "Link Speed",
+      "type": "stat"
+    },
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 }, "id": 200, "panels": [], "title": "Throughput", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "Bps" }, "overrides": [] },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 6 },
+      "id": 10,
+      "targets": [{ "expr": "interface_io{job=\"graphite-exporter\",interface!~\"docker.*|veth.*|lo\"} * 1024", "legendFormat": "{{interface}} {{op}}", "refId": "A" }],
+      "title": "Network Throughput",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "pps" }, "overrides": [] },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 6 },
+      "id": 11,
+      "targets": [{ "expr": "interface_packets{job=\"graphite-exporter\",interface!~\"docker.*|veth.*|lo\"}", "legendFormat": "{{interface}} {{op}}", "refId": "A" }],
+      "title": "Packets/sec",
+      "type": "timeseries"
+    },
+    { "collapsed": false, "gridPos": { "h": 1, "w": 24, "x": 0, "y": 13 }, "id": 300, "panels": [], "title": "Errors & Drops", "type": "row" },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 14 },
+      "id": 20,
+      "targets": [{ "expr": "interface_errors{job=\"graphite-exporter\",interface!~\"docker.*|veth.*|lo\"}", "legendFormat": "{{interface}} {{op}}", "refId": "A" }],
+      "title": "Interface Errors",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "44fd2e18-715d-458e-ab7c-a6b4ecfa6966" },
+      "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 14 },
+      "id": 21,
+      "targets": [{ "expr": "interface_drops{job=\"graphite-exporter\",interface!~\"docker.*|veth.*|lo\"}", "legendFormat": "{{interface}} {{op}}", "refId": "A" }],
+      "title": "Interface Drops",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 42,
+  "tags": ["truenas", "graphite-exporter"],
+  "templating": { "list": [] },
+  "time": { "from": "now-6h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "TrueNAS Network",
+  "uid": "truenas-network",
+  "weekStart": ""
+}
