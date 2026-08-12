@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: graphite-exporter
+  labels:
+    app: graphite-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: graphite-exporter
+  template:
+    metadata:
+      labels:
+        app: graphite-exporter
+    spec:
+      containers:
+        - name: graphite-exporter
+          image: prom/graphite-exporter:v0.17.0
+          args:
+            - --graphite.mapping-config=/etc/graphite-exporter/graphite_mapping.conf
+          ports:
+            - name: carbon
+              containerPort: 9109
+              protocol: TCP
+            - name: metrics
+              containerPort: 9108
+              protocol: TCP
+          volumeMounts:
+            - name: mapping-config
+              mountPath: /etc/graphite-exporter
+              readOnly: true
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "25m"
+            limits:
+              memory: "64Mi"
+      volumes:
+        - name: mapping-config
+          configMap:
+            name: graphite-exporter-mapping

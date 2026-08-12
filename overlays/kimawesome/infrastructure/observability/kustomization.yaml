@@ -9,3 +9,4 @@ resources:
 - monitors-external
 - grafana-loki
 - pve-exporter
+- graphite-exporter

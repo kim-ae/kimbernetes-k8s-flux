@@ -1,0 +1,9 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+  - servicemonitor.yaml
+
+configMapGenerator:
+  - name: graphite-exporter-mapping
+    files:
+      - graphite_mapping.conf

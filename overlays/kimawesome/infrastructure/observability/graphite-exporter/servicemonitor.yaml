@@ -1,0 +1,12 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: graphite-exporter
+spec:
+  selector:
+    matchLabels:
+      app: graphite-exporter
+  endpoints:
+    - port: metrics
+      interval: 30s
+      path: /metrics
