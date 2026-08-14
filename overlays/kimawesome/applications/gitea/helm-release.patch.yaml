@@ -1,0 +1,42 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: gitea
+spec:
+  values:
+    gitea:
+      admin:
+        existingSecret: gitea-admin-secret
+        # The Gitea web UI stays authoritative for the admin password after
+        # first login; a reconcile must never overwrite a password the user
+        # has since changed there.
+        passwordMode: initialOnlyNoReset
+      config:
+        server:
+          DOMAIN: gitea.kim.tec.br
+          ROOT_URL: https://gitea.kim.tec.br/
+          SSH_DOMAIN: gitea.kim.tec.br
+          SSH_PORT: 22
+        database:
+          DB_TYPE: postgres
+          HOST: "small-postgres.internal.kim.tec.br:5432"
+          NAME: giteadb
+          USER: gitea
+      additionalConfigFromEnvs:
+        - name: GITEA__database__PASSWD
+          valueFrom:
+            secretKeyRef:
+              name: gitea-db-secret
+              key: password
+    persistence:
+      storageClass: nfs-csi
+      accessModes:
+        - ReadWriteOnce
+      size: 20Gi
+    service:
+      ssh:
+        type: LoadBalancer
+        annotations:
+          # Pinned so the git-over-SSH endpoint has a stable target, reusing
+          # the same 192.168.10.0/24 range as the gateway VIPs.
+          metallb.io/loadBalancerIPs: "192.168.10.4"

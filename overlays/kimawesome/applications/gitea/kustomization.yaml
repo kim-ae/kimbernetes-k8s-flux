@@ -1,0 +1,9 @@
+namespace: gitea
+resources:
+  - ../../../base/gitea
+  - db-secret.sealed.yaml
+  - admin-secret.sealed.yaml
+  - httproute.yaml
+
+patches:
+  - path: helm-release.patch.yaml
