@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: gitea-actions-runner
+spec:
+  values:
+    existingSecret: gitea-runner-token-secret
+    existingSecretKey: token
+    # Talk to Gitea over the in-cluster Service directly, rather than round
+    # tripping through the external https-gateway for registration/job polling.
+    giteaRootURL: http://gitea-http.gitea.svc.cluster.local:3000
+    statefulset:
+      replicas: 1
+    global:
+      # No StorageClass in this cluster is marked as default, so this must be
+      # set explicitly or the runner's data PVC stays unbound.
+      storageClass: nfs-csi

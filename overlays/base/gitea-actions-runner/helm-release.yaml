@@ -1,0 +1,17 @@
+# https://gitea.com/gitea/helm-actions
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: gitea-actions-runner
+spec:
+  releaseName: gitea-actions-runner
+  interval: 5m
+  chart:
+    spec:
+      chart: actions
+      version: "0.1.2"
+      sourceRef:
+        kind: HelmRepository
+        name: gitea-charts
+  values:
+    enabled: true

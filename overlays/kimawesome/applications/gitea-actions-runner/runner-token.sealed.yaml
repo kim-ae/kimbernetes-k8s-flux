@@ -1,0 +1,18 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  creationTimestamp: null
+  name: gitea-runner-token-secret
+spec:
+  encryptedData:
+    token: AgBOOdQXaKOAC7tNBa2RvR6yrpA23TwAlmIYJdFxS3tZnevEnRhyMXtfllp/2oRCHdhtsgoNLRg4/ja0PwEgNquL9ECmQvHbR43V7wiH2vFD4nqB46C/mR/T12qsdMfiF9Ey7UuxFo78MyJNTPM2qxyY3eZEDCUU3/mgxZSpm9prAgJFk1afqkMhFr+jCgHCTRfVKDtstNlEQEtD1x+BpolBO2acM/D1NSsWwy3ILLiV2NC/Y2NNSY4IaqWpaIaHgQN8SJRoGV+3wY2/KSR5u75tZxgt7NKstjakwHoFWARSidL9P2DBoC4CIwthfwZ7GLo88skmUxBu+ETmZtc74u+99sccQbB9f4JzXyjG85mqQdyBNS4i0hgQqEGeN+LVa214HwSxelMl0owrd0zTGDzgTkXX/vSIRtX6S/sD9MlRVr41dfPQr+SFCkN4LloSEXSBd2WyqkUvJCZdtHryWv+YjJWl0v9UEZyBGU5EIMoNwuH36aLnwaEUgAhtlmJ3sykv+EWDPN9NM4burxSCsonL4bqz1jXbqEIedLxdHShZIAKOD6NQ2c00Xg9IyoZ53cwmlUQdKkaeSO3dWgWA9bTTFBpSrVeECxuiFe7jaBoCmaNLz4Qkqnn+eaiXr0mRYOllSfzCjxKfUfPGUdCSuH3XiyEi8guYTx4XZY24QO0V8Lc/KWwxJ5s33ZCJy210wkDF5RDI3qZ63CIf8mgPcVffGR/ICiVA4jTtv25f+15Vmu7JJn4RXo7n
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: gitea-runner-token-secret
+    type: Opaque

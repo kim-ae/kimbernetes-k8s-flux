@@ -6,6 +6,7 @@ resources:
   - media
   - external-services
   - gitea
+  - gitea-actions-runner
 
 # configMapGenerator:
 #   - name: coredns-custom
