@@ -17,6 +17,8 @@ spec:
           ROOT_URL: https://gitea.kim.tec.br/
           SSH_DOMAIN: gitea.kim.tec.br
           SSH_PORT: 22
+        service:
+          DISABLE_REGISTRATION: true
         database:
           DB_TYPE: postgres
           HOST: "small-postgres.internal.kim.tec.br:5432"
