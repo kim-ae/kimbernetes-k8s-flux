@@ -3,6 +3,11 @@ kind: HelmRelease
 metadata:
   name: gitea
 spec:
+  valuesFrom:
+    - kind: Secret
+      name: gitea-valkey-secret
+      valuesKey: password
+      targetPath: valkey.global.valkey.password
   values:
     gitea:
       admin:
@@ -35,14 +40,18 @@ spec:
       accessModes:
         - ReadWriteOnce
       size: 20Gi
-    # Gitea's LevelDB-backed queue store (/data/queues) takes an exclusive
-    # file lock. The chart's default RollingUpdate (maxSurge 100%) briefly
-    # runs old and new pods together against the same NFS-backed RWO volume,
-    # so the new pod fails to acquire the lock ("resource temporarily
-    # unavailable") and, with maxUnavailable 0, the rollout deadlocks. Recreate
-    # ensures the old pod fully terminates (and releases the lock) first.
-    strategy:
-      type: Recreate
+    # Moves Gitea's queue/session/cache off local LevelDB (which took an
+    # exclusive file lock on the NFS-backed RWO volume and deadlocked the
+    # default RollingUpdate strategy, since old and new pods briefly ran
+    # together) onto this bundled standalone Valkey instance instead, so the
+    # chart's default RollingUpdate strategy is safe to use again.
+    valkey:
+      enabled: true
+      architecture: standalone
+      primary:
+        persistence:
+          storageClass: nfs-csi
+          size: 1Gi
     service:
       ssh:
         type: LoadBalancer

@@ -3,6 +3,7 @@ resources:
   - ../../../base/gitea
   - db-secret.sealed.yaml
   - admin-secret.sealed.yaml
+  - valkey-secret.sealed.yaml
   - httproute.yaml
 
 patches:
