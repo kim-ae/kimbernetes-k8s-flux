@@ -277,6 +277,8 @@ Visualized in Grafana via `overlays/base/grafana/dashboards/process-exporter-ove
 | qbittorrent-external-service | default | n/a (raw manifest) | `internal-gateway` `https` (`torrent.internal.kim.tec.br`) | qBittorrent LXC (Proxmox LXC `109`) `192.168.3.111:8080`, plain HTTP backend, no TLS skip-verify needed |
 | drive-external-service, media-external-service | default | n/a (raw manifest) | `internal-gateway` | Same external-service pattern, targets not reconfirmed this pass |
 | mari (`overlays/kimawesome/mari/`) | `mari` | minimal, just `kustomization.yaml` currently | `https-gateway` `https-mari-wildcard` (`*.marianacabral.odo.br`) | Second tenant/domain, mostly scaffold so far |
+| gitea | `gitea` | `overlays/base/gitea` (Helm chart `gitea`, `gitea-charts` HelmRepository) | `https-gateway` (`gitea.kim.tec.br`) + dedicated `service.ssh` LoadBalancer (`192.168.10.4:22` → container `2222`) | Self-hosted git; external Postgres backend, self-registration disabled, queue/session/cache on a bundled standalone Valkey (needed for zero-downtime `RollingUpdate`) |
+| gitea-actions-runner | `gitea` | `overlays/base/gitea-actions-runner` (Helm chart `actions`, reuses the `gitea-charts` HelmRepository) | internal only (talks to `gitea-http` in-cluster Service) | Gitea Actions CI runner, `StatefulSet`, single replica, no built-in autoscaling |
 
 ## 10. Known repo-level facts / gotchas to remember
 
