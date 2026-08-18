@@ -35,6 +35,14 @@ spec:
       accessModes:
         - ReadWriteOnce
       size: 20Gi
+    # Gitea's LevelDB-backed queue store (/data/queues) takes an exclusive
+    # file lock. The chart's default RollingUpdate (maxSurge 100%) briefly
+    # runs old and new pods together against the same NFS-backed RWO volume,
+    # so the new pod fails to acquire the lock ("resource temporarily
+    # unavailable") and, with maxUnavailable 0, the rollout deadlocks. Recreate
+    # ensures the old pod fully terminates (and releases the lock) first.
+    strategy:
+      type: Recreate
     service:
       ssh:
         type: LoadBalancer
