@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metube
+spec:
+  template:
+    spec:
+      containers:
+        - name: metube
+          envFrom:
+            - configMapRef:
+                name: metube-properties
+      volumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: metube-nfs-pvc
