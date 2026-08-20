@@ -14,7 +14,7 @@ metadata:
   name: media-external-service
 subsets:
   - addresses:
-      - ip: 192.168.0.110
+      - ip: 192.168.0.111
     ports:
       - port: 8096
 ---
