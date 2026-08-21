@@ -1,3 +1,4 @@
 resources:
   - xps-notebook.yaml
   - media-center.yaml
+  - proxmox.yaml
