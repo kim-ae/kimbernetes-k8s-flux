@@ -11,10 +11,6 @@ spec:
       port: 9100
       targetPort: 9100
       protocol: TCP
-    - name: process
-      port: 9256
-      targetPort: 9256
-      protocol: TCP
 ---
 apiVersion: v1
 kind: Endpoints
@@ -29,8 +25,6 @@ subsets:
     ports:
       - name: node
         port: 9100
-      - name: process
-        port: 9256
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -46,8 +40,5 @@ spec:
     - machine_name
   endpoints:
     - port: node
-      interval: 30s
-      path: /metrics
-    - port: process
       interval: 30s
       path: /metrics
