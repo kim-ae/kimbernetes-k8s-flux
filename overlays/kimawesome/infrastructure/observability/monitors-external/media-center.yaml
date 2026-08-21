@@ -25,7 +25,7 @@ metadata:
     machine_name: media-center
 subsets:
   - addresses:
-      - ip: 192.168.0.110
+      - ip: 192.168.0.111
     ports:
       - name: node
         port: 9100
