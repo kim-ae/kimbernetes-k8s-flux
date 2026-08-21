@@ -1,12 +1,12 @@
 {
-  "title": "Media Center Backup",
+  "title": "Media Backup (Proxmox)",
   "uid": "media-center-backup",
-  "tags": ["media-center", "backup", "node-exporter"],
+  "tags": ["backup", "node-exporter", "proxmox"],
   "timezone": "browser",
   "refresh": "1m",
   "time": { "from": "now-30d", "to": "now" },
   "schemaVersion": 39,
-  "version": 1,
+  "version": 3,
   "templating": {
     "list": [
       {
@@ -28,7 +28,7 @@
       "gridPos": { "h": 4, "w": 4, "x": 0, "y": 0 },
       "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
-        { "expr": "media_backup_last_run_success{machine_name=\"media-center\"}", "refId": "A", "instant": true }
+        { "expr": "media_backup_last_run_success{machine_name=\"proxmox\"}", "refId": "A", "instant": true }
       ],
       "fieldConfig": {
         "defaults": {
@@ -48,7 +48,7 @@
       "gridPos": { "h": 4, "w": 5, "x": 4, "y": 0 },
       "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
-        { "expr": "media_backup_last_run_timestamp_seconds{machine_name=\"media-center\"} * 1000", "refId": "A", "instant": true }
+        { "expr": "media_backup_last_run_timestamp_seconds{machine_name=\"proxmox\"} * 1000", "refId": "A", "instant": true }
       ],
       "fieldConfig": { "defaults": { "unit": "dateTimeAsLocal" }, "overrides": [] },
       "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value", "colorMode": "none" }
@@ -60,7 +60,7 @@
       "gridPos": { "h": 4, "w": 5, "x": 9, "y": 0 },
       "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
-        { "expr": "time() - media_backup_last_run_timestamp_seconds{machine_name=\"media-center\"}", "refId": "A", "instant": true }
+        { "expr": "time() - media_backup_last_run_timestamp_seconds{machine_name=\"proxmox\"}", "refId": "A", "instant": true }
       ],
       "fieldConfig": {
         "defaults": {
@@ -78,30 +78,10 @@
       "gridPos": { "h": 4, "w": 5, "x": 14, "y": 0 },
       "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
-        { "expr": "media_backup_last_run_duration_seconds{machine_name=\"media-center\"}", "refId": "A", "instant": true }
+        { "expr": "media_backup_last_run_duration_seconds{machine_name=\"proxmox\"}", "refId": "A", "instant": true }
       ],
       "fieldConfig": { "defaults": { "unit": "s" }, "overrides": [] },
       "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value", "colorMode": "none" }
-    },
-    {
-      "id": 5,
-      "type": "stat",
-      "title": "Timer Active",
-      "gridPos": { "h": 4, "w": 5, "x": 19, "y": 0 },
-      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
-      "targets": [
-        { "expr": "node_systemd_unit_state{machine_name=\"media-center\", name=\"media-backup.timer\", state=\"active\"}", "refId": "A", "instant": true }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [
-            { "type": "value", "options": { "0": { "text": "INACTIVE", "color": "red" }, "1": { "text": "ACTIVE", "color": "green" } } }
-          ],
-          "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
-        },
-        "overrides": []
-      },
-      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value", "colorMode": "background" }
     },
     {
       "id": 10,
@@ -110,7 +90,7 @@
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 },
       "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
-        { "expr": "media_backup_last_run_success{machine_name=\"media-center\"}", "refId": "A", "legendFormat": "success (1=ok, 0=failed)" }
+        { "expr": "media_backup_last_run_success{machine_name=\"proxmox\"}", "refId": "A", "legendFormat": "success (1=ok, 0=failed)" }
       ],
       "fieldConfig": {
         "defaults": {
@@ -128,32 +108,10 @@
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 4 },
       "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
-        { "expr": "media_backup_last_run_duration_seconds{machine_name=\"media-center\"}", "refId": "A", "legendFormat": "duration" }
+        { "expr": "media_backup_last_run_duration_seconds{machine_name=\"proxmox\"}", "refId": "A", "legendFormat": "duration" }
       ],
       "fieldConfig": { "defaults": { "unit": "s" }, "overrides": [] },
       "options": { "legend": { "displayMode": "list", "placement": "bottom" } }
-    },
-    {
-      "id": 20,
-      "type": "table",
-      "title": "media-backup Unit States",
-      "gridPos": { "h": 6, "w": 24, "x": 0, "y": 12 },
-      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
-      "targets": [
-        { "expr": "node_systemd_unit_state{machine_name=\"media-center\", name=~\"media-backup.*\"} == 1", "refId": "A", "instant": true, "format": "table" }
-      ],
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": { "Time": true, "Value": true, "__name__": true, "job": true, "instance": true, "machine_name": true, "namespace": true, "service": true, "endpoint": true },
-            "renameByName": { "name": "Unit", "state": "State", "type": "Type" }
-          }
-        },
-        { "id": "sortBy", "options": { "fields": {}, "sort": [{ "field": "Unit" }] } }
-      ],
-      "fieldConfig": { "defaults": {}, "overrides": [] },
-      "options": { "showHeader": true }
     }
   ]
 }
