@@ -73,6 +73,9 @@ Key facts:
   - `192.168.10.0` → http-gateway
   - `192.168.10.1` → https-gateway (confirmed via `https-gateway-tcp-delay-options.md`: VIP `192.168.10.1`, Service `https-gateway:443`, NodePort `31601`, pod currently on `node01-82nm`)
   - `192.168.10.2` → internal-gateway
+  - `192.168.10.3` → graphite-exporter (`observability/graphite-exporter`, TrueNAS metrics bridge)
+  - `192.168.10.4` → gitea-ssh (`gitea/service.ssh`, port `22` → container `2222`)
+  - `192.168.10.5` → grafana-loki's `loki-external-lb` (`observability/grafana-loki`, Loki push/query API, added 2026/08/27)
 
 ### 2.3 Gateway API / kgateway (`overlays/kimawesome/infrastructure/apigateway/`, `.../gatewayapi/`)
 - Gateway API CRDs installed directly: `kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/standard-install.yaml`.
