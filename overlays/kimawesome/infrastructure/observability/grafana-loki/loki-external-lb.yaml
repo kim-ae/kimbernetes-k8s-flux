@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: loki-external-lb
+  labels:
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/instance: loki-monolith
+  annotations:
+    # Pinned so external log-shipping agents (starting with the qBittorrent
+    # LXC, apps-installation/grafana-alloy-guest-logging/) have a stable push
+    # target, and so this stays a raw L4 LoadBalancer instead of routing
+    # log-push volume through kgateway/Envoy. Same pattern as
+    # observability/graphite-exporter (192.168.10.3).
+    metallb.io/loadBalancerIPs: "192.168.10.5"
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/instance: loki-monolith
+    app.kubernetes.io/component: single-binary
+  ports:
+    - name: http-metrics
+      port: 3100
+      targetPort: 3100
+      protocol: TCP

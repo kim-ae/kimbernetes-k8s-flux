@@ -1,3 +1,4 @@
 resources:
 - loki-pv.yaml
+- loki-external-lb.yaml
 - ../../../../base/grafana/grafana-loki/
