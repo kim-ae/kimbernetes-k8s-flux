@@ -82,22 +82,16 @@ Key facts:
 - `kgateway` is the GatewayClass/controller implementation (Envoy based), replacing Cilium's native Gateway API.
 - Three `Gateway` objects defined in `overlays/kimawesome/infrastructure/apigateway/`:
   1. **`http-gateway.yaml`** — plain HTTP listener on port 80, `allowedRoutes.namespaces.from: All`. Backs MetalLB VIP `192.168.10.0`. Also has `http-internal-redirect.yaml` for internal HTTP→HTTPS redirect behavior.
-  2. **`https-gateway.yaml`** — the public facing gateway (VIP `192.168.10.1`). Has many hostname specific listeners (one per external app, each with its own `certificateRefs` and `allowedRoutes.namespaces.from: All`):
-     - `kim.tec.br` (root) → `root-kim-tec-br-tls`
-     - `*.kim.tec.br` (wildcard) → `wildcard-kim-tec-br-tls`
-     - `kim.tplinkdns.com` → `kim-iplinkdns-tls`
-     - `yopass.kim.tec.br` → `yopass-kim-tec-br-tls`
-     - `knowledge-hub.kim.tec.br` → `knowledge-hub-kim-tec-br-tls`
-     - `leituras.kim.tec.br` → `leituras-kim-tec-br-tls`
-     - `keepupprom.kim.tec.br` → `keepupprom-kim-tec-br-tls`
-     - `no.kim.tec.br` (no-as-a-service) → `no-as-a-service-kim-tec-br-tls`
-     - `grafana.kim.tec.br` → `grafana-kim-tec-br-tls`
-     - `*.marianacabral.odo.br` (wildcard, second domain/tenant "mari") → `wildcard-marianacabral-odo-br-tls`
-     - All listeners annotate `cert-manager.io/cluster-issuer: cluster-issuer` so cert-manager auto-provisions each `certificateRef` secret.
+  2. **`https-gateway.yaml`** — the public facing gateway (VIP `192.168.10.1`). Since 2026/10/02 it has **only three wildcard/root listeners**, all `allowedRoutes.namespaces.from: All`, all served by DNS-01 certificates:
+     - `https-root`: `kim.tec.br` → `root-kim-tec-br-tls`
+     - `https-wildcard`: `*.kim.tec.br` → `wildcard-kim-tec-br-tls` (every `*.kim.tec.br` app attaches here: grafana, yopass, no, knowledge-hub/leituras, gitea, version-management, ...)
+     - `https-mari-wildcard`: `*.marianacabral.odo.br` (second domain/tenant "mari") → `wildcard-marianacabral-odo-br-tls`
+     - The Gateway carries `cert-manager.io/cluster-issuer: cluster-issuer`, so cert-manager's gateway-shim auto-creates one `Certificate` per listener `certificateRef`.
+     - **Do not add hostname-specific listeners for `*.kim.tec.br` apps.** A specific-hostname listener takes precedence over the wildcard, and its own `certificateRef` makes gateway-shim request a separate per-host cert. That cert falls outside the DNS-01 solver's `dnsNames` selector, and the ClusterIssuer has no HTTP-01 solver any more, so it can never be issued. This is exactly how six per-host certs (and `kim.tplinkdns.com`) expired on 2026-09-10 while the wildcard stayed valid; they were removed 2026/10/02.
      - Port is 443 externally, backed by a NodePort internally (comment notes e.g. `31000`/`31601`).
   3. **`internal-gateway.yaml`** — VIP `192.168.10.2`, wildcard hostname `*.internal.kim.tec.br` on both `http` (port 80) and `https` (port 443, TLS terminate via `wildcard-internal-kim-tec-br-tls`). This is the gateway used for anything that should stay LAN only (Proxmox, TrueNAS, etc.)
   - Additional policies: `httppolicy-access-logs.yaml` (access logging), `httppolicy-internal-gateway.yaml` (policy scoped to the internal gateway).
-- Apps attach via `HTTPRoute` with `parentRefs.sectionName` matching one of the listener `name`s above, and the route hostname must match the listener hostname exactly.
+- Apps attach via `HTTPRoute` with `parentRefs.sectionName` matching one of the listener `name`s above (normally `https-wildcard`), and the route hostname must fall under the listener hostname (a specific name under the wildcard is fine).
 
 ### 2.4 External (non-k8s) services exposed through the internal gateway
 `overlays/kimawesome/applications/external-services/` — this is the key pattern for exposing **bare metal / non-cluster machines** through the cluster's Gateway API and (by extension) through Prometheus scraping. Each external target follows this exact recipe: a selector-less `Service` + a manually authored `Endpoints` object pointing at the real LAN IP, then an `HTTPRoute`, then (if TLS cert on the target is self signed) a `kgateway` `BackendConfigPolicy` with `tls.insecureSkipVerify: true`.
@@ -230,7 +224,7 @@ Visualized in Grafana via `overlays/base/grafana/dashboards/process-exporter-ove
 - Base: HelmRelease + HelmRepository (`jetstack`) for `cert-manager`.
 - Cluster overlay (`overlays/kimawesome/infrastructure/cert-manager/`):
   - `cluster-issuer.yaml` (prod) and `stg-cluster-issuer.yaml` (Let's Encrypt staging) — both named/referenced as `cluster-issuer` via the `cert-manager.io/cluster-issuer` annotation on the Gateways.
-  - Uses **Cloudflare DNS-01** challenge (`claudflare-api-token-secret.sealed.yaml` — sealed secret holding the Cloudflare API token; `.ignore-cloudflare-token.yaml` is the local, gitignored plaintext used to generate the sealed secret).
+  - Uses **Cloudflare DNS-01** challenge, and since 2026/10/02 **only** DNS-01: the former catch-all HTTP-01 solver (via `http-gateway`) was removed because public port 80 does not reach `http-gateway`, so it never validated. Names outside the DNS-01 `dnsNames` selector (`kim.tec.br`, `*.kim.tec.br`, `*.internal.kim.tec.br`, `marianacabral.odo.br`, `*.marianacabral.odo.br`) cannot be issued at all. The `cluster-issuer.yaml`/`stg-cluster-issuer.yaml` files actually live in `overlays/kimawesome/infrastructure/base-certificate/`. Issuer details: (`claudflare-api-token-secret.sealed.yaml` — sealed secret holding the Cloudflare API token; `.ignore-cloudflare-token.yaml` is the local, gitignored plaintext used to generate the sealed secret).
   - DNS-01 was chosen specifically to support **wildcard certificates** (`*.kim.tec.br`, `*.internal.kim.tec.br`, `*.marianacabral.odo.br`) which HTTP-01 cannot provide.
 - `base-certificate/` (`overlays/kimawesome/infrastructure/base-certificate/`) — presumably where the actual `Certificate` CRs are defined for the root/wildcard domains (referenced by the Gateways' `certificateRefs`); only `kustomization.yaml` inspected directly, contents not fully expanded — revisit if adding a new certificate.
 

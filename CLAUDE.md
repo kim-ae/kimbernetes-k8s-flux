@@ -52,6 +52,8 @@ Ingress is implemented with Gateway API and `kgateway`. The shared gateways are 
 
 Certificates are managed separately from routes. Gateway listeners reference certificate secrets directly, while certificate and issuer setup lives under `overlays/kimawesome/infrastructure/base-certificate/` and `overlays/base/cert-manager/`.
 
+All public `*.kim.tec.br` apps attach to the **`https-wildcard`** listener (`sectionName: https-wildcard`) and are served by the DNS-01 wildcard cert. **Never add a hostname-specific listener with its own `certificateRef` for a `*.kim.tec.br` app**: cert-manager's gateway-shim would request a per-host cert that the ClusterIssuer cannot issue (DNS-01 only, scoped to the wildcard/root names; the HTTP-01 solver was removed 2026/10/02 because public port 80 never reached `http-gateway`). That is what left six per-host certs expired from 2026-09-10 until 2026/10/02. Only `kim.tec.br`, `*.kim.tec.br`, `*.internal.kim.tec.br`, `marianacabral.odo.br` and `*.marianacabral.odo.br` are issuable.
+
 ## Key conventions
 
 Use `kustomization.yaml` for normal Kustomize composition and `kustomization.flux.yaml` for Flux `Kustomization` custom resources. When changing deployment topology, check both layers.
