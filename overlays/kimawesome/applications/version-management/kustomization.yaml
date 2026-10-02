@@ -3,7 +3,6 @@ resources:
   - ../../../base/version-management
   - shared-resources
   - mysql
-  - httproute.yaml
   - httproute-kim-tec-br.yaml
 
 images:

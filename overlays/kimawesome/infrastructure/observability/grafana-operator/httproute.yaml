@@ -6,7 +6,7 @@ spec:
   parentRefs:
     - name: https-gateway
       namespace: kube-system
-      sectionName: https-grafana
+      sectionName: https-wildcard
   hostnames:
     - "grafana.kim.tec.br"       # Specific hostname for this app
   rules:

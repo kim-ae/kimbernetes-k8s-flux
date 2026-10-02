@@ -6,10 +6,7 @@ spec:
   parentRefs:
     - name: https-gateway
       namespace: kube-system
-      sectionName: https-knowledge-hub
-    - name: https-gateway
-      namespace: kube-system
-      sectionName: https-leituras
+      sectionName: https-wildcard
   hostnames:
     - "knowledge-hub.kim.tec.br"       # Specific hostname for this app
     - "leituras.kim.tec.br"

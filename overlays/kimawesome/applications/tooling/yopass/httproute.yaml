@@ -6,7 +6,7 @@ spec:
   parentRefs:
     - name: https-gateway
       namespace: kube-system
-      sectionName: https-yopass
+      sectionName: https-wildcard
   hostnames:
     - "yopass.kim.tec.br"       # Specific hostname for this app
   rules:

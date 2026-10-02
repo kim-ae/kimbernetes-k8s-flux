@@ -6,7 +6,7 @@ spec:
   parentRefs:
     - name: https-gateway
       namespace: kube-system
-      sectionName: https-no-as-a-service
+      sectionName: https-wildcard
   hostnames:
     - "no.kim.tec.br"       # Specific hostname for this app
   rules:
